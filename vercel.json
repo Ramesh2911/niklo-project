@@ -1,0 +1,134 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/v1/auth/(.*)",
+      "destination": "http://szs601uiqefhc8jbpeq587f3.187.127.157.13.sslip.io/api/v1/auth/$1"
+    },
+    {
+      "source": "/api/v1/wishlist",
+      "destination": "http://f11slpsqn3bkula8r1yr292u.187.127.157.13.sslip.io/api/v1/wishlist"
+    },
+    {
+      "source": "/api/v1/wishlist/(.*)",
+      "destination": "http://f11slpsqn3bkula8r1yr292u.187.127.157.13.sslip.io/api/v1/wishlist/$1"
+    },
+    {
+      "source": "/api/v1/users/(.*)",
+      "destination": "http://f11slpsqn3bkula8r1yr292u.187.127.157.13.sslip.io/api/v1/users/$1"
+    },
+    {
+      "source": "/api/v1/user/(.*)",
+      "destination": "http://f11slpsqn3bkula8r1yr292u.187.127.157.13.sslip.io/api/v1/user/$1"
+    },
+    {
+      "source": "/api/v1/ride/(.*)",
+      "destination": "http://my41fssoetuy2w34a2yettfe.187.127.157.13.sslip.io/api/v1/ride/$1"
+    },
+    {
+      "source": "/api/v1/bus/(.*)",
+      "destination": "http://w1n68oxs2na9q9tbveqsqa4s.187.127.157.13.sslip.io/api/v1/bus/$1"
+    },
+    {
+      "source": "/api/v1/bus/(.*)",
+      "destination": "http://w1n68oxs2na9q9tbveqsqa4s.187.127.157.13.sslip.io/api/v1/bus/$1"
+    },
+    {
+      "source": "/api/v1/payment/(.*)",
+      "destination": "http://n13chiypv5vg517ffvioht20.187.127.157.13.sslip.io/api/v1/payment/$1"
+    },
+    {
+      "source": "/api/v1/hotels/(.*)",
+      "destination": "http://b5m0ntg98i0cpdaidmcvdqwd.187.127.157.13.sslip.io/api/v1/hotels/$1"
+    },
+    {
+      "source": "/api/v1/location/(.*)",
+      "destination": "http://b5m0ntg98i0cpdaidmcvdqwd.187.127.157.13.sslip.io/api/v1/location/$1"
+    },
+    {
+      "source": "/api/v1/bookings/hotel",
+      "destination": "http://b5m0ntg98i0cpdaidmcvdqwd.187.127.157.13.sslip.io/api/v1/bookings/hotel"
+    },
+    {
+      "source": "/api/v1/bookings/hotel/(.*)",
+      "destination": "http://b5m0ntg98i0cpdaidmcvdqwd.187.127.157.13.sslip.io/api/v1/bookings/hotel/$1"
+    },
+    {
+      "source": "/api/v1/bookings",
+      "destination": "http://yjfbvszz8e2yv5sefwcpxye4.187.127.157.13.sslip.io/api/v1/bookings"
+    },
+    {
+      "source": "/api/v1/bookings/(.*)",
+      "destination": "http://yjfbvszz8e2yv5sefwcpxye4.187.127.157.13.sslip.io/api/v1/bookings/$1"
+    },
+    {
+      "source": "/api/v1/offers/(.*)",
+      "destination": "http://yjfbvszz8e2yv5sefwcpxye4.187.127.157.13.sslip.io/api/v1/offers/$1"
+    },
+    {
+      "source": "/api/v1/offers",
+      "destination": "http://yjfbvszz8e2yv5sefwcpxye4.187.127.157.13.sslip.io/api/v1/offers"
+    },
+    {
+      "source": "/api/v1/recommendations/(.*)",
+      "destination": "http://yjfbvszz8e2yv5sefwcpxye4.187.127.157.13.sslip.io/api/v1/recommendations/$1"
+    },
+    {
+      "source": "/api/v1/promotions/(.*)",
+      "destination": "http://yjfbvszz8e2yv5sefwcpxye4.187.127.157.13.sslip.io/api/v1/promotions/$1"
+    },
+    {
+      "source": "/api/v1/promotions",
+      "destination": "http://yjfbvszz8e2yv5sefwcpxye4.187.127.157.13.sslip.io/api/v1/promotions"
+    },
+    {
+      "source": "/api/v1/user/active-trip",
+      "destination": "http://yjfbvszz8e2yv5sefwcpxye4.187.127.157.13.sslip.io/api/v1/user/active-trip"
+    },
+    {
+      "source": "/api/v1/driver/(.*)",
+      "destination": "http://ebzdp7jvp5z5bhrl05tkvxsa.187.127.157.13.sslip.io/api/v1/driver/$1"
+    },
+    {
+      "source": "/api/v1/packages/(.*)",
+      "destination": "http://ltmzir9qa389f53ho5hkzlq0.187.127.157.13.sslip.io/api/v1/packages/$1"
+    },
+    {
+      "source": "/api/v1/adventure/(.*)",
+      "destination": "http://ra0qdnh3xfolrfu1y82bva9g.187.127.157.13.sslip.io/api/v1/adventure/$1"
+    },
+    {
+      "source": "/api/v1/adventures",
+      "destination": "http://ra0qdnh3xfolrfu1y82bva9g.187.127.157.13.sslip.io/api/v1/adventures"
+    },
+    {
+      "source": "/api/v1/adventures/(.*)",
+      "destination": "http://ra0qdnh3xfolrfu1y82bva9g.187.127.157.13.sslip.io/api/v1/adventures/$1"
+    },
+    {
+      "source": "/api/v1/notify/(.*)",
+      "destination": "http://l2pdf6ail6mlmurxhtjjf44i.187.127.157.13.sslip.io/api/v1/notify/$1"
+    },
+    {
+      "source": "/api/v1/notifications",
+      "destination": "http://l2pdf6ail6mlmurxhtjjf44i.187.127.157.13.sslip.io/api/v1/notifications"
+    },
+    {
+      "source": "/api/v1/notifications/(.*)",
+      "destination": "http://l2pdf6ail6mlmurxhtjjf44i.187.127.157.13.sslip.io/api/v1/notifications/$1"
+    },
+    {
+      "source": "/api/v1/ai-planner/(.*)",
+      "destination": "http://s3knzzbxvavkb4t218hgb9nh.187.127.157.13.sslip.io/api/v1/ai-planner/$1"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "http://irtucumwj9akelon0k4iyatv.187.127.157.13.sslip.io/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

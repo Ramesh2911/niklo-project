@@ -1,0 +1,719 @@
+.passenger-details-page {
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. Page Banner */
+.page-banner {
+  background-color: #0052ff;
+  color: #ffffff;
+  padding: 40px 0;
+}
+
+.banner-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  width: fit-content;
+}
+
+.btn-back:hover {
+  text-decoration: underline;
+}
+
+.banner-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.banner-content p {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* 2. Main Content Grid */
+.main-content-grid {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 80px;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.left-column {
+  flex: 2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.right-column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 100px;
+}
+
+/* 3. Details Cards */
+.details-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.icon-blue {
+  color: #0052ff;
+}
+
+.card-header h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.card-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: -16px;
+  margin-bottom: 24px;
+}
+
+/* 4. Bus Summary Card */
+.bus-summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bus-summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.bus-title-area h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+}
+
+.bus-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bus-rating .rating-badge {
+  background-color: #22c55e;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.bus-rating .rating-text {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.bus-time-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.bus-date {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.bus-time {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.bus-route-summary {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 16px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 20px;
+}
+
+.route-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  z-index: 2;
+}
+
+.point-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 6px;
+}
+
+.point-dot.blue { background-color: #0052ff; }
+.point-dot.orange { background-color: #f59e0b; }
+
+.route-line-vertical {
+  position: absolute;
+  left: 20px;
+  top: 28px;
+  bottom: 28px;
+  width: 2px;
+  background-color: #e2e8f0;
+  z-index: 1;
+}
+
+.point-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.point-text strong {
+  font-size: 0.875rem;
+  color: #0f172a;
+}
+
+.point-text span {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.seats-badge {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.seats-badge strong {
+  font-size: 1.125rem;
+  color: #0052ff;
+}
+
+.seats-badge span {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  letter-spacing: 1px;
+}
+
+/* 5. Passenger Forms */
+.form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr;
+  gap: 16px;
+}
+
+.contact-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.input-group input {
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #0052ff;
+}
+
+/* Custom gender dropdown uses the same border/focus color scheme as the
+   other form inputs (.input-group input) instead of the native select's
+   mismatched palette. */
+.gender-dropdown {
+  position: relative;
+}
+
+.gender-dropdown-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: #0f172a;
+  background-color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.gender-dropdown-btn[aria-expanded="true"],
+.gender-dropdown-btn:focus {
+  border-color: #0052ff;
+}
+
+.gender-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  z-index: 20;
+  overflow: hidden;
+}
+
+.gender-dropdown-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.gender-dropdown-menu button:hover {
+  background-color: #f1f5f9;
+}
+
+.gender-dropdown-menu button.active {
+  color: #0052ff;
+  font-weight: 600;
+  background-color: #eef4ff;
+}
+
+/* 6. Options Card & Checkboxes */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.custom-checkbox-wrapper {
+  display: flex;
+  gap: 16px;
+  cursor: pointer;
+  align-items: flex-start;
+}
+
+.checkbox-input {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.checkbox-input input {
+  opacity: 0;
+  position: absolute;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.checkbox-input input:checked ~ .checkmark {
+  background-color: #0052ff;
+  border-color: #0052ff;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-input input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.checkbox-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkbox-title-row strong {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.price-tag {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.checkbox-content p {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* 7. Fare Summary Card */
+.fare-summary-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 24px 0;
+}
+
+.fare-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px dashed #e2e8f0;
+  padding-bottom: 24px;
+}
+
+.fare-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.fare-row.discount {
+  color: #10b981;
+}
+
+.fare-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 24px;
+}
+
+.total-val {
+  font-size: 1.25rem;
+}
+
+.btn-continue-payment {
+  background-color: #0052ff; /* Brand blue */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.btn-continue-payment:hover {
+  background-color: #003ecc;
+}
+
+.secure-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.icon-green {
+  color: #10b981;
+}
+
+/* 8. Promo Applied Card */
+.promo-applied-card {
+  background-color: #eff6ff;
+  border: 1px dashed #93c5fd;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.promo-applied-card h4 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #0052ff;
+  margin: 0 0 8px 0;
+}
+
+.promo-applied-card p {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* 9. FAQ Section */
+.faq-section {
+  max-width: 800px;
+  margin: 40px auto 80px auto;
+  padding: 0 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.faq-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 32px 0;
+}
+
+.faq-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-item {
+  background-color: #f8fafc;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: background-color 0.2s;
+}
+
+.faq-item:hover {
+  background-color: #f1f5f9;
+}
+
+.faq-question {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.faq-answer {
+  padding: 0 20px 20px 20px;
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Payment Overlay */
+.payment-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-overlay-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  animation: slideUp 0.3s ease-out;
+  width: 90%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #0052ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.payment-overlay-card h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.payment-overlay-card p {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Responsive: this page had zero breakpoints before — main-content-grid was a
+   fixed 2:1 flex row (forms + fare sidebar) with a 3-column form-grid inside,
+   so on a phone the intrinsic content width of the age/gender inputs refused
+   to shrink and pushed the whole page into horizontal scroll. */
+@media (max-width: 1024px) {
+  .main-content-grid {
+    flex-direction: column;
+    padding: 32px 24px;
+  }
+
+  /* Sticky sidebar only makes sense next to a scrolling left column; once
+     the grid stacks to a single column there's nothing beside it to stick
+     against. */
+  .right-column {
+    position: static;
+    top: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-content {
+    padding: 0 20px;
+  }
+
+  .banner-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .main-content-grid {
+    padding: 24px 16px;
+    gap: 24px;
+  }
+
+  .details-card {
+    padding: 20px;
+  }
+
+  .form-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bus-summary-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .bus-time-area {
+    align-items: flex-start;
+  }
+
+  /* Was position:absolute pinned to the middle-right of the route summary —
+     fine when the route text is two short lines, but it overlapped the
+     dropping-point text once things reflowed narrower. Let it stack instead. */
+  .seats-badge {
+    position: static;
+    transform: none;
+    align-items: flex-start;
+    margin-top: 4px;
+  }
+
+  .faq-section {
+    padding: 0 20px;
+  }
+}

@@ -1,0 +1,653 @@
+.wa-page-wrapper {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #0f172a;
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.relative {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Header Section */
+.wa-header-section {
+  background-color: #ffffff;
+  padding: 40px 0 20px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.wa-header-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.wa-header-container h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
+}
+
+.wa-header-container p {
+  font-size: 0.95rem;
+  color: #64748b;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Main Main Layout */
+.wa-main {
+  background-color: #f8fafc;
+  padding: 40px 0 80px 0;
+  flex: 1;
+}
+
+.wa-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+/* 1. Wallet Header Banner Card */
+.wa-banner-card {
+  background-color: #0052ff;
+  border: 2px dashed #93c5fd;
+  border-radius: 24px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  align-items: center;
+  color: #ffffff;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0, 82, 255, 0.08);
+}
+
+.wa-banner-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.wa-lbl {
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.85;
+  margin-bottom: 8px;
+}
+
+.wa-balance {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.wa-add-btn {
+  background-color: #ffffff;
+  color: #0052ff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wa-add-btn:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-1px);
+}
+
+.wa-add-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Inline Add Money form (replaces window.prompt) */
+.wa-add-money-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.wa-add-money-row {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 0 14px;
+  gap: 4px;
+}
+
+.wa-add-money-prefix {
+  color: #0052ff;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.wa-add-money-input {
+  border: none;
+  outline: none;
+  padding: 10px 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  width: 130px;
+  background: transparent;
+}
+
+.wa-add-money-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wa-add-money-cancel {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.wa-add-money-cancel:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.wa-add-money-msg {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.wa-add-money-msg.error {
+  color: #fecaca;
+}
+
+.wa-add-money-msg.success {
+  color: #bbf7d0;
+}
+
+.wa-banner-middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wa-wallet-graphic {
+  width: 260px;
+  height: 193px;
+  object-fit: contain;
+}
+
+.wa-banner-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 24px;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.wa-cashback-lbl {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.wa-cashback-val {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.wa-banner-right p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.9;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* 2. Action Menu Row */
+.wa-action-menu {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+.wa-menu-item {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wa-menu-item:hover {
+  border-color: #0052ff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+}
+
+.wa-menu-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #eff6ff;
+  color: #0052ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wa-menu-item span {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+/* Sections */
+.wa-section {
+  margin-bottom: 56px;
+}
+
+.wa-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.wa-section-header h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.wa-view-all {
+  color: #0052ff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.wa-view-all:hover {
+  text-decoration: underline;
+}
+
+/* Transactions list */
+.wa-transactions-list {
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #cbd5e1;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+}
+
+.wa-tx-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.wa-tx-row:last-child {
+  border-bottom: none;
+}
+
+.wa-tx-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.wa-tx-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wa-tx-icon-box.green {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.wa-tx-icon-box.blue {
+  background-color: #eff6ff;
+  color: #0052ff;
+}
+
+.wa-tx-icon-box.orange {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.wa-tx-icon-box.red {
+  background-color: #fff1f2;
+  color: #f43f5e;
+}
+
+.wa-tx-info h3 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.wa-tx-info p {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+}
+
+.wa-tx-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.wa-tx-amt {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.wa-tx-amt.green {
+  color: #10b981;
+}
+
+.wa-tx-bal {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* Exclusive Offers Grid */
+.wa-offers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.wa-offer-box {
+  border-radius: 20px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid transparent;
+}
+
+.wa-offer-box.light-green {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.wa-offer-box.light-blue {
+  background-color: #f0f9ff;
+  border-color: #bae6fd;
+}
+
+.wa-offer-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.wa-offer-badge.green {
+  background-color: #ffffff;
+  color: #10b981;
+}
+
+.wa-offer-badge.blue {
+  background-color: #ffffff;
+  color: #0052ff;
+}
+
+.wa-offer-box h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+.wa-offer-box p {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+
+.wa-offer-code-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.wa-offer-code {
+  background-color: #ffffff;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.wa-copy-btn {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #64748b;
+}
+
+.wa-offer-expiry {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* Trust alert at bottom */
+.wa-security-alert {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 24px 32px;
+}
+
+.wa-security-alert-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wa-sec-details {
+  margin: 16px 0 0 0;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.wa-chevron-open {
+  transform: rotate(90deg);
+  transition: transform 0.2s;
+}
+
+.wa-sec-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wa-sec-icon {
+  color: #0052ff;
+}
+
+.wa-sec-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.wa-sec-text strong {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.wa-sec-text span {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.wa-sec-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #0052ff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.wa-sec-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .wa-header-container,
+  .wa-container {
+    padding: 0 20px;
+  }
+
+  .wa-action-menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wa-header-container h1 {
+    font-size: 1.75rem;
+  }
+
+  .wa-banner-card {
+    grid-template-columns: 1fr;
+    padding: 28px;
+    gap: 24px;
+  }
+
+  .wa-balance {
+    font-size: 2.25rem;
+  }
+
+  .wa-wallet-graphic {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+  }
+
+  .wa-banner-right {
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding-top: 20px;
+  }
+
+  .wa-add-money-form,
+  .wa-add-money-row,
+  .wa-add-money-actions {
+    width: 100%;
+  }
+
+  .wa-add-money-input {
+    width: 100%;
+  }
+
+  .wa-add-money-actions button {
+    flex: 1;
+  }
+
+  .wa-offers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wa-tx-row {
+    padding: 18px 20px;
+  }
+
+  .wa-security-alert-row {
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .wa-header-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .wa-action-menu {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .wa-menu-item {
+    padding: 18px 10px;
+  }
+
+  .wa-banner-card {
+    padding: 20px;
+  }
+
+  .wa-tx-left {
+    gap: 12px;
+  }
+}

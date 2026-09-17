@@ -1,0 +1,613 @@
+.ha-page-wrapper {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #0f172a;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.relative {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Header */
+.ha-header {
+  background-color: #ffffff;
+  padding: 16px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.ha-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ha-back-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #0f172a;
+}
+
+.ha-back-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.ha-hotel-info h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  color: #0f172a;
+}
+
+.ha-hotel-info p {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+}
+
+.ha-header-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.ha-nav-links {
+  display: flex;
+  gap: 24px;
+}
+
+.ha-nav-links span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.ha-nav-links span:hover {
+  color: #0052ff;
+}
+
+.ha-signin-btn {
+  background-color: #0052ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ha-signin-btn:hover {
+  background-color: #003ecc;
+}
+
+/* Main content */
+.ha-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.ha-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.ha-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 10px 0;
+}
+
+.ha-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0 0 24px 0;
+  font-weight: 500;
+}
+
+/* Free Cancellation Alert Box */
+.ha-alert-box {
+  background-color: #eff6ff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.ha-alert-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.ha-alert-icon {
+  color: #0052ff;
+  margin-top: 2px;
+}
+
+.ha-alert-text h3 {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #0052ff;
+  margin: 0 0 4px 0;
+}
+
+.ha-alert-text p {
+  font-size: 0.8rem;
+  color: #475569;
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.ha-alert-caret {
+  color: #94a3b8;
+}
+
+/* Select Dates */
+.ha-section-lbl-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ha-section-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ha-nights-badge {
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.ha-dates-grid, .ha-guests-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ha-field {
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.ha-field label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #0052ff;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.ha-input-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.ha-val-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ha-sub-val {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.ha-field-icon {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.ha-btn-submit {
+  width: 100%;
+  background-color: rgba(0, 82, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 82, 255, 0.5);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  box-shadow: 0 10px 20px rgba(0, 82, 255, 0.2);
+}
+
+.ha-btn-submit:hover {
+  background-color: rgba(0, 68, 204, 0.9);
+  box-shadow: 0 12px 24px rgba(0, 82, 255, 0.3);
+}
+
+.ha-btn-submit:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.ha-no-pay-lbl {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+  text-align: center;
+  display: block;
+}
+
+/* Guarantees benefits row */
+.ha-footer-benefits {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.ha-benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.ha-benefit-item svg {
+  color: #94a3b8;
+}
+
+/* Custom Popovers override */
+.custom-calendar-popover,
+.custom-guest-popover {
+  position: absolute;
+  top: 100%;
+  margin-top: 12px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e2e8f0;
+  padding: 24px;
+  z-index: 100;
+  width: 320px;
+  cursor: default;
+}
+
+/* Calendar */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+
+.calendar-header button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  text-align: center;
+}
+
+.cal-day-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.cal-day {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+}
+
+.cal-day:hover {
+  background-color: #f1f5f9;
+}
+
+.cal-day.selected {
+  background-color: #0052ff;
+  color: #ffffff;
+}
+
+/* Guest Picker */
+.guest-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.guest-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.guest-info span {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.guest-info small {
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.guest-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.guest-controls button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #0052ff;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.guest-controls button:hover {
+  background-color: #f1f5f9;
+}
+
+.guest-controls span {
+  font-weight: 700;
+  color: #0f172a;
+  min-width: 12px;
+  text-align: center;
+}
+
+.guest-done-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #0052ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.guest-done-btn:hover {
+  background-color: #003ecc;
+}
+
+/* Modal Overlay */
+.ha-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ha-modal {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 480px;
+  width: calc(100% - 48px);
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ha-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.ha-modal-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #ecfdf5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.ha-modal-check {
+  color: #10b981;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.ha-modal h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 12px 0;
+}
+
+.ha-modal p {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 32px 0;
+  font-weight: 500;
+}
+
+.ha-modal-continue {
+  width: 100%;
+  background-color: #0052ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: background-color 0.2s;
+}
+
+.ha-modal-continue:hover {
+  background-color: #003ecc;
+}
+
+.ha-modal-modify {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-bottom: 1.5px solid transparent;
+}
+
+.ha-modal-modify:hover {
+  color: #0f172a;
+  border-bottom-color: #0f172a;
+}
+
+/* ---------------------------------- */
+/* Responsive */
+/* ---------------------------------- */
+
+@media (max-width: 1024px) {
+  .ha-header {
+    padding: 16px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ha-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .ha-header-right {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .ha-nav-links {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    max-width: 100%;
+  }
+
+  .ha-nav-links span {
+    white-space: nowrap;
+  }
+
+  .ha-card {
+    padding: 28px 24px;
+  }
+
+  .custom-calendar-popover,
+  .custom-guest-popover {
+    width: min(320px, calc(100vw - 64px));
+  }
+
+  .ha-footer-benefits {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ha-title {
+    font-size: 1.4rem;
+  }
+
+  .ha-card {
+    padding: 24px 16px;
+  }
+
+  .ha-dates-grid,
+  .ha-guests-grid {
+    grid-template-columns: 1fr;
+  }
+}

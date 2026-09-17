@@ -1,0 +1,277 @@
+.of-page-wrapper {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #0f172a;
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header section */
+.of-header-section {
+  background-color: #ffffff;
+  padding: 40px 0 20px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.of-header-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.of-header-container h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* Main */
+.of-main {
+  background-color: #f8fafc;
+  padding: 40px 0 80px 0;
+  flex: 1;
+}
+
+.of-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+/* Filters row */
+.of-filters-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.of-pill-btn {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  border-radius: 14px;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.of-pill-btn:hover {
+  border-color: #0052ff;
+  color: #0052ff;
+}
+
+.of-pill-btn.active {
+  background-color: #0052ff;
+  border-color: #0052ff;
+  color: #ffffff;
+}
+
+/* Offers Grid */
+.of-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.of-card {
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  height: 240px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border: 1px solid transparent;
+}
+
+/* Offer colors */
+.of-card.bg-light-blue {
+  background-color: #e0f2fe; /* Light blue */
+  border-color: #bae6fd;
+}
+
+.of-card.bg-light-indigo {
+  background-color: #e0e7ff; /* Light indigo */
+  border-color: #c7d2fe;
+}
+
+.of-card.bg-light-yellow {
+  background-color: #fef9c3; /* Light yellow */
+  border-color: #fef08a;
+}
+
+.of-card.bg-light-pink {
+  background-color: #ffe4e6; /* Light pink */
+  border-color: #fecdd3;
+}
+
+.of-card-left {
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 10;
+}
+
+.of-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #0052ff;
+  margin-bottom: 16px;
+}
+
+.of-card.bg-light-blue .of-badge svg { color: #0284c7; }
+.of-card.bg-light-blue .of-badge { color: #0284c7; }
+
+.of-card.bg-light-indigo .of-badge svg { color: #4f46e5; }
+.of-card.bg-light-indigo .of-badge { color: #4f46e5; }
+
+.of-card.bg-light-yellow .of-badge svg { color: #b45309; }
+.of-card.bg-light-yellow .of-badge { color: #b45309; }
+
+.of-card.bg-light-pink .of-badge svg { color: #e11d48; }
+.of-card.bg-light-pink .of-badge { color: #e11d48; }
+
+.of-card-left h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+  line-height: 1.25;
+}
+
+.of-card-left p {
+  font-size: 0.8rem;
+  color: #475569;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 20px 0;
+}
+
+/* Copy code box */
+.of-code-box-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.of-code-box {
+  background-color: #ffffff;
+  border: 1.5px dashed #94a3b8;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 0.02em;
+}
+
+.of-copy-btn {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s;
+}
+
+.of-copy-btn:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Right Illustration */
+.of-card-right {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+}
+
+.of-card-graphic {
+  max-height: 180px;
+  max-width: 180px;
+  object-fit: contain;
+  position: absolute;
+  right: -10px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .of-header-container,
+  .of-container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .of-header-container h1 {
+    font-size: 1.75rem;
+  }
+
+  .of-filters-row {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .of-pill-btn {
+    padding: 8px 18px;
+    font-size: 0.8rem;
+  }
+
+  .of-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .of-card {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    gap: 20px;
+    padding: 24px;
+  }
+
+  .of-card-left {
+    max-width: 100%;
+  }
+
+  .of-card-right {
+    width: 100%;
+    height: 130px;
+  }
+
+  .of-card-graphic {
+    position: static;
+    max-height: 110px;
+    max-width: 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  .of-header-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .of-card-left h2 {
+    font-size: 1.15rem;
+  }
+}

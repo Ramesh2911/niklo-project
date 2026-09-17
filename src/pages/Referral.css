@@ -1,0 +1,476 @@
+.re-page-wrapper {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #0f172a;
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main Main Layout */
+.re-main {
+  background-color: #f8fafc;
+  padding: 48px 0 80px 0;
+  flex: 1;
+}
+
+.re-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+/* 1. Header Banner Card */
+.re-banner-card {
+  background-color: #0052ff;
+  border-radius: 24px;
+  padding: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  color: #ffffff;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0, 82, 255, 0.08);
+}
+
+.re-banner-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.re-banner-left h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 16px 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.re-banner-left p {
+  font-size: 1rem;
+  line-height: 1.5;
+  opacity: 0.9;
+  margin: 0 0 32px 0;
+  font-weight: 500;
+}
+
+.re-share-btn {
+  background-color: #ffffff;
+  color: #0052ff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 32px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.re-share-btn:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-1px);
+}
+
+.re-banner-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.re-hero-graphic {
+  width: 480px;
+  height: 320px;
+  object-fit: contain;
+}
+
+/* 2. Referral Code floating block */
+.re-code-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 56px;
+}
+
+.re-code-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 32px 48px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+  max-width: 480px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.re-code-lbl {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.re-code-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background-color: #eff6ff;
+  border: 1.5px dashed #0052ff;
+  border-radius: 100px;
+  padding: 12px 12px 12px 32px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 280px;
+  margin-bottom: 16px;
+  transition: background-color 0.2s;
+}
+
+.re-code-box:hover {
+  background-color: #dbeafe;
+}
+
+.re-code-val {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0052ff;
+  letter-spacing: 0.05em;
+}
+
+.re-copy-btn {
+  background-color: #ffffff;
+  border: none;
+  color: #0052ff;
+  cursor: pointer;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.re-code-note {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* 3. How It Works */
+.re-how-it-works {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 24px;
+  padding: 48px;
+  text-align: center;
+  margin-bottom: 56px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+}
+
+.re-how-it-works h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 40px 0;
+}
+
+.re-steps-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.re-step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 140px;
+}
+
+.re-step-icon-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #eff6ff;
+  color: #0052ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.re-step-item h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.re-step-divider {
+  flex: 1;
+  height: 1px;
+  border-top: 1px dashed #cbd5e1;
+  margin: 0 16px;
+  margin-bottom: 40px;
+}
+
+/* 4. Recent Referrals Table */
+.re-section {
+  margin-bottom: 56px;
+}
+
+.re-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.re-section-header h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.re-view-all {
+  color: #0052ff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.re-view-all:hover {
+  text-decoration: underline;
+}
+
+.re-table-wrapper {
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #cbd5e1;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+}
+
+.re-table-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 32px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.re-table-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.re-table-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.re-table-row:last-child {
+  border-bottom: none;
+}
+
+.re-friend-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.re-friend-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.re-friend-text h3 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+}
+
+.re-friend-text p {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0;
+  font-weight: 600;
+}
+
+.re-status-col {
+  display: flex;
+  align-items: center;
+}
+
+.re-status-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 30px;
+}
+
+.re-status-badge.completed {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.re-status-badge.pending {
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+/* 5. Bottom CTA Banner */
+.re-cta-banner {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 24px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.01);
+}
+
+.re-cta-left h2 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.re-cta-left p {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 600;
+}
+
+.re-cta-btn {
+  background-color: #0052ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.re-cta-btn:hover {
+  background-color: #003ecc;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .re-container {
+    padding: 0 20px;
+  }
+
+  .re-banner-card {
+    padding: 40px;
+  }
+
+  .re-hero-graphic {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+  }
+
+  .re-steps-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 32px;
+  }
+
+  .re-step-divider {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .re-banner-card {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+  }
+
+  .re-banner-left h1 {
+    font-size: 1.9rem;
+  }
+
+  .re-banner-right {
+    margin-top: 8px;
+  }
+
+  .re-code-card {
+    padding: 24px;
+  }
+
+  .re-how-it-works {
+    padding: 28px 20px;
+  }
+
+  .re-step-item {
+    width: 45%;
+  }
+
+  .re-table-header {
+    display: none;
+  }
+
+  .re-table-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .re-status-col {
+    width: 100%;
+  }
+
+  .re-cta-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+  }
+
+  .re-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .re-banner-left h1 {
+    font-size: 1.6rem;
+  }
+
+  .re-step-item {
+    width: 100%;
+  }
+}

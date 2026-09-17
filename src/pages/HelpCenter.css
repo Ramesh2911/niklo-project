@@ -1,0 +1,160 @@
+.hc-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+.hc-header-section {
+  background: #0052ff;
+  padding: 48px 80px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.hc-header-container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hc-header-container h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin: 8px 0 4px;
+}
+
+.hc-header-container p {
+  opacity: 0.9;
+  margin: 0;
+}
+
+.hc-main {
+  flex: 1;
+  padding: 32px 80px 64px;
+}
+
+.hc-container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hc-quick-help-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.hc-quick-pill {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.hc-quick-pill.active {
+  background: #0052ff;
+  color: #ffffff;
+  border-color: #0052ff;
+}
+
+.hc-section {
+  margin-bottom: 40px;
+}
+
+.hc-section h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 16px;
+}
+
+.hc-faq-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.hc-faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: left;
+}
+
+.hc-faq-chevron {
+  transition: transform 0.2s;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.hc-faq-chevron.open {
+  transform: rotate(180deg);
+}
+
+.hc-faq-answer {
+  padding: 0 18px 16px;
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.hc-empty {
+  color: #64748b;
+  padding: 16px 0;
+}
+
+.hc-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.hc-contact-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #0052ff;
+  text-decoration: none;
+}
+
+.hc-contact-card strong {
+  display: block;
+  color: #0f172a;
+  font-size: 0.9rem;
+}
+
+.hc-contact-card span {
+  display: block;
+  color: #64748b;
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hc-header-section {
+    padding: 48px 24px;
+  }
+
+  .hc-main {
+    padding: 32px 24px 64px;
+  }
+}

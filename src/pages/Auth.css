@@ -1,0 +1,471 @@
+/* ─── Auth pages: Login & Signup ─────────────────────────────── */
+.auth-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #0052EB;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 147px 80px 60px 80px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.auth-logo-container {
+  position: absolute;
+  top: 66px;
+  left: 104px;
+  z-index: 10;
+}
+
+.auth-logo-img {
+  height: 70px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ─── Card ─────────────────────────────────────────────────── */
+.auth-card {
+  background: #ffffff;
+  border-radius: 40px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 464px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 58px;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.auth-title-section {
+  text-align: center;
+}
+
+.auth-card-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.auth-card-subtitle {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* ─── Form ──────────────────────────────────────────────────── */
+.auth-card-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ─── Full name input (Signup only) ─────────────────────────── */
+.standard-input-container {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 15px 20px;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.standard-input-container:focus-within {
+  border-color: #0052ff;
+  box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.1);
+}
+
+.standard-input-field {
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #0f172a;
+  width: 100%;
+  outline: none;
+  font-family: inherit;
+}
+
+.standard-input-field::placeholder {
+  color: #9ca3af;
+}
+
+/* ─── Phone input (shared Login & Signup) ────────────────────── */
+.phone-input-container {
+  display: flex;
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.phone-input-container:focus-within {
+  border-color: #0052ff;
+  box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.1);
+}
+
+.country-code-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 9px 14px;
+  border-right: 1px solid #e5e7eb;
+  white-space: nowrap;
+  background: #f9fafb;
+}
+
+.country-code-label,
+.phone-number-label {
+  font-size: 0.65rem;
+  color: #9ca3af;
+  font-weight: 500;
+  line-height: 1.3;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.country-code-val {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.phone-number-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 9px 14px;
+}
+
+.phone-input-field {
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #0f172a;
+  width: 100%;
+  outline: none;
+  font-family: inherit;
+}
+
+.phone-input-field::placeholder {
+  color: #9ca3af;
+}
+
+/* visually hidden labels keep accessibility, hidden from view */
+.input-lbl {
+  display: none;
+}
+
+/* ─── Submit button ─────────────────────────────────────────── */
+.btn-submit-otp {
+  width: 100%;
+  padding: 17px;
+  border-radius: 999px;
+  background: #0052ff;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: inherit;
+  margin-top: 4px;
+}
+
+.btn-submit-otp:hover {
+  background: #0041aa;
+}
+
+.btn-submit-otp:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ─── Footer link ───────────────────────────────────────────── */
+.auth-footer-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+.auth-footer-link {
+  color: #0052ff;
+  font-weight: 600;
+  margin-left: 4px;
+  text-decoration: none;
+}
+
+.auth-footer-link:hover {
+  text-decoration: underline;
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+@media (max-width: 992px) {
+  .auth-container {
+    flex-direction: column;
+    align-items: center;
+    /* Content starts below the illustration instead of centering over
+       it. Top padding uses a percentage, which (per the CSS spec)
+       resolves against the container's *width* — this tracks the
+       image's own width/2 height under background-size: contain, so
+       the card clears the artwork at every breakpoint. */
+    justify-content: flex-start;
+    padding: calc(50% + 24px) 24px 40px;
+    /* Background art is a wide 2:1 illustration; on tall/narrow
+       viewports "cover" zooms into the center and the card ends up
+       sitting right on top of the phone mockup. "contain" plus the
+       matching background-color (#0052EB, same blue as the image
+       edges) letterboxes it cleanly instead. */
+    background-size: contain;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+  .auth-logo-container {
+    top: 24px;
+    left: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: calc(50% + 24px) 16px 40px;
+  }
+
+  .auth-card {
+    padding: 32px 24px;
+    border-radius: 16px;
+  }
+
+  .auth-card-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* ─── OTP Modal ─────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 100;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.otp-modal {
+  background: #ffffff;
+  border-radius: 40px;
+  padding: 90px 41px 33px;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 27px;
+  right: 27px;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-close-modal:hover {
+  background: #f3f4f6;
+}
+
+.otp-title-section {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.otp-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.otp-subtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.otp-phone-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f172a;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-edit-phone {
+  color: #0052ff;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0;
+  font-family: inherit;
+}
+
+/* ─── OTP boxes ─────────────────────────────────────────────── */
+.otp-inputs-row {
+  display: flex;
+  justify-content: center;
+  gap: 11px;
+  width: 100%;
+  margin: 28px 0;
+}
+
+.otp-box-input {
+  width: 70px;
+  height: 72px;
+  border-radius: 12px;
+  border: 1.5px solid #d1d5db;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #ffffff;
+  font-family: inherit;
+}
+
+.otp-box-input:focus {
+  border-color: #0052ff;
+  box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.1);
+}
+
+/* ─── Resend / timer ────────────────────────────────────────── */
+.otp-resend-section {
+  text-align: center;
+  margin-bottom: 45px;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.btn-resend-code {
+  color: #0052ff;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0;
+  font-family: inherit;
+}
+
+.otp-timer-val {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* ─── Verify button ─────────────────────────────────────────── */
+.btn-verify-otp {
+  width: 100%;
+  padding: 17px;
+  border-radius: 999px;
+  background: #0052ff;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 32px;
+  font-family: inherit;
+}
+
+.btn-verify-otp:hover {
+  background: #0041aa;
+}
+
+/* ─── Legal text ────────────────────────────────────────────── */
+.otp-legal-text {
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.otp-legal-link {
+  color: #0052ff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.otp-legal-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .otp-modal {
+    padding: 32px 20px;
+    border-radius: 16px;
+  }
+
+  .otp-title {
+    font-size: 1.5rem;
+  }
+
+  .otp-box-input {
+    width: 40px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+}

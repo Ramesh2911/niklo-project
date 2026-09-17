@@ -1,0 +1,56 @@
+.route-landing { min-height: 100vh; display: flex; flex-direction: column; background: #f8fafc; }
+
+.route-hero {
+  background: linear-gradient(135deg, #0052ff 0%, #0041cc 100%);
+  padding: 80px 80px 60px;
+  color: white;
+}
+.route-hero-inner { max-width: 800px; }
+
+.route-breadcrumb { font-size: 0.85rem; opacity: 0.8; margin-bottom: 16px; }
+.route-breadcrumb a { color: white; text-decoration: underline; }
+
+.route-hero-title { font-size: 2.5rem; font-weight: 800; margin: 0 0 8px; }
+.route-hero-sub { font-size: 1.1rem; opacity: 0.85; margin: 0 0 28px; }
+
+.route-stats-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+.route-stat { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; font-weight: 600;
+  background: rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px; }
+
+.route-cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: white; color: #0052ff;
+  border: none; border-radius: 12px; padding: 14px 28px;
+  font-size: 1rem; font-weight: 700; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.route-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+
+.route-main { flex: 1; }
+.route-container { max-width: 900px; margin: 0 auto; padding: 60px 24px; }
+
+.route-info-section { margin-bottom: 48px; }
+.route-info-section h2 { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+.route-info-section p { color: #64748b; line-height: 1.7; font-size: 1rem; }
+
+.route-faq-section h2 { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-bottom: 20px; }
+.route-faq-list { display: flex; flex-direction: column; gap: 12px; }
+
+.route-faq-item {
+  background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0;
+  overflow: hidden;
+}
+.route-faq-item summary {
+  padding: 18px 20px; font-size: 0.95rem; font-weight: 600; color: #0f172a;
+  cursor: pointer; list-style: none; display: flex; justify-content: space-between;
+}
+.route-faq-item summary::-webkit-details-marker { display: none; }
+.route-faq-item summary::after { content: '+'; font-size: 1.2rem; color: #0052ff; }
+.route-faq-item[open] summary::after { content: '−'; }
+.route-faq-item p { padding: 0 20px 16px; color: #64748b; line-height: 1.6; margin: 0; }
+
+@media (max-width: 768px) {
+  .route-hero { padding: 60px 24px 40px; }
+  .route-hero-title { font-size: 1.75rem; }
+  .route-stats-row { gap: 10px; }
+}

@@ -1,0 +1,230 @@
+/* Footer Styles */
+.home-footer {
+  background-color: #090d16;
+  color: #94a3b8;
+  margin-top: 100px;
+  padding: 80px 80px 40px;
+  border-radius: 30px 30px 0 0;
+}
+
+.footer-top-columns {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 48px;
+}
+
+.footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-brand-logo {
+  height: 38px;
+  object-fit: contain;
+  align-self: flex-start;
+}
+
+.footer-brand-desc {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.footer-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.footer-contact-info p {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+}
+
+.footer-contact-info svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #64748b;
+}
+
+.footer-social-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.social-circle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.social-circle-btn:hover {
+  background-color: #0052ff;
+}
+
+.footer-col-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.footer-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links-list a {
+  font-size: 0.9rem;
+  transition: color 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer-links-list a:hover {
+  color: #ffffff;
+}
+
+/* Footer Newsletter Section */
+.footer-newsletter-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.newsletter-text h4 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.newsletter-text p {
+  font-size: 0.95rem;
+  margin: 0 0 24px;
+  max-width: 480px;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  max-width: 460px;
+  width: 100%;
+}
+
+.newsletter-input {
+  flex-grow: 1;
+  padding: 14px 20px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.newsletter-input::placeholder {
+  color: #475569;
+}
+
+.btn-newsletter-submit {
+  padding: 12px 28px;
+  background-color: #0052ff;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-newsletter-submit:hover {
+  background-color: #003ecc;
+}
+
+/* Footer Bottom copyright and store icons */
+.footer-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  font-size: 0.85rem;
+}
+
+.footer-bottom-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-bottom-badges {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-badge-img {
+  height: 30px;
+  object-fit: contain;
+}
+
+/* Responsive constraints */
+@media (max-width: 1024px) {
+  .footer-top-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .newsletter-form {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-footer {
+    padding: 60px 20px 40px;
+  }
+  
+  .footer-top-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom-row {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Input + submit button were a fixed-width flex row that can overflow the
+     viewport with longer translated button text; stack them full-width instead. */
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-input,
+  .btn-newsletter-submit {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

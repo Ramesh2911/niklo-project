@@ -1,0 +1,87 @@
+.notif-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+.notif-header-section {
+  background: #0052ff;
+  padding: 40px 80px;
+  color: #ffffff;
+}
+
+.notif-header-container,
+.notif-container {
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.notif-header-container h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.notif-main {
+  flex: 1;
+  padding: 32px 80px 64px;
+}
+
+.notif-empty {
+  color: #64748b;
+  text-align: center;
+  padding: 48px 0;
+}
+
+.notif-card {
+  display: flex;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+.notif-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #0052ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notif-body h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.notif-body p {
+  margin: 0 0 8px;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.notif-date {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .notif-header-section {
+    padding: 40px 24px;
+  }
+
+  .notif-main {
+    padding: 32px 24px 64px;
+  }
+}

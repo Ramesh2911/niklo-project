@@ -1,0 +1,913 @@
+.seat-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.seat-modal-container {
+  background-color: #f8fafc;
+  width: 95%;
+  max-width: 1200px;
+  height: 90vh;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.seat-modal-header {
+  background-color: #ffffff;
+  padding: 20px 64px 20px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.modal-route-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.route-arrow {
+  color: #94a3b8;
+}
+
+/* Mobile-only header row (back arrow + title/subtitle + wishlist/share);
+   hidden by default, shown in the ≤768px block below. */
+.mobile-header-row {
+  display: none;
+}
+
+.btn-back-mobile {
+  background: none;
+  border: none;
+  padding: 4px;
+  color: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mobile-header-titles {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-header-titles h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.mobile-header-titles p {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 2px 0 0;
+}
+
+.mobile-header-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.mobile-header-actions .icon-btn {
+  background: none;
+  border: none;
+  padding: 6px;
+  color: #334155;
+  cursor: pointer;
+}
+
+.mobile-header-actions .icon-btn.liked {
+  color: #ef4444;
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 10;
+  background: none;
+  border: none;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f172a;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-close-modal:hover {
+  color: #0052ff;
+}
+
+.seat-modal-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 24px;
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.seat-modal-left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.seat-selection-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.legend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.legend-header h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.legend-items {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.decks-wrapper {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.deck-switcher-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.deck-toggle {
+  display: flex;
+  background-color: #f1f5f9;
+  border-radius: 20px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.deck-toggle button {
+  background: none;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.deck-toggle button.active {
+  background-color: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.deck-label-plain {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 1px;
+}
+
+.steering-wheel-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+}
+
+.deck-layout {
+  border: 2px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 24px;
+  background-color: #f8fafc;
+  position: relative;
+  width: 100%;
+  max-width: 220px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Upper deck renders sleeper icons at a larger size (see SeatSelectionModal.tsx)
+   so the deck needs a bit more room to avoid crowding/overflow. */
+.deck-layout--upper {
+  max-width: 260px;
+}
+
+.deck-layout--upper .seat-col {
+  gap: 10px;
+}
+
+.seat-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+}
+
+.seat-col {
+  display: flex;
+  gap: 8px;
+}
+
+.seat-aisle {
+  flex: 1;
+  width: 40px;
+}
+
+.features-card, .ratings-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.features-card h3, .ratings-card h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+
+.features-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background-color: #eff6ff;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0052ff;
+}
+
+.ratings-content {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.rating-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc;
+  padding: 24px;
+  border-radius: 16px;
+  min-width: 140px;
+}
+
+.rating-score {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 2rem;
+  font-weight: 800;
+  background-color: #22c55e;
+  color: white;
+  padding: 4px 16px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.rating-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.rating-count {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.rating-bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rating-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar-label {
+  width: 30px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.bar-track {
+  flex: 1;
+  height: 6px;
+  background-color: #f1f5f9;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.bar-pct {
+  width: 40px;
+  font-size: 0.85rem;
+  color: #64748b;
+  text-align: right;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.review-item {
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.reviewer-name {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.review-date {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.review-text {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.seat-modal-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* .seat-modal-body (not the page) is the scroll container here, and it has
+     no sticky header inside it to offset for, so top: 0 anchors this to the
+     top of that container as the seat grid/features/ratings scroll past. */
+  position: sticky;
+  top: 0;
+  align-self: start;
+}
+
+.sidebar-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.sidebar-card h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+
+.btn-change {
+  background: none;
+  border: none;
+  color: #0052ff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.trip-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timeline-point {
+  display: flex;
+  gap: 16px;
+}
+
+.point-row {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.point-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 4px;
+}
+
+.point-dot.start {
+  background-color: #0052ff;
+  border: 2px solid #e0f2fe;
+}
+
+.point-dot.end {
+  background-color: #ef4444;
+  border: 2px solid #fee2e2;
+}
+
+.timeline-line {
+  width: 0;
+  height: 24px;
+  border-left: 2px dashed #cbd5e1;
+  margin-left: 5px;
+}
+
+.point-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.point-meta {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.point-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.price-card .price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  color: #334155;
+}
+
+.discount-pill {
+  display: flex;
+  justify-content: space-between;
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px dashed #e2e8f0;
+  padding-top: 16px;
+  margin-top: 16px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.total-val {
+  color: #0052ff;
+  font-size: 1.4rem;
+}
+
+.btn-continue-booking {
+  width: 100%;
+  padding: 16px;
+  background-color: #0052ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 24px;
+  transition: all 0.2s;
+}
+
+.btn-continue-booking:hover:not(:disabled) {
+  background-color: #003ecc;
+}
+
+.btn-continue-booking:disabled {
+  background-color: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.offers-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.offer-header-icon {
+  color: #0052ff;
+}
+
+.savings-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: #dcfce7;
+  color: #166534;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.offer-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.offer-item + .offer-item {
+  margin-top: 16px;
+}
+
+.offer-icon {
+  color: #0052ff;
+}
+
+.offer-info h4 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.offer-info p {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Mobile fixed bottom sheet: price + CTA + selected-seat chips.
+   Hidden by default (desktop uses the sidebar price-card instead);
+   shown in the ≤768px block below. */
+.mobile-price-sheet {
+  display: none;
+}
+
+.price-sheet-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+}
+
+.price-sheet-price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ps-amount {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ps-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #0052ff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ps-toggle svg {
+  transition: transform 0.15s;
+}
+
+.ps-toggle svg.expanded {
+  transform: rotate(180deg);
+}
+
+.btn-continue-mobile {
+  width: auto;
+  flex: 1;
+  max-width: 220px;
+  margin-top: 0;
+  padding: 14px 20px;
+  border-radius: 24px;
+  font-size: 0.95rem;
+}
+
+.price-sheet-details {
+  padding: 0 16px 16px;
+}
+
+.price-sheet-details .price-row {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.price-sheet-seats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid #f1f5f9;
+  flex-wrap: wrap;
+}
+
+.selected-seat-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.seat-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.seat-chip button {
+  display: flex;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.seats-count-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #16a34a;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.sheet-lock-error {
+  color: #ef4444;
+  font-size: 0.85rem;
+  padding: 0 16px 12px;
+  margin: 0;
+}
+
+/* Payment Overlay */
+.payment-overlay-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  animation: slideUp 0.3s ease-out;
+  width: 400px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #0052ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.payment-overlay-card h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.payment-overlay-card p {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Seat state icons (outline style, matches design) */
+.seat-icon {
+  flex-shrink: 0;
+  transition: transform 0.15s;
+  display: inline-block;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: currentColor;
+}
+
+.seat-icon.available, .seat-icon.selected { cursor: pointer; }
+.seat-icon.booked { cursor: not-allowed; }
+
+.seat-icon.available:hover, .seat-icon.selected:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile: full-screen layout matching the reference design — back-arrow
+   header with page title, boarding/destination card first, seat grid with a
+   Lower/Upper deck toggle, then a fixed bottom sheet for price + CTA, with
+   features/offers/ratings cards below in the scroll. */
+@media (max-width: 768px) {
+  .seat-modal-overlay {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .seat-modal-container {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0;
+  }
+
+  .seat-modal-header {
+    padding: 16px;
+  }
+
+  .btn-close-modal,
+  .modal-route-title {
+    display: none;
+  }
+
+  .mobile-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .seat-modal-body {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    /* clears the fixed .mobile-price-sheet so the last card isn't hidden behind it */
+    padding-bottom: 150px;
+    gap: 16px;
+  }
+
+  /* Flatten the two desktop columns so every card is a direct flex child of
+     .seat-modal-body and can be reordered individually below. */
+  .seat-modal-left,
+  .seat-modal-right {
+    display: contents;
+  }
+
+  .trip-details-card { order: 1; }
+  .seat-selection-card { order: 2; }
+  .features-card { order: 3; }
+  .offers-card { order: 4; }
+  .ratings-card { order: 5; }
+
+  /* Desktop-only sidebar price card is replaced by .mobile-price-sheet */
+  .desktop-price-card {
+    display: none;
+  }
+
+  .trip-details-card h3 {
+    display: none;
+  }
+
+  .seat-selection-card,
+  .features-card,
+  .ratings-card,
+  .sidebar-card {
+    padding: 16px;
+  }
+
+  .decks-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .deck-layout,
+  .deck-layout--upper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .mobile-price-sheet {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ffffff;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+  }
+}

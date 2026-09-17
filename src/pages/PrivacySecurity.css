@@ -1,0 +1,144 @@
+.ps-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+.ps-header-section {
+  background: #0052ff;
+  padding: 48px 80px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.ps-header-container h1 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin: 8px 0 0;
+}
+
+.ps-main {
+  flex: 1;
+  padding: 32px 80px 64px;
+}
+
+.ps-container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.ps-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.ps-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 20px;
+}
+
+.ps-option-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.ps-option-row strong {
+  display: block;
+  color: #1e293b;
+  font-size: 0.9rem;
+}
+
+.ps-option-row p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.ps-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #10b981;
+  font-size: 0.82rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.ps-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ps-legal-text p {
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0 0 14px;
+}
+
+.ps-legal-text strong {
+  color: #1e293b;
+}
+
+.toggle-switch {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  background: #cbd5e1;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.toggle-switch.active {
+  background: #0052ff;
+}
+
+.toggle-knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: left 0.2s;
+}
+
+.toggle-switch.active .toggle-knob {
+  left: 23px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .ps-header-section {
+    padding: 48px 24px;
+  }
+
+  .ps-main {
+    padding: 32px 24px 64px;
+  }
+}

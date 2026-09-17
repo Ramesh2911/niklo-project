@@ -1,0 +1,1438 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Meow+Script&display=swap');
+
+.home-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Floating AI Planner chatbot button */
+.floating-ai-planner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  width: 140px;
+  height: 140px;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.2));
+}
+
+.floating-ai-planner:hover {
+  transform: scale(1.08) translateY(-4px);
+}
+
+@media (max-width: 768px) {
+  .floating-ai-planner {
+    width: 88px;
+    height: 88px;
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 100px 80px 140px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: 420px;
+}
+
+.hero-bg-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover; /* fill whole hero, no gap showing bg color */
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  z-index: 0;
+}
+
+.hero-bg-slide.active {
+  opacity: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+  flex-shrink: 0;
+}
+
+.hero-main-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
+.hero-tagline {
+  font-family: 'Meow Script', cursive;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #e0edff;
+  margin: 8px 0 4px;
+  line-height: 1;
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #e0edff;
+  max-width: 420px;
+}
+
+/* Floating Search Panel */
+.floating-search-card {
+  position: relative;
+  z-index: 5;
+  max-width: 1630px;
+  width: calc(100% - 160px);
+  margin: -60px auto 0;
+  background-color: #ffffff;
+  border-radius: 24px;
+  border-top-left-radius: 0;
+  padding: 28px 32px 36px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f1f5f9;
+}
+
+/* S-curve notch where the card meets the hero: convex bump, then concave dip into the top edge */
+.floating-search-card::before {
+  content: '';
+  position: absolute;
+  top: -36px;
+  left: -1px;
+  width: 230px;
+  height: 36px;
+  background: #ffffff;
+  clip-path: path('M0,36 A36,36 0 0 1 36,0 L160,0 C195,0 195,36 230,36 L0,36 Z');
+  pointer-events: none;
+}
+
+/* Category tabs sitting on top of the search fields, underline-style active state */
+.search-tabs-row {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #eef2f7;
+  padding-bottom: 4px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.search-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 14px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #64748b;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
+  font-size: large;
+}
+
+.search-tab-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.search-tab:hover {
+  color: #0052ff;
+}
+
+.search-tab.active {
+  color: #0f172a;
+  border-bottom-color: #0052ff;
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr auto auto;
+  grid-template-areas: "locations date search locate";
+  gap: 16px;
+  align-items: center;
+}
+
+/* Grid-area names stay the same at every breakpoint below — only the column/area
+   topology changes per breakpoint (see the 1024px and 768px media queries). */
+.search-form > *:nth-child(1) { grid-area: locations; }
+.search-form > *:nth-child(2) { grid-area: date; }
+.search-form > *:nth-child(3) { grid-area: search; }
+.search-form > *:nth-child(4) { grid-area: locate; }
+
+.field-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.field-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.date-field-group {
+  align-items: center;
+}
+
+.hotel-dates-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.date-field-input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+  font-family: inherit;
+}
+
+/* Wraps the From/To fields so the swap button can be centered between them with
+   a single absolute-position rule, whether they sit side-by-side (desktop) or
+   stacked (mobile, see 768px media query below). */
+.search-locations-wrapper {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.search-input-field-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px 20px;
+  position: relative;
+}
+
+.search-input-field-group:focus-within {
+  border-color: #0052ff;
+}
+
+.search-input-field-group input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+}
+
+.search-input-field-group input::placeholder {
+  color: #94a3b8;
+}
+
+.location-error-text {
+  text-align: center;
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-top: 12px;
+}
+
+.swap-locations-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  /* Centered on both axes relative to .search-locations-wrapper — this holds
+     regardless of whether the two fields are side-by-side (desktop) or stacked
+     (mobile), so it never needs a per-breakpoint offset. */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.swap-locations-btn:hover {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.btn-hero-search {
+  padding: 23px 50px;
+  background-color: #0052ff;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1.3rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(0, 82, 255, 0.2);
+  transition: background-color 0.2s;
+}
+
+.btn-hero-search:hover {
+  background-color: #003ecc;
+}
+
+.btn-ai-options {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: none;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-ai-options:hover {
+  background-color: #e2e8f0;
+  color: #0052ff;
+}
+
+/* Trust badges (Best Price / Secure Booking / 24x7 Support) */
+.trust-badges-row {
+  width: 100%;
+  background-color: #eef2fb;
+  padding: 40px 24px;
+  margin-top: 56px;
+  box-sizing: border-box;
+}
+
+.trust-badges-inner {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 88px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.trust-badge-icon {
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+  flex-shrink: 0;
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.trust-badge-text h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0052ff;
+  margin: 0 0 4px;
+}
+
+.trust-badge-text p {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Section Common Layout */
+.section-wrapper {
+  max-width: 1630px;
+  width: calc(100% - 160px);
+  margin: 60px auto 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.section-main-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.section-view-all {
+  color: #0052ff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-view-all:hover {
+  text-decoration: underline;
+}
+
+.section-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.carousel-nav-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.carousel-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.carousel-nav-btn:hover {
+  border-color: #0052ff;
+  color: #0052ff;
+}
+
+/* 1. Explore Travel Options Grid */
+.travel-options-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.option-card {
+  background-color: #f4f4f5;
+  border-radius: 24px;
+  border: 2px solid #ededed;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  transition: transform 0.2s;
+  position: relative;
+}
+
+.option-card:hover {
+  transform: translateY(-2px);
+}
+
+.option-icon-box {
+  width: 100%;
+  height: 90px;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.option-icon-img {
+  width: auto;
+  height: 100px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.option-bus-icon {
+  /* bus.svg's visible artwork is a wide, short silhouette (~2.75:1) after
+     trimming its transparent canvas padding, so it needs a shorter height
+     than the other (roughly square) icons to read at a comparable visual size. */
+  height: 88px;
+}
+
+.option-car-icon {
+  height: 95px;
+}
+
+.option-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.option-desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1;
+}
+
+.option-link {
+  color: #0052ff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+/* 2. AI Travel Banner */
+.ai-planner-banner {
+
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.ai-banner-left {
+  padding: 40px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.badge-new-tag {
+  display: inline-block;
+  background-color: #0052ff;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 10px;
+  text-transform: none;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.ai-banner-title {
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.ai-banner-desc {
+  font-size: 1.05rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.btn-plan-journey {
+  padding: 16px 32px;
+  background-color: #0052ff;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(0, 82, 255, 0.2);
+  transition: background-color 0.2s;
+}
+
+.btn-plan-journey:hover {
+  background-color: #003ecc;
+}
+
+.ai-banner-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 32px;
+}
+
+.ai-banner-right-img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 330px;
+  border-radius: 40px;
+  object-fit: contain;
+}
+
+/* 3. Escape/Hotels Grid Common Card */
+.travel-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.escape-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.escape-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+}
+
+.card-img-box {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-location-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: -6px;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.escape-card:hover .card-img {
+  transform: scale(1.05);
+}
+
+.card-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.card-bottom-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.card-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #334155;
+  margin: 0;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-subtext {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #94a3b8;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.card-price-amount {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #475569;
+}
+
+.card-price-per {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+.btn-card-like {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.btn-card-like:hover {
+  background: #f8fafc;
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+.btn-card-action {
+  background-color: #0052ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-card-action:hover {
+  background-color: #003ecc;
+}
+
+/* 4. Best Offers Grid - Updated with SVG illustrations */
+.offers-carousel-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.offer-card {
+  border-radius: 24px;
+  padding: 28px 24px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 16px;
+  align-items: center;
+  border: none;
+  box-sizing: border-box;
+  min-height: 200px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.offer-card:hover {
+  transform: translateY(-2px);
+}
+
+.offer-left-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: 14px;
+  width: 100%;
+}
+
+.offer-right-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 100%;
+  gap: 16px;
+  width: 100%;
+}
+
+.offer-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.offer-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.badge-percent-icon {
+  flex-shrink: 0;
+  stroke-width: 2.2;
+}
+
+.offer-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.offer-card-desc {
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.offer-card-date {
+  font-size: 0.82rem;
+  color: #64748b;
+  font-weight: 700;
+  margin: 0;
+}
+
+.offer-code-dashed {
+  border: 1.5px dashed currentColor;
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-weight: 800;
+  font-size: 0.92rem;
+  width: fit-content;
+  background-color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.offer-illust-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin: 0 -24px -28px 0;
+}
+
+.offer-illust-img {
+  width: auto;
+  height: auto;
+  max-height: 130px;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* 5. App Download Banner - Styled with CTA image background */
+.app-download-banner {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 30px;
+  padding: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  height: 340px;
+}
+
+.app-download-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.05) 100%);
+  z-index: 1;
+}
+
+.app-banner-left {
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.app-banner-logo {
+  height: 30px;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+.app-banner-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.app-store-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.badge-store-img {
+  height: 54px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.app-banner-right {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  position: relative;
+  z-index: 2;
+}
+
+.app-qr-container {
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-qr-img {
+  width: 140px;
+  height: 140px;
+  display: block;
+}
+
+/* 6. FAQ Accordion */
+.faq-container {
+  max-width: 800px;
+  width: 100%;
+  margin: 60px auto 0;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.faq-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 32px;
+  color: #0f172a;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-item {
+  background-color: #f4f4f5;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: background-color 0.2s;
+}
+
+.faq-item.active {
+  background-color: #eef2ff;
+}
+
+.faq-question-btn {
+  width: 100%;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #334155;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-chevron {
+  color: #64748b;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.faq-chevron.open {
+  color: #0052ff;
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  padding: 0 24px 20px;
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.faq-view-more-btn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 24px;
+  background: none;
+  border: 1px solid #0052ff;
+  border-radius: 999px;
+  color: #0052ff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.faq-view-more-btn:hover {
+  background: #eef2ff;
+}
+
+/* Responsive constraints */
+@media (max-width: 1024px) {
+  .home-header {
+    padding: 16px 40px;
+  }
+
+  .hero-section {
+    padding: 80px 40px 100px;
+  }
+
+  .floating-search-card {
+    width: calc(100% - 80px);
+    margin-top: -40px;
+  }
+
+  .search-form {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "locations locations"
+      "date locate"
+      "search search";
+  }
+
+  .section-wrapper {
+    width: calc(100% - 80px);
+  }
+
+  .travel-options-grid,
+  .travel-cards-grid,
+  .offers-carousel-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ai-planner-banner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .hero-section {
+    padding: 24px 20px 80px;
+    align-items: flex-start;
+  }
+
+  .hero-bg-slide {
+    background-position: left center; /* mostly left-anchored, trim ~15px off left edge to avoid a hard cut, rest crops on right */
+  }
+
+  .hero-content {
+    max-width: 100%;
+    flex-shrink: 1;
+  }
+
+  .hero-main-title {
+    font-size: 1.9rem;
+  }
+
+  .trust-badges-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .trust-badge {
+    width: 100%;
+  }
+
+  .floating-search-card {
+    width: calc(100% - 40px);
+    border-radius: 28px;
+    border-top-left-radius: 0;
+    padding: 20px 20px 24px;
+  }
+
+  .floating-search-card::before {
+    top: -25px;
+    width: 160px;
+    height: 25px;
+    clip-path: path('M0,25 A25,25 0 0 1 25,0 L111,0 C135,0 135,25 160,25 L0,25 Z');
+  }
+
+  .search-form {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "locations"
+      "date"
+      "search";
+    gap: 12px;
+  }
+
+  .search-locations-wrapper {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .search-tabs-row {
+    justify-content: flex-start;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .search-tab {
+    padding: 6px 10px 10px;
+    font-size: 0.85rem;
+  }
+
+  .search-tab-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .search-input-field-group {
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .search-input-field-group input,
+  .date-field-input {
+    font-size: 1rem;
+  }
+
+  .field-label {
+    margin-bottom: 4px;
+  }
+
+  .swap-locations-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .btn-hero-search {
+    padding: 16px 24px;
+    font-size: 1.05rem;
+  }
+
+  .section-wrapper {
+    width: calc(100% - 40px);
+  }
+
+  /* Explore Travel Options: exactly 2 columns on mobile (was collapsing to 1). */
+  .travel-options-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .travel-cards-grid,
+  .offers-carousel-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* AI Planner banner: the desktop 60px side padding left almost no room for
+     the heading/description/button on a phone-width screen. */
+  .ai-banner-left {
+    padding: 32px 24px;
+  }
+
+  .ai-banner-title {
+    font-size: 1.7rem;
+  }
+
+  .ai-banner-right-img {
+    max-height: 210px;
+  }
+
+  .app-download-banner {
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+    height: auto;
+    padding: 40px 20px;
+  }
+
+  /* Store badges + QR code were laid out in one row with no wrap, so they
+     overflowed the banner and got clipped by its overflow:hidden. */
+  .app-banner-right {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 20px;
+  }
+
+  .app-store-badges {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-main-title {
+    font-size: 1.5rem;
+  }
+
+  .btn-hero-search {
+    padding: 16px 24px;
+    width: 100%;
+  }
+
+  .app-banner-title {
+    font-size: 1.8rem;
+  }
+
+  .faq-title,
+  .section-main-title {
+    font-size: 1.4rem;
+  }
+
+  /* At this width the 2-column travel-options-grid cards get tight; trim their
+     padding/icon size so content doesn't crowd the edges. */
+  .option-card {
+    padding: 20px 14px;
+  }
+
+  .option-icon-box {
+    height: 70px;
+  }
+
+  .option-icon-img {
+    height: 60px;
+  }
+}
+
+/* Custom interactive popover & dropdown components styling */
+.search-input-field-group.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-input-label-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.custom-input-value-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Navigation Dropdowns removed to Navbar.css */
+
+/* Calendar Popover */
+.custom-calendar-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 200;
+  width: 280px;
+}
+
+.calendar-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.calendar-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.calendar-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  text-align: center;
+}
+
+.calendar-day-header {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+  padding-bottom: 4px;
+}
+
+.calendar-day-empty {
+  height: 32px;
+}
+
+.calendar-day-btn {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.calendar-day-btn:hover {
+  background-color: #f1f5f9;
+  color: #0052ff;
+}
+
+.calendar-day-btn.selected {
+  background-color: #0052ff;
+  color: #ffffff;
+}
+
+/* Passenger Selector Popover */
+.passenger-selector-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 200;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.passenger-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.passenger-label-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.passenger-type {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.passenger-subtext {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.counter-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.counter-controls button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #0f172a;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.counter-controls button:hover {
+  border-color: #0052ff;
+  color: #0052ff;
+  background-color: #eff6ff;
+}
+
+.counter-controls span {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+  min-width: 16px;
+  text-align: center;
+}
+
+.btn-passenger-done {
+  background-color: #0052ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-align: center;
+}
+
+.btn-passenger-done:hover {
+  background-color: #003ecc;
+}

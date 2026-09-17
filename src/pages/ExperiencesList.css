@@ -1,0 +1,574 @@
+.el-page-wrapper {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #0f172a;
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.relative {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Header Section */
+.el-header-section {
+  background-color: #f8fafc;
+  padding: 48px 0 24px 0;
+}
+
+.el-header-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.el-badge-lbl {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #0052ff; /* Brand blue badge text */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.el-header-container h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* Main content */
+.el-main {
+  background-color: #f8fafc;
+  padding: 32px 0 80px 0;
+  flex: 1;
+}
+
+.el-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+/* Filters & Sort Row */
+.el-filters-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.el-pills-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.el-filter-btn {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.el-filter-btn.active {
+  border-color: #0052ff;
+  color: #0052ff;
+}
+
+/* Filters drawer - same slide-in-panel + backdrop pattern as HotelsList's
+   mobile sidebar (.hl-sidebar-open/.hl-sidebar-backdrop), but this page has
+   no persistent desktop sidebar slot (category pills already cover that
+   axis), so the drawer is a fixed overlay at every width instead of only
+   below the HotelsList-style stacking breakpoint. */
+.el-filter-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background-color: rgba(15, 23, 42, 0.5);
+}
+
+.el-filter-drawer {
+  display: none;
+}
+
+.el-filter-drawer.el-filter-drawer-open {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(360px, 100vw);
+  background-color: #ffffff;
+  z-index: 1000;
+  padding: 20px 24px 32px;
+  overflow-y: auto;
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.08);
+}
+
+.el-filter-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.el-filter-drawer-header h2 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.el-filter-drawer-close {
+  background: none;
+  border: none;
+  color: #0f172a;
+  cursor: pointer;
+  display: flex;
+}
+
+.el-filter-section h3 {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
+}
+
+.el-filter-price-row {
+  display: flex;
+  gap: 12px;
+}
+
+.el-filter-price-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.el-filter-price-field input {
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+}
+
+.el-filter-price-field input:focus {
+  border-color: #0052ff;
+}
+
+.el-filter-drawer-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.el-filter-reset-btn {
+  flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.el-filter-apply-btn {
+  flex: 1;
+  background-color: #0052ff;
+  border: none;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.el-filter-apply-btn:hover {
+  background-color: #003ecc;
+}
+
+.el-pill-btn {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.el-pill-btn:hover {
+  border-color: #0052ff;
+  color: #0052ff;
+}
+
+.el-pill-btn.active {
+  background-color: #0052ff;
+  border-color: #0052ff;
+  color: #ffffff;
+}
+
+.el-sort-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.el-sort-select {
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0f172a;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Adventures Grid (2 columns) */
+.el-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+.el-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+  display: flex;
+  flex-direction: column;
+}
+
+.el-card:hover {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.el-card-img-box {
+  height: 240px;
+  position: relative;
+}
+
+.el-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.el-card-body {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.el-card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.el-card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.el-like-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.el-like-btn:hover {
+  color: #ef4444;
+}
+
+.el-card-loc {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.el-card-loc svg {
+  color: #0052ff;
+}
+
+.el-card-desc {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+  font-weight: 500;
+}
+
+.el-card-tags {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  margin-top: auto;
+}
+
+.el-tag-item {
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.el-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 20px;
+}
+
+.el-price-col {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.el-price-val {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.el-price-lbl {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.el-details-btn {
+  background-color: #0052ff; /* Brand blue details button */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.el-details-btn:hover {
+  background-color: #003ecc;
+}
+
+/* Footer Promotion Banner */
+.el-promo-section {
+  height: 320px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 48px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+}
+
+.el-promo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(15, 23, 42, 0.8) 35%, rgba(15, 23, 42, 0.2) 100%);
+}
+
+.el-promo-content {
+  position: relative;
+  z-index: 10;
+  max-width: 600px;
+  color: #ffffff;
+  text-align: left;
+}
+
+.el-promo-content h2 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.01em;
+}
+
+.el-promo-content p {
+  font-size: 1.05rem;
+  opacity: 0.9;
+  margin: 0 0 24px 0;
+  font-weight: 500;
+}
+
+.el-promo-form {
+  display: flex;
+  gap: 12px;
+  max-width: 480px;
+}
+
+.el-promo-input {
+  flex: 1;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  outline: none;
+  color: #0f172a;
+}
+
+.el-promo-btn {
+  background-color: #0052ff; /* Brand blue button background */
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 0 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.el-promo-btn:hover {
+  background-color: #003ecc;
+}
+
+.el-promo-success {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: rgba(16, 185, 129, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.6);
+  border-radius: 10px;
+  padding: 12px 20px;
+  max-width: 480px;
+  margin: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .el-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .el-header-container,
+  .el-container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .el-header-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .el-filters-meta-row {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .el-filter-drawer.el-filter-drawer-open {
+    width: 100%;
+  }
+
+  .el-pills-wrap {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  .el-sort-box {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .el-card-img-box {
+    height: 200px;
+  }
+
+  .el-promo-section {
+    height: auto;
+    padding: 32px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .el-promo-content {
+    max-width: 100%;
+  }
+
+  .el-promo-form {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .el-promo-input {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .el-promo-section {
+    padding: 24px;
+  }
+
+  .el-promo-content h2 {
+    font-size: 1.6rem;
+  }
+
+  .el-card-footer {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}

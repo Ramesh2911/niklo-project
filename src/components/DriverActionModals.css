@@ -1,0 +1,461 @@
+.dam-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 2000;
+}
+
+/* Generic bottom sheet used by Message/Share/Safety */
+.dam-sheet {
+  background: #ffffff;
+  border-radius: 24px 24px 0 0;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  animation: dam-slide-up 0.25s ease-out;
+  position: relative;
+}
+
+@keyframes dam-slide-up {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.dam-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.dam-sheet-header h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dam-sheet-desc {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.dam-close-btn {
+  background: #f1f5f9;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  cursor: pointer;
+}
+
+/* Call */
+.dam-call-screen {
+  background: #0f172a;
+  width: 100%;
+  height: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 48px 24px;
+  box-sizing: border-box;
+}
+
+.dam-call-top {
+  text-align: center;
+}
+
+.dam-call-top h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dam-call-top p {
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.dam-call-top p.connected {
+  color: #60a5fa;
+}
+
+.dam-call-avatar-wrap {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 12px rgba(96, 165, 250, 0.12);
+}
+
+.dam-call-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dam-call-bottom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.dam-call-options {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.dam-call-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 0.7rem;
+}
+
+.dam-call-opt svg {
+  width: 52px;
+  height: 52px;
+  padding: 15px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.dam-call-end {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #ef4444;
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Chat */
+.dam-chat-sheet {
+  height: 75vh;
+  padding: 0;
+}
+
+.dam-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dam-chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dam-chat-header-text {
+  flex: 1;
+}
+
+.dam-chat-header-text h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dam-chat-header-text span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.dam-online-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.dam-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dam-chat-bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.dam-chat-bubble.driver {
+  align-self: flex-start;
+  background: #f1f5f9;
+  color: #0f172a;
+  border-bottom-left-radius: 4px;
+}
+
+.dam-chat-bubble.user {
+  align-self: flex-end;
+  background: #0052ff;
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+
+.dam-chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.dam-chat-input-row input {
+  flex: 1;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.dam-chat-input-row input:focus {
+  border-color: #0052ff;
+}
+
+.dam-chat-input-row button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #0052ff;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Share */
+.dam-link-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.dam-link-text {
+  flex: 1;
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #0052ff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dam-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #0052ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.dam-share-native-btn {
+  margin-top: 16px;
+  background: none;
+  border: 1.5px solid #0052ff;
+  color: #0052ff;
+  border-radius: 999px;
+  padding: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Safety */
+.dam-pin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.dam-pin-row strong {
+  font-size: 0.9rem;
+  color: #0f172a;
+}
+
+.dam-pin-row p {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.dam-pin-value {
+  background: #e0ebf8;
+  color: #0052ff;
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.dam-safety-tile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  text-align: left;
+  color: #475569;
+}
+
+.dam-safety-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dam-safety-icon.danger { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
+.dam-safety-icon.info { background: rgba(59, 130, 246, 0.12); color: #3b82f6; }
+.dam-safety-icon.warn { background: rgba(249, 115, 22, 0.12); color: #f97316; }
+
+.dam-safety-tile-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dam-safety-tile-text strong {
+  font-size: 0.85rem;
+  color: #0f172a;
+}
+
+.dam-safety-tile-text small {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.dam-toast {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* SOS active state */
+.dam-sos-active {
+  background: #7f1d1d;
+  color: #ffffff;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.dam-sos-active svg {
+  color: #ffffff;
+}
+
+.dam-sos-active h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.dam-sos-active p {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.dam-sos-count {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin: 16px 0;
+}
+
+.dam-sos-cancel {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 24px;
+  padding: 14px;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .dam-backdrop {
+    align-items: flex-end;
+  }
+  .dam-call-screen {
+    height: 100vh;
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,379 @@
+.pkg-list-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero Section */
+.pkg-list-hero {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pkg-list-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
+}
+
+.pkg-list-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 80px;
+}
+
+.pkg-hero-sub {
+  color: #fbbf24;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.pkg-list-hero-content h1 {
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0 0 32px 0;
+}
+
+/* Search Summary Bar */
+.pkg-summary-bar {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: inline-flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.pkg-summary-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.pkg-summary-item .label {
+  font-size: 0.7rem;
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.pkg-summary-item .value {
+  font-size: 0.95rem;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.pkg-edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #cbd5e1;
+  background: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #0052ff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.pkg-edit-btn:hover {
+  background-color: #f1f5f9;
+}
+
+/* Main Content */
+.pkg-list-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 40px 80px;
+}
+
+/* Categories Tabs */
+.pkg-list-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.pkg-list-tab {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 8px 20px;
+  border-radius: 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.pkg-list-tab.active {
+  background-color: #0052ff;
+  color: #ffffff;
+  border-color: #0052ff;
+}
+
+/* Fallback data notice */
+.pkg-fallback-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background-color: #fff7ed;
+  border: 1px solid #fdba74;
+  color: #9a3412;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.pkg-fallback-banner .pkg-edit-btn {
+  padding: 6px 16px;
+  white-space: nowrap;
+}
+
+/* Grid */
+.pkg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.pkg-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.pkg-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.pkg-card-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.pkg-card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.pkg-card-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #0052ff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.pkg-card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+}
+
+.pkg-card-desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  flex: 1;
+}
+
+.pkg-card-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.pkg-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #475569;
+  font-weight: 600;
+}
+
+.pkg-stat.rating {
+  color: #10b981;
+}
+
+.pkg-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.pkg-price-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.pkg-price-label {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-bottom: 2px;
+}
+
+.pkg-price-val {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1;
+}
+
+.pkg-price-unit {
+  font-size: 0.65rem;
+  color: #94a3b8;
+}
+
+.pkg-details-btn {
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.pkg-details-btn:hover {
+  background-color: #dc2626;
+}
+
+.pkg-load-more {
+  display: block;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.pkg-load-more:hover {
+  background-color: #f8fafc;
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 1024px) {
+  .pkg-list-hero-content {
+    padding: 0 24px;
+  }
+
+  .pkg-list-main {
+    padding: 32px 24px;
+  }
+
+  .pkg-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .pkg-list-hero {
+    height: auto;
+    padding: 100px 0 32px;
+  }
+
+  .pkg-list-hero-content h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .pkg-summary-bar {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 16px 24px;
+    padding: 16px;
+  }
+
+  .pkg-edit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pkg-list-main {
+    padding: 24px 20px;
+  }
+
+  .pkg-list-tabs {
+    margin-bottom: 24px;
+  }
+
+  .pkg-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .pkg-card-content {
+    padding: 20px;
+  }
+
+  .pkg-card-stats {
+    flex-wrap: wrap;
+    gap: 12px 16px;
+  }
+
+  .pkg-card-footer {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .pkg-details-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .pkg-list-hero-content h1 {
+    font-size: 1.6rem;
+  }
+
+  .pkg-summary-bar {
+    gap: 12px 20px;
+  }
+}

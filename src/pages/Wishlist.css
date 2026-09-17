@@ -1,0 +1,219 @@
+.wl-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+.wl-header-section {
+  background: #0052ff;
+  padding: 40px 80px;
+  color: #ffffff;
+}
+
+.wl-header-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wl-header-container h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.wl-main {
+  flex: 1;
+  padding: 32px 80px 64px;
+}
+
+.wl-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.wl-chips-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.wl-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.wl-chip.active {
+  background: #0052ff;
+  color: #ffffff;
+  border-color: #0052ff;
+}
+
+.wl-empty-note {
+  color: #64748b;
+  text-align: center;
+  padding: 48px 0;
+}
+
+.wl-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 64px 24px;
+}
+
+.wl-empty-icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.wl-empty-state h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 8px;
+}
+
+.wl-empty-state p {
+  color: #64748b;
+  max-width: 420px;
+  margin: 0 0 24px;
+}
+
+.wl-empty-cta {
+  padding: 12px 28px;
+  background: #0052ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.wl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.wl-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.wl-card-img-box {
+  position: relative;
+  height: 160px;
+  background: #f1f5f9;
+}
+
+.wl-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wl-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+}
+
+.wl-remove-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.65);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.wl-card-body {
+  padding: 16px;
+}
+
+.wl-card-type {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #0052ff;
+  letter-spacing: 0.02em;
+}
+
+.wl-card-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 4px 0 4px;
+}
+
+.wl-card-location {
+  color: #64748b;
+  font-size: 0.85rem;
+  margin: 0 0 12px;
+}
+
+.wl-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.wl-card-price {
+  color: #0052ff;
+  font-size: 1.05rem;
+}
+
+.wl-view-btn {
+  padding: 8px 16px;
+  background: #0052ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .wl-header-section {
+    padding: 40px 24px;
+  }
+
+  .wl-main {
+    padding: 32px 24px 64px;
+  }
+}

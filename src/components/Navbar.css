@@ -1,0 +1,348 @@
+/* Unified Navbar Styles */
+.niklo-navbar {
+  padding: 14px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.niklo-navbar.theme-blue {
+  background-color: #0052eb;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.niklo-navbar.theme-white {
+  background-color: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  height: 30px;
+  width: auto;
+  max-width: none;
+  flex-shrink: 0;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-main-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-main-link {
+  background: none;
+  border: none;
+  padding: 6px 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.theme-blue .nav-main-link {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.theme-white .nav-main-link {
+  color: #475569;
+}
+
+.theme-blue .nav-main-link:hover,
+.theme-blue .nav-main-link.active {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+.theme-white .nav-main-link:hover,
+.theme-white .nav-main-link.active {
+  color: #0052ff;
+  border-bottom-color: #0052ff;
+}
+
+@media (max-width: 1200px) {
+  .nav-main-links {
+    display: none;
+  }
+}
+
+.nav-item {
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.theme-blue .nav-item {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.theme-white .nav-item {
+  color: #475569;
+}
+
+.theme-blue .nav-item:hover,
+.theme-blue .nav-item.active {
+  color: #ffffff;
+}
+
+.theme-white .nav-item:hover,
+.theme-white .nav-item.active {
+  color: #0052ff;
+}
+
+/* Navigation Dropdowns */
+.nav-dropdown-container {
+  position: relative;
+}
+
+.nav-dropdown-btn {
+  background: none;
+  border: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 12px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.theme-blue .nav-dropdown-btn {
+  color: #ffffff;
+}
+
+.theme-white .nav-dropdown-btn {
+  color: #0052ff;
+  background-color: #f1f5f9;
+}
+
+.theme-blue .nav-dropdown-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-white .nav-dropdown-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 6px;
+  min-width: 140px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  z-index: 150;
+}
+
+.nav-dropdown-menu button {
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.nav-dropdown-menu button:hover,
+.nav-dropdown-menu button.active-lang {
+  background-color: #f1f5f9;
+  color: #0052ff;
+}
+
+/* Profile Dropdown Menu */
+.profile-dropdown-container {
+  position: relative;
+}
+
+.profile-dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: transparent;
+}
+
+.theme-blue .profile-dropdown-btn {
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+}
+
+.theme-blue .profile-dropdown-btn:hover {
+  border-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-white .profile-dropdown-btn {
+  border: 1.5px solid #0052ff;
+  color: #ffffff;
+  background-color: #0052ff;
+}
+
+.theme-white .profile-dropdown-btn:hover {
+  background-color: #003ecc;
+  border-color: #003ecc;
+}
+
+.profile-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 160px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  z-index: 150;
+}
+
+.profile-dropdown-menu button {
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.profile-dropdown-menu button:hover {
+  background-color: #f1f5f9;
+  color: #0052ff;
+}
+
+.dropdown-hr {
+  border: 0;
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 4px 0;
+}
+
+.profile-dropdown-menu button.logout-btn {
+  color: #ef4444;
+}
+
+.profile-dropdown-menu button.logout-btn:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+/* Mobile hamburger */
+.navbar-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  color: inherit;
+  transition: background 0.2s;
+  /* Must stay above .mobile-drawer (z-index: 200) or the open drawer covers
+     the button and its X (close) icon becomes unclickable. */
+  position: relative;
+  z-index: 201;
+}
+.theme-blue .navbar-hamburger { color: #fff; }
+.theme-white .navbar-hamburger { color: #0f172a; }
+.navbar-hamburger:hover { background: rgba(128,128,128,0.15); }
+
+/* The open drawer paints white over the whole viewport, including the header
+   strip the hamburger sits in — a theme-blue page's white X would vanish
+   against that white background, so force it dark while the drawer is open. */
+.navbar-hamburger.is-open { color: #0f172a !important; }
+
+/* Mobile drawer */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(300px, 85vw);
+  height: 100vh;
+  background: #fff;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  padding: 80px 0 24px;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+  overflow-y: auto;
+  animation: slideInRight 0.22s ease;
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+.mobile-nav-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.mobile-nav-item:hover { background: #f8fafc; color: #0052ff; }
+.mobile-logout { color: #ef4444 !important; }
+.mobile-login  { color: #0052ff !important; }
+/* Responsive */
+@media (max-width: 768px) {
+  .niklo-navbar { padding: 10px 20px; position: sticky; top: 0; }
+  .navbar-right  { display: none; }
+  .navbar-hamburger { display: flex; }
+}

@@ -1,0 +1,893 @@
+.cab-booking-container {
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero Section */
+.cab-hero-section {
+  display: flex;
+  min-height: 600px;
+  /* ponytail: no fixed 100vh height — sidebar content varies by state
+     (selecting/searching/assigned) and a hard viewport cap clipped the
+     Confirm Pickup button on shorter screens. Height now follows content;
+     the map area stretches to match via flex align-items:stretch. */
+}
+
+.cab-hero-section.layout-flipped {
+  flex-direction: row-reverse;
+}
+
+.cab-sidebar {
+  width: 480px;
+  background-color: #ffffff;
+  padding: 22px 28px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+}
+
+.sidebar-header h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  color: #0f172a;
+}
+
+.sidebar-header p {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0 0 14px 0;
+}
+
+.trip-type-tabs {
+  display: flex;
+  background-color: #f1f5f9;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 16px;
+}
+
+.trip-type-tabs .tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.trip-type-tabs .tab.active {
+  background-color: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.location-inputs {
+  position: relative;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 16px;
+}
+
+.pickup-field {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dot-icon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.green-dot { background-color: #16a34a; }
+.red-pin { color: #ef4444; display: flex; align-items: center; }
+
+.field-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.field-content .label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.field-content .value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.field-content input {
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+  width: 100%;
+}
+
+.field-content input::placeholder {
+  color: #94a3b8;
+}
+
+.live-badge {
+  background-color: #eff6ff;
+  color: #0052ff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.search-icon {
+  color: #94a3b8;
+}
+
+.ride-selection h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: #0f172a;
+}
+
+.ride-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ride-card {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  gap: 16px;
+}
+
+.ride-card:hover {
+  border-color: #cbd5e1;
+}
+
+.ride-card.active {
+  border-color: #0052ff;
+  background-color: #eff6ff;
+}
+
+.ride-card img {
+  width: 44px;
+  height: auto;
+}
+
+.ride-info {
+  flex: 1;
+}
+
+.ride-info h5 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #0f172a;
+}
+
+.ride-info p {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0 0 6px 0;
+}
+
+.ride-eta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0052ff;
+}
+
+.ride-price {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0052ff;
+}
+
+.confirm-pickup-btn {
+  background-color: #0052ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.confirm-pickup-btn:hover {
+  background-color: #003ecc;
+}
+
+.cab-map-area {
+  flex: 1;
+  min-width: 0;
+  background-color: #e5e7eb;
+  position: relative;
+  overflow: hidden;
+  /* Own stacking context so map-locate-error/map-controls (z-index up to 1000)
+     stay contained to the map area and never leak above the navbar/modals. */
+  z-index: 0;
+}
+
+.gmap-fill {
+  width: 100%;
+  height: 100%;
+  /* Own stacking context so Google Maps' internal panes/controls stay contained
+     to the map area and never sit above the sim-route/-cars overlays below. */
+  z-index: 0;
+}
+
+.map-locate-error {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 1000;
+  background-color: #ffffff;
+  color: #ef4444;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.map-controls {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.map-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.map-btn {
+  width: 60px;
+  height: 60px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #475569;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.zoom-controls {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.zoom-controls button {
+  width: 60px;
+  height: 54px;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #475569;
+  cursor: pointer;
+}
+
+.zoom-controls button:first-child {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Outstation Section */
+.outstation-section {
+  padding: 60px 80px;
+  background-color: #ffffff;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.carousel-nav {
+  display: flex;
+  gap: 12px;
+}
+
+.carousel-nav button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.carousel-nav button:hover {
+  background-color: #f1f5f9;
+}
+
+.outstation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.outstation-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #ffffff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.outstation-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.outstation-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.outstation-details {
+  padding: 16px;
+}
+
+.outstation-details h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+}
+
+.outstation-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.outstation-price span {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.outstation-price strong {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* FAQ Section */
+.faq-section {
+  padding: 60px 80px 100px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.faq-section h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 40px 0;
+}
+
+.faq-list {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-item {
+  background-color: #f8fafc;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+}
+
+.faq-question:hover {
+  background-color: #f1f5f9;
+}
+
+.faq-answer {
+  padding: 0 24px 24px;
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .cab-hero-section, .cab-hero-section.layout-flipped {
+    flex-direction: column-reverse;
+    height: auto;
+  }
+  .cab-sidebar {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+  .cab-map-area {
+    height: 400px;
+    flex: none;
+  }
+  .outstation-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .outstation-section, .faq-section {
+    padding: 40px 20px;
+  }
+  .outstation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- New Layout States --- */
+/* flex-direction: row-reverse lives on the base .cab-hero-section rule above
+   (desktop-only) — it must stay ahead of the max-width:1024px media query below
+   so that query's column-reverse override still wins on mobile for the
+   searching/assigned states. It used to sit here, after the media query, with
+   no viewport guard, so it always won regardless of screen size and collapsed
+   the map to 0 width whenever layout-flipped was applied on mobile. */
+
+/* Matching State */
+.matching-state, .assigned-state {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.state-top-nav {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #334155;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.state-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+}
+
+.state-desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0 0 32px 0;
+  line-height: 1.5;
+}
+
+.matching-box {
+  border: 2px solid #0052ff;
+  background-color: #eff6ff;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: auto;
+}
+
+.spin-icon {
+  animation: spin 1.2s linear infinite;
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.matching-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.matching-box-header h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #0052ff;
+  font-weight: 700;
+}
+
+.blue-icon {
+  color: #0052ff;
+}
+
+.matching-text {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+}
+
+.progress-bar-container {
+  height: 6px;
+  background-color: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #0052ff;
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+}
+
+.located-text {
+  color: #0052ff;
+  font-weight: 700;
+}
+
+.wait-text {
+  color: #64748b;
+}
+
+.matching-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.outline-btn {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid #cbd5e1;
+  background: none;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.outline-btn:hover {
+  background-color: #f8fafc;
+}
+
+.outline-btn.danger {
+  color: #ef4444;
+  border-color: #ef4444;
+}
+.outline-btn.danger:hover {
+  background-color: #fef2f2;
+}
+
+/* Assigned State */
+.assigned-header-top {
+  margin-bottom: 24px;
+}
+
+.eta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eta-text {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.otp-badge {
+  background-color: #eff6ff;
+  color: #0052ff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.driver-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.driver-info-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.driver-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.driver-details {
+  flex: 1;
+}
+
+.driver-details h4 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.car-image-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.car-image-mini img {
+  width: 60px;
+  margin-bottom: 4px;
+}
+
+.plate-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  background-color: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #475569;
+}
+
+.car-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.car-desc strong {
+  color: #0f172a;
+}
+
+.quick-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 32px;
+}
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.round-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: #f1f5f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #334155;
+  cursor: pointer;
+}
+
+.round-btn.danger-light {
+  background-color: #fee2e2;
+}
+
+.action-item span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.trip-details-timeline {
+  margin-bottom: auto;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.timeline-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.timeline-header a {
+  font-size: 0.85rem;
+  color: #0052ff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.timeline-path {
+  position: relative;
+}
+
+.timeline-path::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background-color: #e2e8f0;
+}
+
+.t-point {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.t-point:last-child {
+  margin-bottom: 0;
+}
+
+.t-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.t-dot.blue { background-color: #0052ff; }
+.t-dot.gray { background-color: #94a3b8; }
+
+.t-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.t-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.t-val {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.cancel-request-full-btn {
+  width: 100%;
+  padding: 16px;
+  background-color: #f1f5f9;
+  color: #ef4444;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 32px;
+}
+
+/* Map Overlays — a small ETA badge over the real map, no fake markers pretending
+   to be other cars (the map underneath is real now, so anything not tied to an
+   actual coordinate just floats disconnected from the streets). */
+.eta-floating-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  background-color: #0052ff;
+  color: #ffffff;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 82, 255, 0.25);
+}
