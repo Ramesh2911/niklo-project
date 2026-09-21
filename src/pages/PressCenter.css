@@ -1,0 +1,42 @@
+.pc-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+.pc-header-section {
+  background: #0052ff;
+  padding: 56px 80px 48px;
+  color: #ffffff;
+  text-align: center;
+}
+.pc-header-container { max-width: 800px; margin: 0 auto; }
+.pc-header-section h1 { font-size: 2.2rem; font-weight: 800; margin: 10px 0 8px; }
+.pc-header-section p { font-size: 1.05rem; opacity: 0.9; margin: 0; line-height: 1.6; }
+.pc-main { flex: 1; padding: 0 80px 64px; }
+.pc-story-section { max-width: 1000px; margin: 48px auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.pc-story-content h2 { font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0 0 16px; }
+.pc-story-content p { font-size: 0.95rem; color: #475569; line-height: 1.7; margin: 0 0 14px; }
+.pc-story-image { width: 100%; border-radius: 20px; object-fit: cover; height: 320px; box-shadow: 0 8px 30px rgba(0, 82, 255, 0.12); }
+.pc-section-title { text-align: center; font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0 0 8px; }
+.pc-section-subtitle { text-align: center; font-size: 0.95rem; color: #64748b; margin: 0 0 32px; }
+.pc-releases-section { max-width: 1000px; margin: 56px auto 0; }
+.pc-releases-list { display: flex; flex-direction: column; gap: 16px; }
+.pc-release-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; display: flex; align-items: center; gap: 24px; transition: transform 0.2s, box-shadow 0.2s; }
+.pc-release-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 82, 255, 0.1); }
+.pc-release-date { min-width: 80px; text-align: center; }
+.pc-release-date span { display: block; font-size: 1.5rem; font-weight: 800; color: #0052ff; }
+.pc-release-date small { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+.pc-release-content { flex: 1; }
+.pc-release-content h3 { font-size: 1.05rem; font-weight: 700; color: #0f172a; margin: 0 0 6px; }
+.pc-release-content p { font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5; }
+.pc-release-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; color: #0052ff; text-decoration: none; white-space: nowrap; transition: gap 0.2s; }
+.pc-release-link:hover { gap: 10px; }
+.pc-mediakit-section { max-width: 1000px; margin: 56px auto 0; text-align: center; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 48px 32px; }
+.pc-mediakit-section h2 { font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0 0 12px; }
+.pc-mediakit-section p { font-size: 0.95rem; color: #64748b; margin: 0 auto 24px; max-width: 500px; line-height: 1.6; }
+.pc-mediakit-btn { display: inline-flex; align-items: center; gap: 8px; background: #0052ff; color: #ffffff; border: none; border-radius: 12px; padding: 14px 32px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; text-decoration: none; }
+.pc-mediakit-btn:hover { background: #003ecc; }
+@media (max-width: 1024px) { .pc-header-section { padding: 48px 24px; } .pc-main { padding: 0 24px 64px; } }
+@media (max-width: 768px) { .pc-header-section h1 { font-size: 1.75rem; } .pc-story-section { grid-template-columns: 1fr; gap: 24px; } .pc-release-card { flex-direction: column; align-items: flex-start; gap: 12px; } .pc-release-date { text-align: left; } }
+@media (max-width: 480px) { .pc-release-card { padding: 16px; } }

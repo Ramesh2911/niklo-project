@@ -1,0 +1,43 @@
+.cr-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+.cr-header-section {
+  background: #0052ff;
+  padding: 56px 80px 48px;
+  color: #ffffff;
+  text-align: center;
+}
+.cr-header-container { max-width: 800px; margin: 0 auto; }
+.cr-header-section h1 { font-size: 2.2rem; font-weight: 800; margin: 10px 0 8px; }
+.cr-header-section p { font-size: 1.05rem; opacity: 0.9; margin: 0; line-height: 1.6; }
+.cr-main { flex: 1; padding: 0 80px 64px; }
+.cr-story-section { max-width: 1000px; margin: 48px auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.cr-story-content h2 { font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0 0 16px; }
+.cr-story-content p { font-size: 0.95rem; color: #475569; line-height: 1.7; margin: 0 0 14px; }
+.cr-story-image { width: 100%; border-radius: 20px; object-fit: cover; height: 320px; box-shadow: 0 8px 30px rgba(0, 82, 255, 0.12); }
+.cr-section-title { text-align: center; font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0 0 8px; }
+.cr-section-subtitle { text-align: center; font-size: 0.95rem; color: #64748b; margin: 0 0 32px; }
+.cr-jobs-section { max-width: 1000px; margin: 56px auto 0; }
+.cr-jobs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.cr-job-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: transform 0.2s, box-shadow 0.2s; }
+.cr-job-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0, 82, 255, 0.1); }
+.cr-job-card h3 { font-size: 1.05rem; font-weight: 700; color: #0f172a; margin: 0; }
+.cr-job-card p { font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5; }
+.cr-job-tag { display: inline-block; background: #eff6ff; color: #0052ff; font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
+.cr-culture-section { max-width: 1000px; margin: 56px auto 0; }
+.cr-culture-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.cr-culture-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px 20px; text-align: center; }
+.cr-culture-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; background: #eff6ff; color: #0052ff; }
+.cr-culture-card h3 { font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0 0 6px; }
+.cr-culture-card p { font-size: 0.82rem; color: #64748b; line-height: 1.5; margin: 0; }
+.cr-cta-section { max-width: 1000px; margin: 56px auto 0; text-align: center; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 48px 32px; }
+.cr-cta-section h2 { font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0 0 12px; }
+.cr-cta-section p { font-size: 0.95rem; color: #64748b; margin: 0 auto 24px; max-width: 500px; line-height: 1.6; }
+.cr-cta-btn { display: inline-flex; align-items: center; gap: 8px; background: #0052ff; color: #ffffff; border: none; border-radius: 12px; padding: 14px 32px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; text-decoration: none; }
+.cr-cta-btn:hover { background: #003ecc; }
+@media (max-width: 1024px) { .cr-header-section { padding: 48px 24px; } .cr-main { padding: 0 24px 64px; } }
+@media (max-width: 768px) { .cr-header-section h1 { font-size: 1.75rem; } .cr-story-section { grid-template-columns: 1fr; gap: 24px; } .cr-jobs-grid { grid-template-columns: 1fr; } .cr-culture-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .cr-culture-grid { grid-template-columns: 1fr; } }

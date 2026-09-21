@@ -61,12 +61,12 @@ const Footer: React.FC = () => {
         <nav aria-label="Company links">
           <h4 className="footer-col-title">{t('footer.companyHeading')}</h4>
           <ul className="footer-links-list">
-            <li><a href="#" onClick={(e) => e.preventDefault()}>{t('footer.linkAboutUs')}</a></li>
-            <li><a href="#" onClick={(e) => e.preventDefault()}>{t('footer.linkCareers')}</a></li>
-            <li><a href="#" onClick={(e) => e.preventDefault()}>{t('footer.linkBlog')}</a></li>
-            <li><a href="#" onClick={(e) => e.preventDefault()}>{t('footer.linkSustainability')}</a></li>
-            <li><a href="#" onClick={(e) => e.preventDefault()}>{t('footer.linkPressCenter')}</a></li>
-            <li><a href="#" onClick={(e) => e.preventDefault()}>{t('footer.linkInvestorRelations')}</a></li>
+            <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/about'); }}>{t('footer.linkAboutUs')}</a></li>
+            <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/careers'); }}>{t('footer.linkCareers')}</a></li>
+            <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/blog'); }}>{t('footer.linkBlog')}</a></li>
+            <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/sustainability'); }}>{t('footer.linkSustainability')}</a></li>
+            <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/press'); }}>{t('footer.linkPressCenter')}</a></li>
+            <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/investors'); }}>{t('footer.linkInvestorRelations')}</a></li>
           </ul>
         </nav>
 
@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
           <ul className="footer-links-list">
             <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/help'); }}>{t('footer.linkHelpCenter')}</a></li>
             <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/help'); }}>{t('footer.linkFaqs')}</a></li>
-            <li><a href="#" onClick={(e) => e.preventDefault()}>{t('footer.linkCancellationPolicy')}</a></li>
+            <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/cancellation-policy'); }}>{t('footer.linkCancellationPolicy')}</a></li>
             <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/privacy-security'); }}>{t('footer.linkTrustSafety')}</a></li>
             <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/privacy-security#privacy-policy'); }}>{t('footer.linkPrivacyPolicy')}</a></li>
             <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/privacy-security#terms-of-service'); }}>{t('footer.linkTermsOfService')}</a></li>

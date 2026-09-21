@@ -39,6 +39,13 @@ const HelpCenter = lazy(() => import('./pages/HelpCenter'));
 const Wishlist = lazy(() => import('./pages/Wishlist'));
 const PrivacySecurity = lazy(() => import('./pages/PrivacySecurity'));
 const BusRouteLanding = lazy(() => import('./pages/BusRouteLanding'));
+const About = lazy(() => import('./pages/About'));
+const Careers = lazy(() => import('./pages/Careers'));
+const Blog = lazy(() => import('./pages/Blog'));
+const Sustainability = lazy(() => import('./pages/Sustainability'));
+const PressCenter = lazy(() => import('./pages/PressCenter'));
+const InvestorRelations = lazy(() => import('./pages/InvestorRelations'));
+const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
 
 // No scroll restoration on navigate by default with react-router — reset to top
 // on every route change so a new page doesn't open mid-scroll from the last one.
@@ -99,6 +106,13 @@ function App() {
             <Route path="/help" element={<HelpCenter />} />
             <Route path="/wishlist" element={<RequireAuth><Wishlist /></RequireAuth>} />
             <Route path="/privacy-security" element={<PrivacySecurity />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/sustainability" element={<Sustainability />} />
+            <Route path="/press" element={<PressCenter />} />
+            <Route path="/investors" element={<InvestorRelations />} />
+            <Route path="/cancellation-policy" element={<CancellationPolicy />} />
             <Route path="/bus/:slug" element={<BusRouteLanding />} />
           </Routes>
           </div>

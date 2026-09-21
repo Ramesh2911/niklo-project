@@ -1,0 +1,49 @@
+.ir-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+.ir-header-section {
+  background: #0052ff;
+  padding: 56px 80px 48px;
+  color: #ffffff;
+  text-align: center;
+}
+.ir-header-container { max-width: 800px; margin: 0 auto; }
+.ir-header-section h1 { font-size: 2.2rem; font-weight: 800; margin: 10px 0 8px; }
+.ir-header-section p { font-size: 1.05rem; opacity: 0.9; margin: 0; line-height: 1.6; }
+.ir-main { flex: 1; padding: 0 80px 64px; }
+.ir-story-section { max-width: 1000px; margin: 48px auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.ir-story-content h2 { font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0 0 16px; }
+.ir-story-content p { font-size: 0.95rem; color: #475569; line-height: 1.7; margin: 0 0 14px; }
+.ir-story-image { width: 100%; border-radius: 20px; object-fit: cover; height: 320px; box-shadow: 0 8px 30px rgba(0, 82, 255, 0.12); }
+.ir-section-title { text-align: center; font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0 0 8px; }
+.ir-section-subtitle { text-align: center; font-size: 0.95rem; color: #64748b; margin: 0 0 32px; }
+.ir-metrics-section { max-width: 1000px; margin: 56px auto 0; }
+.ir-metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.ir-metric-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px 20px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
+.ir-metric-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0, 82, 255, 0.1); }
+.ir-metric-card h3 { font-size: 1.8rem; font-weight: 800; color: #0052ff; margin: 0 0 4px; }
+.ir-metric-card p { font-size: 0.85rem; color: #64748b; margin: 0; }
+.ir-timeline-section { max-width: 1000px; margin: 56px auto 0; position: relative; }
+.ir-timeline { position: relative; padding: 20px 0; }
+.ir-timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #e2e8f0; transform: translateX(-50%); }
+.ir-timeline-item { position: relative; width: 50%; padding: 0 40px 40px; }
+.ir-timeline-item:nth-child(odd) { left: 0; text-align: right; }
+.ir-timeline-item:nth-child(even) { left: 50%; text-align: left; }
+.ir-timeline-dot { position: absolute; top: 8px; width: 14px; height: 14px; background: #0052ff; border-radius: 50%; border: 3px solid #ffffff; box-shadow: 0 0 0 2px #0052ff; }
+.ir-timeline-item:nth-child(odd) .ir-timeline-dot { right: -7px; }
+.ir-timeline-item:nth-child(even) .ir-timeline-dot { left: -7px; }
+.ir-timeline-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: inline-block; text-align: left; max-width: 360px; }
+.ir-timeline-card h3 { font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0 0 4px; }
+.ir-timeline-card span { font-size: 0.78rem; color: #0052ff; font-weight: 600; display: block; margin-bottom: 6px; }
+.ir-timeline-card p { font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5; }
+.ir-cta-section { max-width: 1000px; margin: 56px auto 0; text-align: center; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 48px 32px; }
+.ir-cta-section h2 { font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0 0 12px; }
+.ir-cta-section p { font-size: 0.95rem; color: #64748b; margin: 0 auto 24px; max-width: 500px; line-height: 1.6; }
+.ir-cta-btn { display: inline-flex; align-items: center; gap: 8px; background: #0052ff; color: #ffffff; border: none; border-radius: 12px; padding: 14px 32px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; text-decoration: none; }
+.ir-cta-btn:hover { background: #003ecc; }
+@media (max-width: 1024px) { .ir-header-section { padding: 48px 24px; } .ir-main { padding: 0 24px 64px; } }
+@media (max-width: 768px) { .ir-header-section h1 { font-size: 1.75rem; } .ir-story-section { grid-template-columns: 1fr; gap: 24px; } .ir-metrics-grid { grid-template-columns: repeat(2, 1fr); } .ir-timeline::before { left: 20px; } .ir-timeline-item { width: 100%; left: 0 !important; text-align: left !important; padding-left: 50px; padding-right: 0; } .ir-timeline-dot { left: 13px !important; right: auto !important; } }
+@media (max-width: 480px) { .ir-metrics-grid { grid-template-columns: 1fr; } }

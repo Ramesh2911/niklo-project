@@ -167,7 +167,7 @@ const BusBooking: React.FC = () => {
 
   return (
     <div className="bus-booking-container">
-      <Navbar />
+      <Navbar theme="blue" />
 
       {/* 2. Blue Search Panel */}
       <section className="search-criteria-section">
