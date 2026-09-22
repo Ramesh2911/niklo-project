@@ -5,7 +5,8 @@ import {
   ChevronDown, ShieldCheck, Lock, Star
 } from 'lucide-react';
 import { hotelService, type HotelAvailabilityCheck } from '../lib/hotelService';
-import { api } from '../lib/api';
+import { createApi } from '../lib/api';
+const api = createApi(import.meta.env.VITE_HOTEL_BASE_URL || '/api/v1');
 import { useI18n } from '../contexts/I18nContext';
 import './HotelAvailability.css';
 

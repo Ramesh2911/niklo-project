@@ -1,4 +1,7 @@
-import { api } from './api';
+import { createApi } from './api';
+
+const api = createApi(import.meta.env.VITE_BOOKING_BASE_URL || '/api/v1');
+const userApi = createApi(import.meta.env.VITE_USER_BASE_URL || '/api/v1');
 
 export interface PassengerInfo {
   name: string;
@@ -225,7 +228,7 @@ export const bookingService = {
   },
 
   getActiveTrip: async (): Promise<{ has_active_trip: boolean; trip?: MyBookingItem }> => {
-    const res = await api.get<{ has_active_trip: boolean; trip?: RawBooking } | { data: { has_active_trip: boolean; trip?: RawBooking } }>('/user/active-trip', true);
+    const res = await userApi.get<{ has_active_trip: boolean; trip?: RawBooking } | { data: { has_active_trip: boolean; trip?: RawBooking } }>('/user/active-trip', true);
     const data = 'data' in res ? res.data : res;
     return {
       has_active_trip: data.has_active_trip,

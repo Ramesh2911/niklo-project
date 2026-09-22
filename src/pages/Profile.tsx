@@ -5,7 +5,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import defaultAvatar from '../assets/default_avatar.png';
 import { useAuth } from '../contexts/AuthContext';
-import { api } from '../lib/api';
+import { createApi } from '../lib/api';
+const api = createApi(import.meta.env.VITE_USER_BASE_URL || '/api/v1');
 import { wishlistService } from '../lib/authService';
 import { addressService, type Address } from '../lib/addressService';
 import { userService, type EmergencyContact } from '../lib/userService';
@@ -168,7 +169,9 @@ const Profile: React.FC = () => {
     setKycSubmitting(true);
     setKycError('');
     try {
-      await api.post('/user/kyc', { documentType: 'AADHAAR' }, true);
+      const form = new FormData();
+      form.append('document_type', 'AADHAAR');
+      await api.postForm('/user/kyc', form, true);
       setKycStatus('submitted');
     } catch {
       setKycError(t('profile.kycError'));

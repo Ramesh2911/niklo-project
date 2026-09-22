@@ -1,4 +1,7 @@
-import { api } from './api';
+import { createApi } from './api';
+
+const api = createApi(import.meta.env.VITE_AUTH_BASE_URL || '/api/v1');
+const userApi = createApi(import.meta.env.VITE_USER_BASE_URL || '/api/v1');
 
 export interface AuthUser {
   id: string;
@@ -103,13 +106,14 @@ export interface WishlistToggleResult {
 
 export const wishlistService = {
   list: async (itemType?: WishlistItemType): Promise<WishlistItem[]> => {
-    const items = unwrap(await api.get<Envelope<WishlistItem[]>>(`/wishlist${itemType ? `?type=${itemType}` : ''}`, true));
+    const items = unwrap(await userApi.get<Envelope<WishlistItem[]>>(`/wishlist${itemType ? `?type=${itemType}` : ''}`, true));
     return itemType ? items.filter((i) => i.item_type === itemType) : items;
   },
   toggle: async (itemType: WishlistItemType, itemId: string, rawData?: Record<string, unknown>): Promise<WishlistToggleResult> =>
-    unwrap(await api.post<Envelope<WishlistToggleResult>>(
+    unwrap(await userApi.post<Envelope<WishlistToggleResult>>(
       '/wishlist/toggle',
       { item_type: itemType, item_id: itemId, raw_data: rawData },
       true,
     )),
+  sync: () => userApi.post('/wishlist/sync', {}, true),
 };

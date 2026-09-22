@@ -31,10 +31,6 @@
       "destination": "http://w1n68oxs2na9q9tbveqsqa4s.187.127.157.13.sslip.io/api/v1/bus/$1"
     },
     {
-      "source": "/api/v1/bus/(.*)",
-      "destination": "http://w1n68oxs2na9q9tbveqsqa4s.187.127.157.13.sslip.io/api/v1/bus/$1"
-    },
-    {
       "source": "/api/v1/payment/(.*)",
       "destination": "http://n13chiypv5vg517ffvioht20.187.127.157.13.sslip.io/api/v1/payment/$1"
     },

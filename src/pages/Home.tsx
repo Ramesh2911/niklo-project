@@ -34,75 +34,19 @@ import chatbotAnimation from '../assets/lottie/chatbot-robot.json';
 
 import './Home.css';
 
-// Mock Destinations
+// Mock Destinations — use t() at render time
 const DESTINATIONS = [
-  {
-    id: 1,
-    name: 'Varanasi',
-    subtext: 'Spiritual & Cultural',
-    price: 3500,
-    img: 'https://images.unsplash.com/photo-1706186839147-0d708602587b?auto=format&fit=crop&q=80&w=400',
-    rating: 4.8
-  },
-  {
-    id: 2,
-    name: 'Taj Mahal',
-    subtext: 'Heritage & Romance',
-    price: 4500,
-    img: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&q=80&w=400',
-    rating: 4.9
-  },
-  {
-    id: 3,
-    name: 'Nainital',
-    subtext: 'Lakes & Mountains',
-    price: 4800,
-    img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=400',
-    rating: 4.7
-  },
-  {
-    id: 4,
-    name: 'Jaipur',
-    subtext: 'Palaces & History',
-    price: 4200,
-    img: 'https://images.unsplash.com/photo-1524230507669-5ff97982bb5e?auto=format&fit=crop&q=80&w=400',
-    rating: 4.8
-  }
+  { id: 1, nameKey: 'home.dest1Name', subtextKey: 'home.dest1Subtext', price: 3500, img: 'https://images.unsplash.com/photo-1706186839147-0d708602587b?auto=format&fit=crop&q=80&w=400', rating: 4.8 },
+  { id: 2, nameKey: 'home.dest2Name', subtextKey: 'home.dest2Subtext', price: 4500, img: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&q=80&w=400', rating: 4.9 },
+  { id: 3, nameKey: 'home.dest3Name', subtextKey: 'home.dest3Subtext', price: 4800, img: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=400', rating: 4.7 },
+  { id: 4, nameKey: 'home.dest4Name', subtextKey: 'home.dest4Subtext', price: 4200, img: 'https://images.unsplash.com/photo-1524230507669-5ff97982bb5e?auto=format&fit=crop&q=80&w=400', rating: 4.8 },
 ];
 
-// Mock Offers with SVG illustrations and precise properties
+// Mock Offers — use t() at render time
 const OFFERS = [
-  {
-    id: 1,
-    title: 'Save More on Every Journey',
-    date: 'Valid till 31 Aug 2026',
-    code: 'Code: BUS150',
-    bgColor: '#e0f2fe', // light blue
-    textColor: '#0052ff', // blue text
-    badgeColor: '#0052ff', // blue badge
-    img: image174
-  },
-  {
-    id: 2,
-    title: 'Airport Transfer Deal',
-    desc: 'Travel to and from the airport at discounted fares.',
-    date: 'Valid till 31 Aug 2026',
-    code: 'Code: BUS150',
-    bgColor: '#e8ecf4', // greyish-purple
-    textColor: '#0f172a', // dark text
-    badgeColor: '#0f172a', // black badge
-    img: image180
-  },
-  {
-    id: 3,
-    title: 'Save More on Every Journey',
-    date: 'Valid till 31 Aug 2026',
-    code: 'Code: BUS150',
-    bgColor: '#fffbeb', // light orange/yellow
-    textColor: '#c2410c', // orange/brown text
-    badgeColor: '#7c2d12', // brown badge
-    img: image177
-  }
+  { id: 1, titleKey: 'home.offer1Title', dateKey: 'home.offer1Date', codeKey: 'home.offer1Code', bgColor: '#e0f2fe', textColor: '#0052ff', badgeColor: '#0052ff', img: image174 },
+  { id: 2, titleKey: 'home.offer2Title', descKey: 'home.offer2Desc', dateKey: 'home.offer2Date', codeKey: 'home.offer2Code', bgColor: '#e8ecf4', textColor: '#0f172a', badgeColor: '#0f172a', img: image180 },
+  { id: 3, titleKey: 'home.offer3Title', dateKey: 'home.offer3Date', codeKey: 'home.offer3Code', bgColor: '#fffbeb', textColor: '#c2410c', badgeColor: '#7c2d12', img: image177 },
 ];
 
 
@@ -163,45 +107,24 @@ const suggestionImageFor = (title: string): string => {
   return 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=400';
 };
 
-// Merged "Your Tips" + "FAQs" into one combined FAQ-style section (client request: fold tips into the FAQ block, show a few by default with View More to expand).
+// FAQ — use t() at render time
 const FAQ_AND_TIPS = [
-  {
-    q: 'How do I book a bus ticket on Niklo?',
-    a: 'Booking a bus ticket on Niklo is fast and easy. Simply enter your departure city, destination, and travel date in the search panel. Choose from the list of standard and luxury buses, select your preferred seat on the interactive map, enter passenger details, and complete your secure checkout using our OTP verification.',
-  },
-  {
-    q: 'Can I cancel or reschedule my ticket?',
-    a: 'Yes! You can manage and cancel your ticket directly through the "My Bookings" page. Cancellation charges depend on the bus operator policy and how close the cancellation is to the departure time. Refunds are processed within 3-5 business days.',
-  },
-  {
-    q: 'How does the AI Travel Planner work?',
-    a: 'Our AI Planner gathers your travel destination, duration, budget, and traveler preferences. It automatically generates a customized itinerary, maps out stopover locations, lists standard or AC bus routes, suggests top hotels, and lets you book the entire package seamlessly in one click.',
-  },
-  {
-    q: 'Book bus tickets at least 3 days ahead',
-    a: 'Fares tend to rise closer to the travel date and popular routes sell out fast on weekends and holidays. Booking 3+ days in advance usually gets you the best seat choice and lowest price.',
-  },
-  {
-    q: 'Carry a valid photo ID for every trip',
-    a: 'Bus and hotel check-ins require the same ID used at booking (Aadhaar, PAN, passport, or driving licence). Keep a photo of it on your phone as a backup.',
-  },
-  {
-    q: 'Check the cancellation window before you pay',
-    a: 'Refund percentage drops the closer you get to departure. Review the fare rules shown at checkout so you know exactly what you get back if plans change.',
-  },
-  {
-    q: 'Use the AI Journey Planner for multi-city trips',
-    a: 'For trips spanning more than one city, the AI Journey Planner strings together bus, cab, and hotel legs automatically so you are not booking each piece separately.',
-  },
+  { qKey: 'home.faq1Question', aKey: 'home.faq1Answer' },
+  { qKey: 'home.faq2Question', aKey: 'home.faq2Answer' },
+  { qKey: 'home.faq3Question', aKey: 'home.faq3Answer' },
+  { qKey: 'home.faq4Question', aKey: 'home.faq4Answer' },
+  { qKey: 'home.faq5Question', aKey: 'home.faq5Answer' },
+  { qKey: 'home.faq6Question', aKey: 'home.faq6Answer' },
+  { qKey: 'home.faq7Question', aKey: 'home.faq7Answer' },
 ];
 const FAQ_AND_TIPS_PREVIEW_COUNT = 4;
 
 const SEARCH_TABS = [
-  { id: 'Bus', label: 'Buses', icon: busIcon },
-  { id: 'Hotels', label: 'Hotels', icon: hotelIcon },
-  { id: 'Cabs', label: 'Cabs', icon: cabIcon },
-  { id: 'Packages', label: 'Packages', icon: packagesIcon },
-  { id: 'Outdoor', label: 'Adventures', icon: adventureIcon },
+  { id: 'Bus', labelKey: 'nav.buses', icon: busIcon },
+  { id: 'Hotels', labelKey: 'nav.hotels', icon: hotelIcon },
+  { id: 'Cabs', labelKey: 'nav.cabs', icon: cabIcon },
+  { id: 'Packages', labelKey: 'nav.packages', icon: packagesIcon },
+  { id: 'Outdoor', labelKey: 'nav.adventures', icon: adventureIcon },
 ];
 
 const Home: React.FC = () => {
@@ -295,7 +218,7 @@ const Home: React.FC = () => {
               onClick={() => setActivePill(tab.id)}
             >
               <img src={tab.icon} alt="" className="search-tab-icon" />
-              <span>{tab.label}</span>
+              <span>{t(tab.labelKey)}</span>
             </button>
           ))}
         </div>
@@ -308,7 +231,7 @@ const Home: React.FC = () => {
             <div className="search-locations-wrapper">
               <div className="search-input-field-group">
                 <div className="field-text">
-                  <span className="field-label">From</span>
+                  <span className="field-label">{t('home.fieldFrom')}</span>
                   <LocationAutocompleteInput
                     value={leavingFrom}
                     onChange={setLeavingFrom}
@@ -321,7 +244,7 @@ const Home: React.FC = () => {
 
               <div className="search-input-field-group">
                 <div className="field-text">
-                  <span className="field-label">To</span>
+                  <span className="field-label">{t('home.fieldTo')}</span>
                   <LocationAutocompleteInput
                     value={goingTo}
                     onChange={setGoingTo}
@@ -340,7 +263,7 @@ const Home: React.FC = () => {
             /* Hotels / Packages / Adventures search by a single destination, not a route. */
             <div className="search-input-field-group">
               <div className="field-text">
-                <span className="field-label">Destination</span>
+                <span className="field-label">{t('home.fieldDestination')}</span>
                 <LocationAutocompleteInput
                   value={destination}
                   onChange={setDestination}
@@ -357,7 +280,7 @@ const Home: React.FC = () => {
               <div className="search-input-field-group date-field-group">
                 <Calendar size={18} style={{ color: '#64748b' }} />
                 <div className="field-text">
-                  <span className="field-label">Check-in</span>
+                  <span className="field-label">{t('home.checkIn')}</span>
                   <input
                     type="date"
                     className="date-field-input"
@@ -370,7 +293,7 @@ const Home: React.FC = () => {
               <div className="search-input-field-group date-field-group">
                 <Calendar size={18} style={{ color: '#64748b' }} />
                 <div className="field-text">
-                  <span className="field-label">Check-out</span>
+                  <span className="field-label">{t('home.checkOut')}</span>
                   <input
                     type="date"
                     className="date-field-input"
@@ -385,7 +308,7 @@ const Home: React.FC = () => {
             <div className="search-input-field-group date-field-group">
               <Calendar size={18} style={{ color: '#64748b' }} />
               <div className="field-text">
-                <span className="field-label">Journey Date</span>
+                <span className="field-label">{t('home.journeyDate')}</span>
                 <input
                   type="date"
                   className="date-field-input"
@@ -412,22 +335,22 @@ const Home: React.FC = () => {
           <div className="trust-badge">
             <img src={icon1} alt="" className="trust-badge-icon" />
             <div className="trust-badge-text">
-              <h3>Best Price Guarantee</h3>
-              <p>Get the best deals or we match it.</p>
+              <h3>{t('home.badgeBestPrice')}</h3>
+              <p>{t('home.badgeBestPriceDesc')}</p>
             </div>
           </div>
           <div className="trust-badge">
             <img src={icon2} alt="" className="trust-badge-icon" />
             <div className="trust-badge-text">
-              <h3>Secure Booking</h3>
-              <p>Your data is safe with us.</p>
+              <h3>{t('home.badgeSecure')}</h3>
+              <p>{t('home.badgeSecureDesc')}</p>
             </div>
           </div>
           <div className="trust-badge">
             <img src={icon3} alt="" className="trust-badge-icon" />
             <div className="trust-badge-text">
-              <h3>24/7 Customer Support</h3>
-              <p>We're here to help anytime.</p>
+              <h3>{t('home.badgeSupport')}</h3>
+              <p>{t('home.badgeSupportDesc')}</p>
             </div>
           </div>
         </div>
@@ -444,28 +367,28 @@ const Home: React.FC = () => {
             <div className="option-icon-box">
               <img src={busIcon} className="option-icon-img option-bus-icon" alt="Bus Booking" />
             </div>
-            <h3 className="option-title">Bus Booking</h3>
-            <p className="option-desc">Intercity & local buses</p>
-            <span className="option-link">Find routes &rarr;</span>
+            <h3 className="option-title">{t('home.exploreBusTitle')}</h3>
+            <p className="option-desc">{t('home.exploreBusDesc')}</p>
+            <span className="option-link">{t('home.findRoutes')}</span>
           </div>
 
           <div className="option-card" style={{ cursor: 'pointer' }} onClick={() => navigate('/cabs')}>
             <div className="option-icon-box">
               <img src={cabIcon} className="option-icon-img option-car-icon" alt="Car Rides" />
             </div>
-            <h3 className="option-title">Car Rides</h3>
-            <p className="option-desc">Cabs & outstation trips</p>
-            <span className="option-link">Find routes &rarr;</span>
+            <h3 className="option-title">{t('home.exploreCarTitle')}</h3>
+            <p className="option-desc">{t('home.exploreCarDesc')}</p>
+            <span className="option-link">{t('home.findRoutes')}</span>
           </div>
 
           <div className="option-card">
             <div className="option-icon-box">
               <img src={hotelIcon} className="option-icon-img" alt="Hotels" />
             </div>
-            <h3 className="option-title">Hotels</h3>
-            <p className="option-desc">Find comfortable stays</p>
+            <h3 className="option-title">{t('home.exploreHotelTitle')}</h3>
+            <p className="option-desc">{t('home.exploreHotelDesc')}</p>
             <a href="/hotels" className="option-link" onClick={(e) => { e.preventDefault(); navigate('/hotels'); }}>
-              Find routes &rarr;
+              {t('home.findRoutes')}
             </a>
           </div>
 
@@ -473,10 +396,10 @@ const Home: React.FC = () => {
             <div className="option-icon-box">
               <img src={adventureIcon} className="option-icon-img" alt="Adventure" />
             </div>
-            <h3 className="option-title">Adventure</h3>
-            <p className="option-desc">Water sports, safari & more</p>
+            <h3 className="option-title">{t('home.exploreAdventureTitle')}</h3>
+            <p className="option-desc">{t('home.exploreAdventureDesc')}</p>
             <a href="/experiences" className="option-link" onClick={(e) => { e.preventDefault(); navigate('/experiences'); }}>
-              Find routes &rarr;
+              {t('home.findRoutes')}
             </a>
           </div>
         </div>
@@ -487,13 +410,13 @@ const Home: React.FC = () => {
         <div className="ai-planner-banner">
           <div className="ai-banner-left">
             <h2 className="ai-banner-title">
-              Plan Your Perfect Trip with AI <span className="badge-new-tag">New</span>
+              {t('home.aiBannerTitle')} <span className="badge-new-tag">{t('home.aiBannerNew')}</span>
             </h2>
             <p className="ai-banner-desc">
-              Niklo AI yields personalized travel plans based on your destination, budget, and preferences - saving you time and helping you travel smarter.
+              {t('home.aiBannerDesc')}
             </p>
             <button className="btn-plan-journey" onClick={handleAiPlannerClick}>
-              Plan My Journey
+              {t('home.planMyJourney')}
               <ArrowRight size={18} />
             </button>
           </div>
@@ -508,7 +431,7 @@ const Home: React.FC = () => {
       {smartSuggestions.length > 0 && (
         <div className="section-wrapper">
           <div className="section-header-row">
-            <h2 className="section-main-title">Smart Suggestions</h2>
+            <h2 className="section-main-title">{t('home.smartSuggestions')}</h2>
             <a href="#" className="section-view-all" onClick={(e) => { e.preventDefault(); navigate('/packages'); }}>
               {t('home.viewAll')}
               <ChevronRight size={16} />
@@ -529,7 +452,7 @@ const Home: React.FC = () => {
                     </div>
                     <button
                       className="btn-card-like"
-                      aria-label={packagesWishlist.isSaved(pkg.id) ? 'Remove from wishlist' : 'Save to wishlist'}
+                      aria-label={packagesWishlist.isSaved(pkg.id) ? t('home.wishlistRemove') : t('home.wishlistAdd')}
                       onClick={() => packagesWishlist.toggle(pkg.id, { name: pkg.title, image: suggestionImageFor(pkg.title), price: pkg.price })}
                     >
                       <Heart size={16} fill={packagesWishlist.isSaved(pkg.id) ? '#ef4444' : 'none'} color={packagesWishlist.isSaved(pkg.id) ? '#ef4444' : 'currentColor'} />
@@ -538,9 +461,9 @@ const Home: React.FC = () => {
                   <div className="card-bottom-row">
                     <div className="card-price-block">
                       <span className="card-price-amount">{pkg.price}</span>
-                      <span className="card-price-per">/ person</span>
+                      <span className="card-price-per">{t('home.perPerson')}</span>
                     </div>
-                    <button className="btn-card-action" onClick={() => navigate(`/packages/${pkg.id}`)}>Book Now</button>
+                      <button className="btn-card-action" onClick={() => navigate(`/packages/${pkg.id}`)}>{t('home.bookNow')}</button>
                   </div>
                 </div>
               </div>
@@ -563,18 +486,18 @@ const Home: React.FC = () => {
           {DESTINATIONS.map((item) => (
             <div key={item.id} className="escape-card">
               <div className="card-img-box">
-                <img loading="lazy" src={item.img} alt={item.name} className="card-img" onError={handleImgError} />
+                <img loading="lazy" src={item.img} alt={t(item.nameKey)} className="card-img" onError={handleImgError} />
               </div>
               <div className="card-body">
                 <div className="card-top-row">
                   <div className="card-title-group">
-                    <h3 className="card-name">{item.name}</h3>
-                    <p className="card-subtext">{item.subtext}</p>
+                    <h3 className="card-name">{t(item.nameKey)}</h3>
+                    <p className="card-subtext">{t(item.subtextKey)}</p>
                   </div>
                   <button
                     className="btn-card-like"
-                    aria-label={packagesWishlist.isSaved(String(item.id)) ? 'Remove from wishlist' : 'Save to wishlist'}
-                    onClick={() => packagesWishlist.toggle(String(item.id), { name: item.name, image: item.img, price: item.price })}
+                    aria-label={packagesWishlist.isSaved(String(item.id)) ? t('home.wishlistRemove') : t('home.wishlistAdd')}
+                    onClick={() => packagesWishlist.toggle(String(item.id), { name: t(item.nameKey), image: item.img, price: item.price })}
                   >
                     <Heart size={16} fill={packagesWishlist.isSaved(String(item.id)) ? '#ef4444' : 'none'} color={packagesWishlist.isSaved(String(item.id)) ? '#ef4444' : 'currentColor'} />
                   </button>
@@ -584,7 +507,7 @@ const Home: React.FC = () => {
                     <span className="card-price-amount">₹{item.price.toLocaleString('en-IN')}</span>
                     <span className="card-price-per">/ person</span>
                   </div>
-                  <button className="btn-card-action" onClick={() => navigate(`/packages?destination=${encodeURIComponent(item.name)}`)}>Book Now</button>
+                    <button className="btn-card-action" onClick={() => navigate(`/packages?destination=${encodeURIComponent(t(item.nameKey))}`)}>{t('home.bookNow')}</button>
                 </div>
               </div>
             </div>
@@ -595,10 +518,10 @@ const Home: React.FC = () => {
       {/* 7. Offers Section */}
       <div className="section-wrapper">
         <div className="section-header-row">
-          <h2 className="section-main-title">Best Offers For You</h2>
+          <h2 className="section-main-title">{t('home.bestOffers')}</h2>
           <div className="section-header-actions">
             <a href="/offers" className="section-view-all" onClick={(e) => { e.preventDefault(); navigate('/offers'); }}>
-              View all
+              {t('home.offersViewAll')}
               <ChevronRight size={16} />
             </a>
           
@@ -613,22 +536,22 @@ const Home: React.FC = () => {
               style={{ backgroundColor: item.bgColor }}
             >
               <div className="offer-left-section">
-                <h3 className="offer-title" style={{ color: item.textColor }}>{item.title}</h3>
+                <h3 className="offer-title" style={{ color: item.textColor }}>{t(item.titleKey)}</h3>
 
                 <div className="offer-details">
-                  {item.desc && <p className="offer-card-desc">{item.desc}</p>}
-                  <p className="offer-card-date">{item.date}</p>
+                  {item.descKey && <p className="offer-card-desc">{t(item.descKey)}</p>}
+                  <p className="offer-card-date">{t(item.dateKey)}</p>
                 </div>
 
                 <div className="offer-code-dashed" style={{ color: item.textColor }}>
-                  {item.code}
+                  {t(item.codeKey)}
                 </div>
               </div>
               
               <div className="offer-right-section">
                 <span className="offer-badge-pill" style={{ color: item.textColor }}>
                   <BadgePercent size={20} className="badge-percent-icon" style={{ color: '#fff', fill: item.badgeColor }} />
-                  Flat ₹150 OFF
+                  {t('home.offerBadge')}
                 </span>
                 <div className="offer-illust-container">
                   <img loading="lazy" src={item.img} className="offer-illust-img" alt="Offer illustration" />
@@ -663,7 +586,7 @@ const Home: React.FC = () => {
                   </div>
                   <button
                     className="btn-card-like"
-                    aria-label={hotelsWishlist.isSaved(item.id) ? 'Remove from wishlist' : 'Save to wishlist'}
+                    aria-label={hotelsWishlist.isSaved(item.id) ? t('home.wishlistRemove') : t('home.wishlistAdd')}
                     onClick={() => hotelsWishlist.toggle(item.id, { name: item.name, image: item.img, price: item.price, location: item.location })}
                   >
                     <Heart size={16} fill={hotelsWishlist.isSaved(item.id) ? '#ef4444' : 'none'} color={hotelsWishlist.isSaved(item.id) ? '#ef4444' : 'currentColor'} />
@@ -678,9 +601,9 @@ const Home: React.FC = () => {
                 <div className="card-bottom-row">
                   <div className="card-price-block">
                     <span className="card-price-amount">₹{item.price.toLocaleString('en-IN')}</span>
-                    <span className="card-price-per">/ night</span>
+                    <span className="card-price-per">{t('home.perNight')}</span>
                   </div>
-                  <button className="btn-card-action" onClick={() => navigate(`/hotels/${item.id}`)}>Book Now</button>
+                  <button className="btn-card-action" onClick={() => navigate(`/hotels/${item.id}`)}>{t('home.bookNow')}</button>
                 </div>
               </div>
             </div>
@@ -696,8 +619,8 @@ const Home: React.FC = () => {
         >
           <div className="app-banner-left">
             <img src={nikloLogoWhite} alt="Niklo" className="app-banner-logo" />
-            <h2 className="app-banner-title">Your Next Adventure Starts<br />with Niklo</h2>
-            <p>Download the Niklo app to get exclusive updates, track bookings and plan itineraries on the go.</p>
+            <h2 className="app-banner-title">{t('home.appBannerTitle')}</h2>
+            <p>{t('home.appBannerDesc')}</p>
           </div>
 
           <div className="app-banner-right">
@@ -714,18 +637,18 @@ const Home: React.FC = () => {
 
       {/* 10. FAQs (merged with Travel Tips into one combined accordion section, per client request) */}
       <div className="faq-container">
-        <h2 className="faq-title">FAQs & Travel Tips</h2>
+        <h2 className="faq-title">{t('home.faqTitle')}</h2>
 
         <div className="faq-list">
           {(showAllFaqs ? FAQ_AND_TIPS : FAQ_AND_TIPS.slice(0, FAQ_AND_TIPS_PREVIEW_COUNT)).map((item, idx) => (
             <div key={idx} className={`faq-item ${activeFaq === idx ? 'active' : ''}`}>
               <button className="faq-question-btn" onClick={() => toggleFaq(idx)}>
-                <span>{item.q}</span>
+                <span>{t(item.qKey)}</span>
                 <ChevronDown size={18} className={`faq-chevron ${activeFaq === idx ? 'open' : ''}`} />
               </button>
               {activeFaq === idx && (
                 <div className="faq-answer fade-in">
-                  <p>{item.a}</p>
+                  <p>{t(item.aKey)}</p>
                 </div>
               )}
             </div>
@@ -734,7 +657,7 @@ const Home: React.FC = () => {
 
         {!showAllFaqs && FAQ_AND_TIPS.length > FAQ_AND_TIPS_PREVIEW_COUNT && (
           <button className="faq-view-more-btn" onClick={() => setShowAllFaqs(true)}>
-            View More
+            {t('home.faqViewMore')}
           </button>
         )}
       </div>

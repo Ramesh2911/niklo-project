@@ -18,11 +18,19 @@ const I18nContext = createContext<I18nContextValue>({
 });
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>('English');
+  const [lang, setLang] = useState<Lang>(() => {
+    const saved = localStorage.getItem('niklo_lang');
+    return (saved as Lang) || 'English';
+  });
+
+  const setLanguage = (l: Lang) => {
+    setLang(l);
+    localStorage.setItem('niklo_lang', l);
+  };
 
   const value: I18nContextValue = {
     lang,
-    setLang,
+    setLang: setLanguage,
     t: (path) => translate(lang, path),
     translations: en,
   };

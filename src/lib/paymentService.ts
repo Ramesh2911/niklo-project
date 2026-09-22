@@ -1,4 +1,7 @@
-import { api } from './api';
+import { createApi } from './api';
+
+const api = createApi(import.meta.env.VITE_PAYMENT_BASE_URL || '/api/v1');
+const userApi = createApi(import.meta.env.VITE_USER_BASE_URL || '/api/v1');
 
 export interface WalletTransaction {
   id: string;
@@ -58,7 +61,7 @@ export const paymentService = {
   // Reading .data on these made getWalletInfo throw on every call.
   getWalletInfo: async (): Promise<WalletInfo> => {
     const [balance, transactions] = await Promise.all([
-      api.get<RawWalletBalance>('/user/wallet', true),
+      userApi.get<RawWalletBalance>('/user/wallet', true),
       api.get<RawWalletTransaction[]>('/payment/wallet/transactions', true),
     ]);
     return {

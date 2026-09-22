@@ -1,4 +1,6 @@
-import { api } from './api';
+import { createApi } from './api';
+
+const api = createApi(import.meta.env.VITE_AI_PLANNER_BASE_URL || '/api/v1');
 
 export interface PlanLocation {
   name: string;

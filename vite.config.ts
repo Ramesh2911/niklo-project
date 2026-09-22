@@ -10,19 +10,19 @@ export default defineConfig(({ mode }) => {
   // instead of a code change; falls back to the values known at write-time.
   const env = loadEnv(mode, process.cwd(), '');
   const SVC = {
-    auth:         env.VITE_AUTH_BASE_URL || 'http://szs601uiqefhc8jbpeq587f3.187.127.157.13.sslip.io',
-    user:         env.VITE_USER_BASE_URL || 'http://f11slpsqn3bkula8r1yr292u.187.127.157.13.sslip.io',
-    ride:         env.VITE_RIDE_BASE_URL || 'http://my41fssoetuy2w34a2yettfe.187.127.157.13.sslip.io',
-    bus:          env.VITE_BUS_BASE_URL || 'http://w1n68oxs2na9q9tbveqsqa4s.187.127.157.13.sslip.io',
-    payment:      env.VITE_PAYMENT_BASE_URL || 'http://n13chiypv5vg517ffvioht20.187.127.157.13.sslip.io',
-    hotel:        env.VITE_HOTEL_BASE_URL || 'http://b5m0ntg98i0cpdaidmcvdqwd.187.127.157.13.sslip.io',
-    packages:     env.VITE_PACKAGE_BASE_URL || 'http://ltmzir9qa389f53ho5hkzlq0.187.127.157.13.sslip.io',
-    adventures:   env.VITE_ADVENTURE_BASE_URL || 'http://ra0qdnh3xfolrfu1y82bva9g.187.127.157.13.sslip.io',
-    notification: env.VITE_NOTIFICATION_BASE_URL || 'http://l2pdf6ail6mlmurxhtjjf44i.187.127.157.13.sslip.io',
-    booking:      env.VITE_BOOKING_BASE_URL || 'http://yjfbvszz8e2yv5sefwcpxye4.187.127.157.13.sslip.io',
-    driver:       env.VITE_DRIVER_BASE_URL || 'http://ebzdp7jvp5z5bhrl05tkvxsa.187.127.157.13.sslip.io',
-    aiPlanner:    env.VITE_AI_PLANNER_BASE_URL || 'http://s3knzzbxvavkb4t218hgb9nh.187.127.157.13.sslip.io',
-    nginx:        env.VITE_NGINX_BASE_URL || 'http://irtucumwj9akelon0k4iyatv.187.127.157.13.sslip.io',
+    auth:         env.VITE_AUTH_BASE_URL || 'http://szs601uiqefhc8jbpeq587f3.187.127.157.13.sslip.io/api/v1',
+    user:         env.VITE_USER_BASE_URL || 'http://f11slpsqn3bkula8r1yr292u.187.127.157.13.sslip.io/api/v1',
+    ride:         env.VITE_RIDE_BASE_URL || 'http://my41fssoetuy2w34a2yettfe.187.127.157.13.sslip.io/api/v1',
+    bus:          env.VITE_BUS_BASE_URL || 'http://w1n68oxs2na9q9tbveqsqa4s.187.127.157.13.sslip.io/api/v1',
+    payment:      env.VITE_PAYMENT_BASE_URL || 'http://n13chiypv5vg517ffvioht20.187.127.157.13.sslip.io/api/v1',
+    hotel:        env.VITE_HOTEL_BASE_URL || 'http://b5m0ntg98i0cpdaidmcvdqwd.187.127.157.13.sslip.io/api/v1',
+    packages:     env.VITE_PACKAGE_BASE_URL || 'http://ltmzir9qa389f53ho5hkzlq0.187.127.157.13.sslip.io/api/v1',
+    adventures:   env.VITE_ADVENTURE_BASE_URL || 'http://ra0qdnh3xfolrfu1y82bva9g.187.127.157.13.sslip.io/api/v1',
+    notification: env.VITE_NOTIFICATION_BASE_URL || 'http://l2pdf6ail6mlmurxhtjjf44i.187.127.157.13.sslip.io/api/v1',
+    booking:      env.VITE_BOOKING_BASE_URL || 'http://yjfbvszz8e2yv5sefwcpxye4.187.127.157.13.sslip.io/api/v1',
+    driver:       env.VITE_DRIVER_BASE_URL || 'http://ebzdp7jvp5z5bhrl05tkvxsa.187.127.157.13.sslip.io/api/v1',
+    aiPlanner:    env.VITE_AI_PLANNER_BASE_URL || 'http://s3knzzbxvavkb4t218hgb9nh.187.127.157.13.sslip.io/api/v1',
+    nginx:        env.VITE_NGINX_BASE_URL || 'http://irtucumwj9akelon0k4iyatv.187.127.157.13.sslip.io/api/v1',
   };
 
   return {

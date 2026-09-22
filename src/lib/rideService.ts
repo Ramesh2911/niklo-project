@@ -1,4 +1,6 @@
-import { api } from './api';
+import { createApi } from './api';
+
+const api = createApi(import.meta.env.VITE_RIDE_BASE_URL || '/api/v1');
 
 // No standalone driver-app client exists in this project, so the currently
 // signed-in account goes online near the pickup point and "accepts" via the

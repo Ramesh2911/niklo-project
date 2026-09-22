@@ -1,4 +1,6 @@
-import { api } from './api';
+import { createApi } from './api';
+
+const api = createApi(import.meta.env.VITE_USER_BASE_URL || '/api/v1');
 
 export interface UserProfile {
   id: string;
@@ -90,4 +92,7 @@ export const userService = {
 
   updateLocation: async (id: string, input: { label?: string; full_address?: string; latitude?: number | null; longitude?: number | null }) =>
     unwrap(await api.put<Envelope<{ id: string; label: string; full_address?: string; latitude?: number | null; longitude?: number | null }>>(`/user/locations/${id}`, input, true)),
+
+  syncWallet: async (id: string) =>
+    unwrap(await api.post<Envelope<{ balance: number }>>(`/user/${id}/sync-wallet`, {}, true)),
 };

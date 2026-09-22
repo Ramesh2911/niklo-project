@@ -1,4 +1,6 @@
-import { api, PLACEHOLDER_IMG } from './api';
+import { createApi, PLACEHOLDER_IMG } from './api';
+
+const api = createApi(import.meta.env.VITE_HOTEL_BASE_URL || '/api/v1');
 
 export interface Hotel {
   id: string;

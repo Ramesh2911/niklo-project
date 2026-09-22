@@ -1,5 +1,7 @@
-import { api } from './api';
+import { createApi } from './api';
 import adventureIllustration from '../assets/adventure.svg';
+
+const api = createApi(import.meta.env.VITE_ADVENTURE_BASE_URL || '/api/v1');
 
 export interface Experience {
   id: string;

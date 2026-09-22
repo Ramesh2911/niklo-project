@@ -14,13 +14,13 @@ interface NavbarProps {
 
 const LANGUAGES: Lang[] = ['English', 'Hindi', 'Bengali', 'Gujarati'];
 
-const MAIN_LINKS = [
-  { label: 'Home', path: '/' },
-  { label: 'Buses', path: '/buses' },
-  { label: 'Hotels', path: '/hotels' },
-  { label: 'Cabs', path: '/cabs' },
-  { label: 'Packages', path: '/packages' },
-  { label: 'Adventures', path: '/experiences' },
+const NAV_KEYS = [
+  { key: 'nav.home', path: '/' },
+  { key: 'nav.buses', path: '/buses' },
+  { key: 'nav.hotels', path: '/hotels' },
+  { key: 'nav.cabs', path: '/cabs' },
+  { key: 'nav.packages', path: '/packages' },
+  { key: 'nav.adventures', path: '/experiences' },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({ theme = 'white' }) => {
@@ -42,14 +42,14 @@ const Navbar: React.FC<NavbarProps> = ({ theme = 'white' }) => {
   }, []);
 
   const handleLogout = async () => {
-    if (!window.confirm('Are you sure you want to log out?')) return;
+    if (!window.confirm(t('nav.confirmLogout'))) return;
     await logout();
     navigate('/');
     setMobileOpen(false);
   };
 
   const go = (path: string) => { navigate(path); setMobileOpen(false); };
-  const displayName = user?.name?.split(' ')[0] || 'Account';
+  const displayName = user?.name?.split(' ')[0] || t('nav.account');
 
   return (
     <header className={`niklo-navbar theme-${theme}`} role="banner">
@@ -67,13 +67,13 @@ const Navbar: React.FC<NavbarProps> = ({ theme = 'white' }) => {
 
       {/* Primary section links */}
       <nav className="nav-main-links" aria-label="Primary navigation">
-        {MAIN_LINKS.map((link) => (
+        {NAV_KEYS.map((link) => (
           <button
             key={link.path}
             className={`nav-main-link${location.pathname === link.path ? ' active' : ''}`}
             onClick={() => go(link.path)}
           >
-            {link.label}
+            {t(link.key)}
           </button>
         ))}
       </nav>
@@ -100,11 +100,11 @@ const Navbar: React.FC<NavbarProps> = ({ theme = 'white' }) => {
             </button>
             {showProfileMenu && (
               <div className="profile-dropdown-menu" role="menu">
-                <button type="button" role="menuitem" onClick={() => { go('/profile'); setShowProfileMenu(false); }}>Profile</button>
-                <button type="button" role="menuitem" onClick={() => { go('/bookings'); setShowProfileMenu(false); }}>My Bookings</button>
-                <button type="button" role="menuitem" onClick={() => { go('/wishlist'); setShowProfileMenu(false); }}>Wishlist</button>
-                <button type="button" role="menuitem" onClick={() => { go('/wallet'); setShowProfileMenu(false); }}>Wallet</button>
-                <button type="button" role="menuitem" onClick={() => { go('/referral'); setShowProfileMenu(false); }}>Referral</button>
+                <button type="button" role="menuitem" onClick={() => { go('/profile'); setShowProfileMenu(false); }}>{t('nav.profile')}</button>
+                <button type="button" role="menuitem" onClick={() => { go('/bookings'); setShowProfileMenu(false); }}>{t('nav.myBookings')}</button>
+                <button type="button" role="menuitem" onClick={() => { go('/wishlist'); setShowProfileMenu(false); }}>{t('nav.wishlist')}</button>
+                <button type="button" role="menuitem" onClick={() => { go('/wallet'); setShowProfileMenu(false); }}>{t('nav.wallet')}</button>
+                <button type="button" role="menuitem" onClick={() => { go('/referral'); setShowProfileMenu(false); }}>{t('nav.referral')}</button>
                 <hr className="dropdown-hr" />
                 <div className="dropdown-submenu-container">
                   <button
@@ -115,7 +115,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme = 'white' }) => {
                     className="dropdown-submenu-trigger"
                     onClick={() => setShowLangSubmenu((v) => !v)}
                   >
-                    <span><Globe size={14} /> Language</span>
+                    <span><Globe size={14} /> {t('nav.language')}</span>
                     <ChevronDown size={12} className={showLangSubmenu ? 'rotated' : ''} />
                   </button>
                   {showLangSubmenu && (
@@ -135,7 +135,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme = 'white' }) => {
                   )}
                 </div>
                 <hr className="dropdown-hr" />
-                <button type="button" role="menuitem" className="logout-btn" onClick={handleLogout}>Log Out</button>
+                <button type="button" role="menuitem" className="logout-btn" onClick={handleLogout}>{t('nav.logout')}</button>
               </div>
             )}
           </div>
@@ -160,24 +160,24 @@ const Navbar: React.FC<NavbarProps> = ({ theme = 'white' }) => {
       {/* Mobile drawer */}
       {mobileOpen && (
         <nav className="mobile-drawer" aria-label="Mobile navigation">
-          <button className="mobile-nav-item" onClick={() => go('/')}>Home</button>
-          <button className="mobile-nav-item" onClick={() => go('/buses')}>Bus Booking</button>
-          <button className="mobile-nav-item" onClick={() => go('/cabs')}>Cab Rides</button>
-          <button className="mobile-nav-item" onClick={() => go('/hotels')}>Hotels</button>
-          <button className="mobile-nav-item" onClick={() => go('/packages')}>Packages</button>
-          <button className="mobile-nav-item" onClick={() => go('/experiences')}>Experiences</button>
+          <button className="mobile-nav-item" onClick={() => go('/')}>{t('nav.home')}</button>
+          <button className="mobile-nav-item" onClick={() => go('/buses')}>{t('nav.busBooking')}</button>
+          <button className="mobile-nav-item" onClick={() => go('/cabs')}>{t('nav.cabRides')}</button>
+          <button className="mobile-nav-item" onClick={() => go('/hotels')}>{t('nav.hotels')}</button>
+          <button className="mobile-nav-item" onClick={() => go('/packages')}>{t('nav.packages')}</button>
+          <button className="mobile-nav-item" onClick={() => go('/experiences')}>{t('nav.adventures')}</button>
           {isLoggedIn && (
             <>
               <button className="mobile-nav-item" onClick={() => go('/wishlist')}>
-                <Heart size={16} /> Wishlist
+                <Heart size={16} /> {t('nav.wishlist')}
               </button>
-              <button className="mobile-nav-item" onClick={() => go('/notifications')}>Notifications</button>
-              <button className="mobile-nav-item" onClick={() => go('/profile')}>Profile</button>
-              <button className="mobile-nav-item mobile-logout" onClick={handleLogout}>Log Out</button>
+              <button className="mobile-nav-item" onClick={() => go('/notifications')}>{t('nav.notifications')}</button>
+              <button className="mobile-nav-item" onClick={() => go('/profile')}>{t('nav.profile')}</button>
+              <button className="mobile-nav-item mobile-logout" onClick={handleLogout}>{t('nav.logout')}</button>
             </>
           )}
           {!isLoggedIn && (
-            <button className="mobile-nav-item mobile-login" onClick={() => go('/welcome')}>Login / Sign Up</button>
+            <button className="mobile-nav-item mobile-login" onClick={() => go('/welcome')}>{t('nav.loginSignUp')}</button>
           )}
         </nav>
       )}
