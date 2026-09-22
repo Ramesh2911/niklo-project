@@ -6,7 +6,14 @@ type RequestOptions = {
   auth?: boolean;
 };
 
-const AUTH_BASE = import.meta.env.VITE_AUTH_BASE_URL || '/api/v1';
+function normalizeBaseUrl(url: string): string {
+  const base = url.trim().replace(/\/+$/, '');
+  if (base.endsWith('/api/v1') || base.endsWith('api/v1')) return base;
+  if (base.endsWith('/api')) return `${base}/v1`;
+  return `${base}/api/v1`;
+}
+
+const AUTH_BASE = normalizeBaseUrl(import.meta.env.VITE_AUTH_BASE_URL || '/api/v1');
 
 let refreshInFlight: Promise<boolean> | null = null;
 
@@ -37,6 +44,8 @@ function tryRefresh(): Promise<boolean> {
 }
 
 export function createApi(baseUrl: string) {
+  const root = normalizeBaseUrl(baseUrl);
+
   async function request<T>(path: string, opts: RequestOptions = {}): Promise<T> {
     const { method = 'GET', body, auth = false } = opts;
     const isFormData = body instanceof FormData;
@@ -48,7 +57,7 @@ export function createApi(baseUrl: string) {
       if (token) headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const res = await fetch(`${baseUrl}${path}`, {
+    const res = await fetch(`${root}${path}`, {
       method,
       headers,
       body: encodedBody,
@@ -58,7 +67,7 @@ export function createApi(baseUrl: string) {
       const refreshed = await tryRefresh();
       if (refreshed) {
         headers['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
-        const retry = await fetch(`${baseUrl}${path}`, {
+        const retry = await fetch(`${root}${path}`, {
           method,
           headers,
           body: encodedBody,
