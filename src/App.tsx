@@ -49,9 +49,33 @@ const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
 
 // No scroll restoration on navigate by default with react-router — reset to top
 // on every route change so a new page doesn't open mid-scroll from the last one.
+// When the URL has a #hash (e.g. /privacy-security#privacy-policy), scroll to
+// that section instead — retry briefly so lazy-loaded pages exist first.
 function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return;
+    }
+    const id = decodeURIComponent(hash.slice(1));
+    let tries = 0;
+    let timer: number | undefined;
+    const scroll = () => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      if (tries++ < 20) {
+        timer = window.setTimeout(scroll, 50);
+        return;
+      }
+      window.scrollTo(0, 0);
+    };
+    scroll();
+    return () => { if (timer) window.clearTimeout(timer); };
+  }, [pathname, hash]);
   return null;
 }
 

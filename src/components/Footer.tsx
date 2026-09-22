@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
             <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/help'); }}>{t('footer.linkHelpCenter')}</a></li>
             <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/help'); }}>{t('footer.linkFaqs')}</a></li>
             <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/cancellation-policy'); }}>{t('footer.linkCancellationPolicy')}</a></li>
-            <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/privacy-security'); }}>{t('footer.linkTrustSafety')}</a></li>
+            <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/privacy-security#trust-safety'); }}>{t('footer.linkTrustSafety')}</a></li>
             <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/privacy-security#privacy-policy'); }}>{t('footer.linkPrivacyPolicy')}</a></li>
             <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/privacy-security#terms-of-service'); }}>{t('footer.linkTermsOfService')}</a></li>
           </ul>

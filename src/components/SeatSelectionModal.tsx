@@ -34,41 +34,73 @@ const maskIconStyle = (iconUrl: string, size: number, color: string): React.CSSP
   maskImage: `url("${iconUrl}")`,
 });
 
-const SeaterIcon = ({ state = 'available', size = 32, onClick }: any) => {
+const iconColor = (state: string, isLadies?: boolean) =>
+  isLadies && state === 'available' ? '#db2777' : SEAT_STATE_COLOR[state];
+
+const seatLabel = (seatNo: any) => (seatNo != null && seatNo !== '' ? `S${seatNo}` : null);
+
+const SeaterIcon = ({ state = 'available', size = 32, onClick, seatNo, isLadies }: any) => {
+  const label = seatLabel(seatNo);
   return (
-    <span
-      style={maskIconStyle(seatIconUrl, size, SEAT_STATE_COLOR[state])}
-      className={`seat-icon ${state}`}
-      onClick={state !== 'booked' ? onClick : undefined}
-    />
+    <span className={`seat-cell ${isLadies ? 'ladies' : ''}`}>
+      <span className="seat-glyph" style={{ width: size, height: size }}>
+        <span
+          style={maskIconStyle(seatIconUrl, size, iconColor(state, isLadies))}
+          className={`seat-icon ${state}`}
+          onClick={state !== 'booked' ? onClick : undefined}
+        />
+        {label && (
+          <span className={`seat-no ${isLadies ? 'ladies' : ''}`}>{label}</span>
+        )}
+      </span>
+    </span>
   );
 };
 
-const SleeperIcon = ({ state = 'available', size = 32, onClick }: any) => {
+const SleeperIcon = ({ state = 'available', size = 32, onClick, seatNo, isLadies }: any) => {
+  const label = seatLabel(seatNo);
   return (
-    <span
-      style={maskIconStyle(bedIconUrl, size, SEAT_STATE_COLOR[state])}
-      className={`seat-icon ${state}`}
-      onClick={state !== 'booked' ? onClick : undefined}
-    />
+    <span className={`seat-cell ${isLadies ? 'ladies' : ''}`}>
+      <span className="seat-glyph" style={{ width: size, height: size }}>
+        <span
+          style={maskIconStyle(bedIconUrl, size, iconColor(state, isLadies))}
+          className={`seat-icon ${state}`}
+          onClick={state !== 'booked' ? onClick : undefined}
+        />
+        {label && (
+          <span className={`seat-no ${isLadies ? 'ladies' : ''}`}>{label}</span>
+        )}
+      </span>
+    </span>
   );
 };
 
-const COLUMN_TO_SLOT: Record<number, string> = { 1: 'left', 2: 'right-1', 3: 'right-2' };
+// 4-column decks use a 2+2 layout (left×2 | aisle | right×2);
+// 3-column decks keep the existing 1+2 layout (left | aisle | right×2).
+const COLUMN_TO_SLOT_3: Record<number, string> = { 1: 'left', 2: 'right-1', 3: 'right-2' };
+const COLUMN_TO_SLOT_4: Record<number, string> = { 1: 'left-1', 2: 'left-2', 3: 'right-1', 4: 'right-2' };
 
-const mapSeat = (s: RawSeat) => ({
-  id: s.seat_number,
-  row: s.row,
-  col: COLUMN_TO_SLOT[s.column] || 'left',
-  state: s.is_available ? 'available' : 'booked',
-  originalState: (s.is_available ? 'available' : 'booked') as 'available' | 'booked',
-});
+const mapDeckSeats = (seats: RawSeat[]) => {
+  const maxCol = seats.reduce((max, s) => Math.max(max, Number(s.column) || 0), 0);
+  const slots = maxCol >= 4 ? COLUMN_TO_SLOT_4 : COLUMN_TO_SLOT_3;
+  return seats.map((s) => {
+    const col = Number(s.column);
+    return {
+      id: s.seat_number,
+      row: Number(s.row) || 1,
+      col: slots[col] || (maxCol >= 4 ? 'left-1' : 'left'),
+      state: s.is_available ? 'available' : 'booked',
+      originalState: (s.is_available ? 'available' : 'booked') as 'available' | 'booked',
+      isLadies: Boolean(s.is_ladies_seat),
+    };
+  });
+};
 
 const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onClose }) => {
   const navigate = useNavigate();
   const { t } = useI18n();
-  const [lowerSeats, setLowerSeats] = useState<ReturnType<typeof mapSeat>[]>([]);
-  const [upperSeats, setUpperSeats] = useState<ReturnType<typeof mapSeat>[]>([]);
+  const [lowerSeats, setLowerSeats] = useState<ReturnType<typeof mapDeckSeats>>([]);
+  const [upperSeats, setUpperSeats] = useState<ReturnType<typeof mapDeckSeats>>([]);
   const [seatsLoading, setSeatsLoading] = useState(true);
   const [isLocking, setIsLocking] = useState(false);
   const [lockError, setLockError] = useState('');
@@ -82,8 +114,13 @@ const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onCl
     busService.getScheduleSeats(bus.id)
       .then((data) => {
         if (cancelled) return;
-        setLowerSeats(data.seats.filter((s) => s.deck === 'LOWER').map(mapSeat));
-        setUpperSeats(data.seats.filter((s) => s.deck === 'UPPER').map(mapSeat));
+        const lower = data.seats.filter((s) => s.deck === 'LOWER');
+        const upper = data.seats.filter((s) => s.deck === 'UPPER');
+        setLowerSeats(mapDeckSeats(lower));
+        setUpperSeats(mapDeckSeats(upper));
+        // Default to whichever deck actually has seats (e.g. empty lower_deck).
+        if (lower.length === 0 && upper.length > 0) setActiveDeck('upper');
+        else if (upper.length === 0 && lower.length > 0) setActiveDeck('lower');
       })
       .catch(() => {
         if (!cancelled) { setLowerSeats([]); setUpperSeats([]); }
@@ -170,46 +207,42 @@ const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onCl
     });
   };
 
+  const renderSeatIcon = (seat: ReturnType<typeof mapDeckSeats>[number] | undefined, isUpper: boolean) => {
+    if (!seat) return null;
+    const props = {
+      state: seat.state,
+      seatNo: seat.id,
+      isLadies: seat.isLadies,
+      onClick: () => handleSeatClick(seat.id, isUpper),
+    };
+    return isUpper ? <SleeperIcon {...props} size={40} /> : <SeaterIcon {...props} size={32} />;
+  };
+
   const renderSeatGrid = (seats: any[], isUpper: boolean) => {
     const rows = isUpper ? upperRows : lowerRows;
     const rowArray = Array.from({ length: rows }, (_, i) => i + 1);
+    const isFourCol = seats.some((s) => s.col === 'left-1' || s.col === 'left-2');
 
     return (
-      <div className={`deck-layout ${isUpper ? 'deck-layout--upper' : ''}`}>
+      <div className={`deck-layout ${isUpper ? 'deck-layout--upper' : ''} ${isFourCol ? 'deck-layout--four' : ''}`}>
         <div className="seat-grid">
             {rowArray.map(r => {
               const rowSeats = seats.filter(s => s.row === r);
-              const leftSeat = rowSeats.find(s => s.col === 'left');
+              const leftSeat1 = rowSeats.find(s => s.col === 'left' || s.col === 'left-1');
+              const leftSeat2 = rowSeats.find(s => s.col === 'left-2');
               const rightSeat1 = rowSeats.find(s => s.col === 'right-1');
               const rightSeat2 = rowSeats.find(s => s.col === 'right-2');
 
               return (
                 <div key={r} className="seat-row">
                   <div className="seat-col left">
-                    {leftSeat && (
-                      isUpper ? (
-                        <SleeperIcon state={leftSeat.state} size={40} onClick={() => handleSeatClick(leftSeat.id, isUpper)} />
-                      ) : (
-                        <SeaterIcon state={leftSeat.state} size={32} onClick={() => handleSeatClick(leftSeat.id, isUpper)} />
-                      )
-                    )}
+                    {renderSeatIcon(leftSeat1, isUpper)}
+                    {renderSeatIcon(leftSeat2, isUpper)}
                   </div>
                   <div className="seat-aisle"></div>
                   <div className="seat-col right">
-                    {rightSeat1 && (
-                      isUpper ? (
-                        <SleeperIcon state={rightSeat1.state} size={40} onClick={() => handleSeatClick(rightSeat1.id, isUpper)} />
-                      ) : (
-                        <SeaterIcon state={rightSeat1.state} size={32} onClick={() => handleSeatClick(rightSeat1.id, isUpper)} />
-                      )
-                    )}
-                    {rightSeat2 && (
-                      isUpper ? (
-                        <SleeperIcon state={rightSeat2.state} size={40} onClick={() => handleSeatClick(rightSeat2.id, isUpper)} />
-                      ) : (
-                        <SeaterIcon state={rightSeat2.state} size={32} onClick={() => handleSeatClick(rightSeat2.id, isUpper)} />
-                      )
-                    )}
+                    {renderSeatIcon(rightSeat1, isUpper)}
+                    {renderSeatIcon(rightSeat2, isUpper)}
                   </div>
                 </div>
               );
@@ -275,6 +308,10 @@ const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onCl
                   <div className="legend-item">
                     <SeaterIcon state="booked" size={20} />
                     <span>{t('seatSelection.legendBooked')}</span>
+                  </div>
+                  <div className="legend-item">
+                    <span className="legend-ladies-chip" aria-hidden="true">S</span>
+                    <span>{t('seatSelection.legendLadies')}</span>
                   </div>
                 </div>
               </div>

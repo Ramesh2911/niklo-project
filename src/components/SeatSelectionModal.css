@@ -173,6 +173,21 @@
   color: #475569;
 }
 
+.legend-ladies-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: #fce7f3;
+  border: 1.5px dashed #ec4899;
+  color: #db2777;
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
 .decks-wrapper {
   display: flex;
   gap: 32px;
@@ -253,6 +268,15 @@
 
 .deck-layout--upper .seat-col {
   gap: 10px;
+}
+
+/* 2+2 seater layout (left×2 | aisle | right×2) needs more width than 1+2. */
+.deck-layout--four {
+  max-width: 280px;
+}
+
+.deck-layout--four.deck-layout--upper {
+  max-width: 300px;
 }
 
 .seat-grid {
@@ -811,6 +835,55 @@
 
 .seat-icon.available:hover, .seat-icon.selected:hover {
   transform: scale(1.1);
+}
+
+/* Seat number overlaid on the glyph (S1, S2, …).
+   Ladies seats: pink filled cell + dashed pink ring so they stay obvious
+   even when the glyph itself is selected (green) or booked (grey). */
+.seat-cell {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.seat-cell.ladies {
+  background: #fdf2f8;
+  border: 1.5px dashed #ec4899;
+  border-radius: 10px;
+  padding: 4px 5px 3px;
+  box-sizing: border-box;
+}
+
+.seat-glyph {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seat-glyph .seat-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.seat-glyph .seat-no {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #64748b;
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -0.02em;
+}
+
+.seat-glyph .seat-no.ladies {
+  color: #db2777;
 }
 
 /* Mobile: full-screen layout matching the reference design — back-arrow

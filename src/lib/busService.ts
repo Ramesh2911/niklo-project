@@ -36,7 +36,9 @@ type ScheduleResponse = RawSchedule[] | { data?: RawSchedule[] };
 
 export interface RawSeat {
   seat_number: string;
-  deck: 'LOWER' | 'UPPER';
+  deck?: 'LOWER' | 'UPPER';
+  is_upper_deck?: boolean;
+  is_ladies_seat?: boolean;
   row: number;
   column: number;
   seat_type: 'SEATER' | 'SLEEPER' | 'SEMI_SLEEPER';
@@ -44,11 +46,15 @@ export interface RawSeat {
   price?: number;
 }
 
+// getScheduleSeats always stamps `deck` (from the source array / is_upper_deck),
+// so consumers can filter on it without worrying about the raw API shape.
+export type SeatWithDeck = RawSeat & { deck: 'LOWER' | 'UPPER' };
+
 export interface ScheduleSeats {
   schedule_id: string;
   total_seats: number;
   available_seats: number;
-  seats: RawSeat[];
+  seats: SeatWithDeck[];
 }
 
 // Verified live (2026-08-25): GET /bus/schedules/:id/seat-map nests the decks
@@ -145,39 +151,56 @@ const mapSchedule = (s: RawSchedule): BusSchedule => {
   };
 };
 
-// Verified live (2026-08-25): none of these four routes wrap their payload as
+// Verified live (2026-08-25): none of these routes wrap their payload as
 // {success, statusCode, data} — search/seat-map/schedule-by-id/boarding-points
 // are all flat. Reading .data on every one of them made search/seat-map/
-// boarding-points throw or silently return nothing.
+// boarding-points throw or silently return nothing. Search lives at the
+// route root (GET /bus/schedules?source=...&destination=...&date=...), not
+// under /search, and requires auth now like the rest of bus-service.
 export const busService = {
   searchSchedules: async (source: string, destination: string, date?: string): Promise<BusSchedule[]> => {
     const params = new URLSearchParams({ source, destination });
     if (date) params.set('date', date);
-    const res = await api.get<ScheduleResponse>(`/bus/schedules/search?${params}`);
+    const res = await api.get<ScheduleResponse>(`/bus/schedules?${params}`, true);
     const list = Array.isArray(res) ? res : res.data ?? [];
     return list.map(mapSchedule);
   },
 
   getScheduleSeats: async (scheduleId: string): Promise<ScheduleSeats> => {
-    const res = await api.get<RawSeatMapResponse | { data: RawSeatMapResponse }>(`/bus/schedules/${scheduleId}/seat-map`);
+    const res = await api.get<RawSeatMapResponse | { data: RawSeatMapResponse }>(`/bus/schedules/${scheduleId}/seat-map`, true);
     const raw = 'data' in res ? res.data : res;
     if (!raw) throw new Error('Seat map response was empty');
     const lowerDeck = raw.seat_map?.lower_deck ?? raw.lower_deck ?? [];
     const upperDeck = raw.seat_map?.upper_deck ?? raw.upper_deck ?? [];
+    const toSeatWithDeck = (
+      seat: RawSeat,
+      sourceDeck: 'LOWER' | 'UPPER',
+    ): SeatWithDeck => ({
+      ...seat,
+      deck:
+        seat.deck ??
+        (typeof seat.is_upper_deck === 'boolean'
+          ? seat.is_upper_deck
+            ? 'UPPER'
+            : 'LOWER'
+          : sourceDeck),
+      column: seat.column ?? (seat as RawSeat & { col?: number }).col ?? 1,
+      is_available:
+        seat.is_available ?? !(seat as RawSeat & { is_booked?: boolean }).is_booked,
+    });
     return {
       schedule_id: raw.schedule_id,
       total_seats: raw.total_seats,
       available_seats: raw.available_seats,
-      seats: [...lowerDeck, ...upperDeck].map((seat) => ({
-        ...seat,
-        column: seat.column ?? (seat as RawSeat & { col?: number }).col ?? 1,
-        is_available: seat.is_available ?? !(seat as RawSeat & { is_booked?: boolean }).is_booked,
-      })),
+      seats: [
+        ...lowerDeck.map((seat) => toSeatWithDeck(seat, 'LOWER')),
+        ...upperDeck.map((seat) => toSeatWithDeck(seat, 'UPPER')),
+      ],
     };
   },
 
   getScheduleById: async (scheduleId: string): Promise<BusSchedule> => {
-    const res = await api.get<RawSchedule>(`/bus/schedules/${scheduleId}`);
+    const res = await api.get<RawSchedule>(`/bus/schedules/${scheduleId}`, true);
     return mapSchedule(res);
   },
 
@@ -202,10 +225,10 @@ export const busService = {
   // Real per-route stops (schedules.service.ts#getBoardingPoints) — replaces
   // the plain departure/arrival city name with an actual pickup/drop stop list.
   getBoardingPoints: (scheduleId: string): Promise<BoardingPoints> =>
-    api.get<BoardingPoints>(`/bus/schedules/${scheduleId}/boarding-points`),
+    api.get<BoardingPoints>(`/bus/schedules/${scheduleId}/boarding-points`, true),
 
   getLocationsAutocomplete: async (query: string): Promise<Array<{ id: string; name: string; state?: string }>> => {
-    const res = await api.get<Array<{ id: string; name: string; state?: string }> | { data?: Array<{ id: string; name: string; state?: string }> }>(`/bus/locations/autocomplete?q=${encodeURIComponent(query)}`);
+    const res = await api.get<Array<{ id: string; name: string; state?: string }> | { data?: Array<{ id: string; name: string; state?: string }> }>(`/bus/locations/autocomplete?q=${encodeURIComponent(query)}`, true);
     return Array.isArray(res) ? res : (res?.data ?? []);
   },
 
@@ -215,7 +238,7 @@ export const busService = {
   },
 
   getPopularRoutes: async (): Promise<Array<{ id: string; source: string; destination: string; route_name?: string; frequency?: string }>> => {
-    const res = await api.get<Array<{ id: string; source: string; destination: string; route_name?: string; frequency?: string }> | { data?: Array<{ id: string; source: string; destination: string; route_name?: string; frequency?: string }> }>('/bus/popular-routes');
+    const res = await api.get<Array<{ id: string; source: string; destination: string; route_name?: string; frequency?: string }> | { data?: Array<{ id: string; source: string; destination: string; route_name?: string; frequency?: string }> }>('/bus/popular-routes', true);
     return Array.isArray(res) ? res : (res?.data ?? []);
   },
 };

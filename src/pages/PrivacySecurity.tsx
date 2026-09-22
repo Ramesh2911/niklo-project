@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import './PrivacySecurity.css';
 
 const PrivacySecurity: React.FC = () => {
-  const { logout } = useAuth();
+  const { logout, isLoggedIn } = useAuth();
   // const { theme, toggleTheme } = useTheme();
   const { t } = useI18n();
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const PrivacySecurity: React.FC = () => {
       <main className="ps-main">
         <div className="ps-container">
 
-          <section className="ps-section">
+          <section className="ps-section" id="trust-safety">
             <h2><Lock size={18} /> {t('privacySecurity.securitySettingsHeading')}</h2>
 
             {/* Dark Mode toggle hidden for now — re-enable by uncommenting.
@@ -77,9 +77,11 @@ const PrivacySecurity: React.FC = () => {
               <span className="ps-verified-badge"><ShieldCheck size={14} /> {t('privacySecurity.verifiedBadge')}</span>
             </div>
 
-            <button className="ps-logout-btn" onClick={handleLogoutEverywhere}>
-              <LogOut size={16} /> {t('privacySecurity.logoutDeviceButton')}
-            </button>
+            {isLoggedIn && (
+              <button className="ps-logout-btn" onClick={handleLogoutEverywhere}>
+                <LogOut size={16} /> {t('privacySecurity.logoutDeviceButton')}
+              </button>
+            )}
           </section>
 
           <section className="ps-section" id="privacy-policy">

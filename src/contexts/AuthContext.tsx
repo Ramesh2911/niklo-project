@@ -13,7 +13,18 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(() => authService.getStoredUser());
+  const [user, setUser] = useState<AuthUser | null>(() => {
+    const stored = authService.getStoredUser();
+    const hasToken = authService.isLoggedIn();
+    // Incomplete session must not render as logged-in (stale Log Out menu).
+    if (!stored || !hasToken) {
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      return null;
+    }
+    return stored;
+  });
 
   const login = useCallback((u: AuthUser) => setUser(u), []);
   const updateUser = useCallback((u: AuthUser) => {
