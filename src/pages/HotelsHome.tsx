@@ -363,7 +363,7 @@ const HotelsHome: React.FC = () => {
               </button>
               <div className="hotels-promo-content">
                 <span className="promo-badge">
-                  {promotion ? `${promotion.discountPercent}% OFF` : t('hotelsHome.promoBadge')}
+                  {promotion?.discountPercent ? `${promotion.discountPercent}% OFF` : t('hotelsHome.promoBadge')}
                 </span>
                 <h2>{promotion?.title || t('hotelsHome.promoHeading')}</h2>
                 <p>{promotion?.description || t('hotelsHome.promoDesc')}</p>
@@ -378,7 +378,7 @@ const HotelsHome: React.FC = () => {
                   <div className="hotels-promo-actions">
                     <button
                       className="hotels-promo-btn"
-                      onClick={() => promotion ? navigate(`/hotels/${promotion.hotelId}`) : setDiscountClaimed(true)}
+                      onClick={() => promotion?.hotelId ? navigate(`/hotels/${promotion.hotelId}`) : setDiscountClaimed(true)}
                     >
                       {promotion ? promotion.cta : t('hotelsHome.promoClaimButton')}
                     </button>

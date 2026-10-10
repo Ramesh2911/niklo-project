@@ -18,7 +18,7 @@ const Offers: React.FC = () => {
         setOffers([]);
         return;
       }
-      setOffers([{ id: promotion.id, type: 'Hotels', badge: `${promotion.discountPercent}% OFF`, title: promotion.title, desc: promotion.description || '', code: `HOTEL${promotion.discountPercent}`, cleanCode: `HOTEL${promotion.discountPercent}`, bgClass: 'bg-light-blue', img: promotion.imagePath }]);
+      setOffers([{ id: promotion.id, type: 'Hotels', badge: promotion.discountPercent ? `${promotion.discountPercent}% OFF` : 'Special Offer', title: promotion.title, desc: promotion.description || '', code: `HOTEL${promotion.discountPercent ?? ''}`, cleanCode: `HOTEL${promotion.discountPercent ?? ''}`, bgClass: 'bg-light-blue', img: promotion.imagePath }]);
     }).catch(() => setOffers([]));
   }, []);
 

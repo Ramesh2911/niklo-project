@@ -86,6 +86,16 @@ export interface OfferItem {
   image_url?: string;
 }
 
+// Guide Step 7.2 — POST /bookings/:id/cancellation-quote
+export interface CancellationQuote {
+  total_paid?: number;
+  cancellation_fee: number;
+  refundable_amount?: number;
+  /** older deployments used this name instead of refundable_amount */
+  refund_amount?: number;
+  refund_policy?: string;
+}
+
 // The list/detail endpoints (GET /bookings/my-bookings, GET /bookings/:id)
 // return raw snake_case entity rows (RawBooking) — confirmed live via curl.
 // There's no booking_reference or title field on the real record, so both
@@ -113,8 +123,8 @@ export const bookingService = {
   // being booked" column, reused for package/adventure ids too. Sending
   // reference_id (not a field on the DTO) leaves schedule_id undefined and
   // fails validation with "schedule_id must be a UUID".
-  createCatalogBooking: (payload: CreateCatalogBookingPayload): Promise<RawBooking> =>
-    api.post<RawBooking>('/bookings', {
+  createCatalogBooking: async (payload: CreateCatalogBookingPayload): Promise<RawBooking> => {
+    const response = await api.post<RawBooking | { data: RawBooking }>('/bookings', {
       booking_type: payload.bookingType,
       schedule_id: payload.referenceId,
       title: payload.title,
@@ -127,7 +137,11 @@ export const bookingService = {
       time_slot: payload.timeSlot,
       total_amount: payload.totalAmount,
       travelers: payload.travelers,
-    }, true),
+    }, true);
+    // same envelope as createBusBooking below — without this unwrap,
+    // booking.id is undefined and confirm-payment 404s on /bookings/undefined.
+    return 'data' in response && response.data ? response.data : (response as RawBooking);
+  },
 
   // POST /bookings is live; the earlier "not built yet, 404s" note was
   // stale — the actual failure was schedule_id validation (see above).
@@ -161,8 +175,12 @@ export const bookingService = {
 
   // backend: GET /bookings/:id is live and returns a RawBooking (verified
   // live with a real token — the "404s until built" note this comment used
-  // to carry was stale, the route already exists).
-  getBooking: (id: string) => api.get<RawBooking>(`/bookings/${id}`, true),
+  // to carry was stale). Response is wrapped {success, statusCode, data};
+  // unwrap defensively so callers (MyBookings details) get real fields.
+  getBooking: async (id: string): Promise<RawBooking> => {
+    const res = await api.get<RawBooking | { data: RawBooking }>(`/bookings/${id}`, true);
+    return 'data' in res && res.data ? res.data : (res as RawBooking);
+  },
 
   // backend: not independently re-verified (would mutate a real booking to
   // CONFIRMED to test) — going by getBooking/cancelBooking below, which
@@ -190,9 +208,12 @@ export const bookingService = {
     return items.map(mapBooking);
   },
 
-  getCancellationQuote: async (id: string): Promise<{ cancellation_fee: number; refund_amount: number; refund_breakdown?: string }> => {
-    const res = await api.post<{ cancellation_fee: number; refund_amount: number; refund_breakdown?: string } | { data: { cancellation_fee: number; refund_amount: number; refund_breakdown?: string } }>(`/bookings/${id}/cancellation-quote`, {}, true);
-    return 'data' in res ? res.data : res;
+  // Guide Step 7.2: refund preview before cancelling — returns
+  // {total_paid, cancellation_fee, refundable_amount, refund_policy}
+  // (older deployments used refund_amount; both are read defensively).
+  getCancellationQuote: async (id: string): Promise<CancellationQuote> => {
+    const res = await api.post<CancellationQuote | { data: CancellationQuote }>(`/bookings/${id}/cancellation-quote`, {}, true);
+    return 'data' in res && res.data ? res.data : (res as CancellationQuote);
   },
 
   applyCoupon: async (id: string, couponCode: string): Promise<{ discount: number; final_amount: number; message?: string }> => {
@@ -222,9 +243,20 @@ export const bookingService = {
     return (res as { data?: OfferItem[] })?.data ?? (res as { offers?: OfferItem[] })?.offers ?? [];
   },
 
-  validateOffer: async (code: string, bookingType?: string): Promise<{ valid: boolean; discount: number; message: string }> => {
-    const res = await api.post<{ valid: boolean; discount: number; message: string } | { data: { valid: boolean; discount: number; message: string } }>('/offers/validate', { code, booking_type: bookingType }, true);
-    return 'data' in res ? res.data : res;
+  // Guide Step 4.2: POST /offers/validate with {code, category, order_amount}
+  // → {valid, code, discount_amount, final_amount, message}. The old
+  // {code, booking_type} body was never wired to any UI and didn't match the
+  // documented contract.
+  validateOffer: async (
+    code: string,
+    orderAmount: number,
+    category = 'BUS',
+  ): Promise<{ valid: boolean; code?: string; discount_amount?: number; final_amount?: number; message?: string }> => {
+    type ValidateResponse = { valid: boolean; code?: string; discount_amount?: number; final_amount?: number; message?: string };
+    const res = await api.post<ValidateResponse | { data: ValidateResponse }>(
+      '/offers/validate', { code, category, order_amount: orderAmount }, true,
+    );
+    return ('data' in res && res.data ? res.data : res) as ValidateResponse;
   },
 
   getActiveTrip: async (): Promise<{ has_active_trip: boolean; trip?: MyBookingItem }> => {

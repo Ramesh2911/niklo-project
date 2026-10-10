@@ -47,6 +47,18 @@ const PressCenter = lazy(() => import('./pages/PressCenter'));
 const InvestorRelations = lazy(() => import('./pages/InvestorRelations'));
 const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
 
+// Adventure partner panel (/partner) — English-only admin UI.
+const PartnerLayout = lazy(() => import('./pages/partner/PartnerLayout'));
+const PartnerDashboard = lazy(() => import('./pages/partner/PartnerDashboard'));
+const PartnerSetup = lazy(() => import('./pages/partner/PartnerSetup'));
+const PartnerActivities = lazy(() => import('./pages/partner/PartnerActivities'));
+const PartnerPackages = lazy(() => import('./pages/partner/PartnerPackages'));
+const PartnerAvailability = lazy(() => import('./pages/partner/PartnerAvailability'));
+const PartnerBookings = lazy(() => import('./pages/partner/PartnerBookings'));
+const PartnerEarnings = lazy(() => import('./pages/partner/PartnerEarnings'));
+const PartnerNotifications = lazy(() => import('./pages/partner/PartnerNotifications'));
+const PartnerProfile = lazy(() => import('./pages/partner/PartnerProfile'));
+
 // No scroll restoration on navigate by default with react-router — reset to top
 // on every route change so a new page doesn't open mid-scroll from the last one.
 // When the URL has a #hash (e.g. /privacy-security#privacy-policy), scroll to
@@ -138,6 +150,17 @@ function App() {
             <Route path="/investors" element={<InvestorRelations />} />
             <Route path="/cancellation-policy" element={<CancellationPolicy />} />
             <Route path="/bus/:slug" element={<BusRouteLanding />} />
+            <Route path="/partner" element={<PartnerLayout />}>
+              <Route index element={<PartnerDashboard />} />
+              <Route path="setup" element={<PartnerSetup />} />
+              <Route path="activities" element={<PartnerActivities />} />
+              <Route path="activities/:activityId/packages" element={<PartnerPackages />} />
+              <Route path="availability" element={<PartnerAvailability />} />
+              <Route path="bookings" element={<PartnerBookings />} />
+              <Route path="earnings" element={<PartnerEarnings />} />
+              <Route path="notifications" element={<PartnerNotifications />} />
+              <Route path="profile" element={<PartnerProfile />} />
+            </Route>
           </Routes>
           </div>
         </Suspense>

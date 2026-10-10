@@ -190,69 +190,34 @@
 
 .decks-wrapper {
   display: flex;
-  gap: 32px;
+  gap: 24px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.deck-switcher-row {
+.deck-panel {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-width: 200px;
+  max-width: 320px;
 }
 
-.deck-toggle {
-  display: flex;
-  background-color: #f1f5f9;
-  border-radius: 20px;
-  padding: 4px;
-  gap: 4px;
-}
-
-.deck-toggle button {
-  background: none;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 16px;
-  font-size: 0.9rem;
-  font-weight: 700;
+.deck-label {
+  font-size: 0.78rem;
+  font-weight: 800;
   color: #64748b;
-  cursor: pointer;
-  transition: background-color 0.15s, color 0.15s;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
-.deck-toggle button.active {
-  background-color: #ffffff;
-  color: #0f172a;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-
-.deck-label-plain {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #64748b;
-  letter-spacing: 1px;
-}
-
-.steering-wheel-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #f1f5f9;
-}
-
-.deck-layout {
+.deck-frame {
+  position: relative;
   border: 2px solid #e2e8f0;
   border-radius: 24px;
   padding: 24px;
   background-color: #f8fafc;
-  position: relative;
-  width: 100%;
-  max-width: 220px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -260,29 +225,28 @@
   box-sizing: border-box;
 }
 
-/* Upper deck renders sleeper icons at a larger size (see SeatSelectionModal.tsx)
-   so the deck needs a bit more room to avoid crowding/overflow. */
-.deck-layout--upper {
-  max-width: 260px;
-}
-
-.deck-layout--upper .seat-col {
-  gap: 10px;
-}
-
-/* 2+2 seater layout (left×2 | aisle | right×2) needs more width than 1+2. */
-.deck-layout--four {
-  max-width: 280px;
-}
-
-.deck-layout--four.deck-layout--upper {
-  max-width: 300px;
+.steering-wheel-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #e2e8f0;
+  z-index: 1;
 }
 
 .seat-grid {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.seat-grid--upper .seat-col {
+  gap: 10px;
 }
 
 .seat-row {
@@ -965,9 +929,7 @@
     gap: 20px;
   }
 
-  .deck-layout,
-  .deck-layout--upper {
-    width: 100%;
+  .deck-panel {
     max-width: 100%;
   }
 

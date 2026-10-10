@@ -104,7 +104,6 @@ const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onCl
   const [seatsLoading, setSeatsLoading] = useState(true);
   const [isLocking, setIsLocking] = useState(false);
   const [lockError, setLockError] = useState('');
-  const [activeDeck, setActiveDeck] = useState<'lower' | 'upper'>('lower');
   const [showPriceDetails, setShowPriceDetails] = useState(false);
   const [liked, setLiked] = useState(false);
 
@@ -118,9 +117,6 @@ const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onCl
         const upper = data.seats.filter((s) => s.deck === 'UPPER');
         setLowerSeats(mapDeckSeats(lower));
         setUpperSeats(mapDeckSeats(upper));
-        // Default to whichever deck actually has seats (e.g. empty lower_deck).
-        if (lower.length === 0 && upper.length > 0) setActiveDeck('upper');
-        else if (upper.length === 0 && lower.length > 0) setActiveDeck('lower');
       })
       .catch(() => {
         if (!cancelled) { setLowerSeats([]); setUpperSeats([]); }
@@ -131,6 +127,35 @@ const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onCl
 
   const lowerRows = lowerSeats.length ? Math.max(...lowerSeats.map((s) => s.row)) : 0;
   const upperRows = upperSeats.length ? Math.max(...upperSeats.map((s) => s.row)) : 0;
+
+  // Guide §6: after a lock conflict (HTTP 409) the seat map must be refreshed
+  // from the server. Selections for seats that are still available are kept;
+  // the contested seat (named in the backend error) is dropped.
+  const refreshSeatMap = async (opts: { keepSelections?: boolean; deselect?: string } = {}) => {
+    try {
+      const data = await busService.getScheduleSeats(bus.id);
+      const lower = mapDeckSeats(data.seats.filter((s) => s.deck === 'LOWER'));
+      const upper = mapDeckSeats(data.seats.filter((s) => s.deck === 'UPPER'));
+      if (opts.keepSelections) {
+        const previouslySelected = new Set(
+          [...lowerSeats, ...upperSeats].filter((s) => s.state === 'selected').map((s) => s.id),
+        );
+        const restore = (seats: typeof lower) =>
+          seats.map((s) =>
+            s.id !== opts.deselect && previouslySelected.has(s.id) && s.state === 'available'
+              ? { ...s, state: 'selected' as const }
+              : s,
+          );
+        setLowerSeats(restore(lower));
+        setUpperSeats(restore(upper));
+      } else {
+        setLowerSeats(lower);
+        setUpperSeats(upper);
+      }
+    } catch {
+      // keep the current view if the refresh itself fails
+    }
+  };
 
   useEffect(() => {
     document.body.classList.add('modal-open');
@@ -186,9 +211,16 @@ const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onCl
       // Booking creation now rejects seats that aren't held by this user, so
       // the hold has to be taken here before we ever leave this screen.
       await busService.lockSeats(bus.id, seatIds);
-    } catch {
+    } catch (err) {
       setIsLocking(false);
-      setLockError(t('seatSelection.seatsTakenError'));
+      // Guide §3.2 / §6: a 409 returns "Seat X is already locked by another
+      // user" — surface that message, drop the contested seat, refresh the
+      // rest of the map. api.ts throws the backend message as Error.message.
+      const serverMsg = err instanceof Error ? err.message : '';
+      const isSpecific = Boolean(serverMsg) && !/^\d+$/.test(serverMsg) && !/^HTTP\s/.test(serverMsg);
+      setLockError(isSpecific ? serverMsg : t('seatSelection.seatsTakenError'));
+      const contested = /seat\s+([A-Za-z0-9]+)/i.exec(serverMsg)?.[1];
+      void refreshSeatMap({ keepSelections: true, deselect: contested });
       return;
     }
     setIsLocking(false);
@@ -221,11 +253,9 @@ const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onCl
   const renderSeatGrid = (seats: any[], isUpper: boolean) => {
     const rows = isUpper ? upperRows : lowerRows;
     const rowArray = Array.from({ length: rows }, (_, i) => i + 1);
-    const isFourCol = seats.some((s) => s.col === 'left-1' || s.col === 'left-2');
 
     return (
-      <div className={`deck-layout ${isUpper ? 'deck-layout--upper' : ''} ${isFourCol ? 'deck-layout--four' : ''}`}>
-        <div className="seat-grid">
+      <div className={`seat-grid ${isUpper ? 'seat-grid--upper' : ''}`}>
             {rowArray.map(r => {
               const rowSeats = seats.filter(s => s.row === r);
               const leftSeat1 = rowSeats.find(s => s.col === 'left' || s.col === 'left-1');
@@ -247,7 +277,6 @@ const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onCl
                 </div>
               );
             })}
-        </div>
       </div>
     );
   };
@@ -316,39 +345,34 @@ const SeatSelectionModal: React.FC<SeatSelectionModalProps> = ({ bus, date, onCl
                 </div>
               </div>
 
-              {!seatsLoading && (
-                <div className="deck-switcher-row">
-                  {upperRows > 0 ? (
-                    <div className="deck-toggle">
-                      <button
-                        className={activeDeck === 'lower' ? 'active' : ''}
-                        onClick={() => setActiveDeck('lower')}
-                      >
-                        {t('seatSelection.lowerDeckShort')}
-                      </button>
-                      <button
-                        className={activeDeck === 'upper' ? 'active' : ''}
-                        onClick={() => setActiveDeck('upper')}
-                      >
-                        {t('seatSelection.upperDeckShort')}
-                      </button>
-                    </div>
-                  ) : (
-                    <span className="deck-label-plain">{t('seatSelection.lowerDeck')}</span>
-                  )}
-                  {activeDeck === 'lower' && (
-                    <div className="steering-wheel-badge">
-                      <img src={steeringSvgUrl} alt="Steering Wheel" width="28" height="28" />
-                    </div>
-                  )}
-                </div>
-              )}
-
               <div className="decks-wrapper">
                 {seatsLoading ? (
                   <p style={{ padding: '24px', color: '#64748b' }}>{t('seatSelection.loadingSeatLayout')}</p>
                 ) : (
-                  renderSeatGrid(activeDeck === 'upper' ? upperSeats : lowerSeats, activeDeck === 'upper')
+                  <>
+                    {lowerRows > 0 && (
+                      <div className="deck-panel">
+                        <span className="deck-label">{t('seatSelection.lowerDeck')}</span>
+                        <div className="deck-frame">
+                          <div className="steering-wheel-badge">
+                            <img src={steeringSvgUrl} alt="Steering Wheel" width="24" height="24" />
+                          </div>
+                          {renderSeatGrid(lowerSeats, false)}
+                        </div>
+                      </div>
+                    )}
+                    {upperRows > 0 && (
+                      <div className="deck-panel">
+                        <span className="deck-label">{t('seatSelection.upperDeck')}</span>
+                        <div className="deck-frame">
+                          {renderSeatGrid(upperSeats, true)}
+                        </div>
+                      </div>
+                    )}
+                    {lowerRows === 0 && upperRows === 0 && (
+                      <p style={{ padding: '24px', color: '#64748b' }}>{t('seatSelection.noSeatsAvailable')}</p>
+                    )}
+                  </>
                 )}
               </div>
             </div>

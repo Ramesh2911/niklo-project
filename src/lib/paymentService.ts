@@ -132,8 +132,10 @@ export const paymentService = {
     return 'data' in res ? res.data : res;
   },
 
-  payWithWallet: async (dto: { booking_id: string; amount: number; currency?: string }): Promise<{ success: boolean; transaction_id: string; balance: number }> => {
-    const res = await api.post<{ success: boolean; transaction_id: string; balance: number } | { data: { success: boolean; transaction_id: string; balance: number } }>('/payment/wallet/pay', { ...dto, currency: dto.currency ?? 'INR' }, true);
-    return 'data' in res ? res.data : res;
+  // Guide Step 6 Option B — direct wallet payment for a booking.
+  payWithWallet: async (dto: { booking_id: string; amount: number; currency?: string; booking_type?: string; description?: string }): Promise<{ success: boolean; transaction_id: string; balance: number }> => {
+    type WalletPayResponse = { success: boolean; transaction_id: string; balance: number };
+    const res = await api.post<WalletPayResponse | { data: WalletPayResponse }>('/payment/wallet/pay', { currency: dto.currency ?? 'INR', ...dto }, true);
+    return ('data' in res && res.data ? res.data : res) as WalletPayResponse;
   },
 };

@@ -199,9 +199,13 @@ export const busService = {
     };
   },
 
+  // Live response is wrapped {success, statusCode, data: RawSchedule};
+  // unwrap before mapping so s.bus/s.route access doesn't throw on the
+  // envelope object (defensive: flat responses still pass through).
   getScheduleById: async (scheduleId: string): Promise<BusSchedule> => {
-    const res = await api.get<RawSchedule>(`/bus/schedules/${scheduleId}`, true);
-    return mapSchedule(res);
+    const res = await api.get<RawSchedule | { data: RawSchedule }>(`/bus/schedules/${scheduleId}`, true);
+    const raw = 'data' in res && res.data ? res.data : (res as RawSchedule);
+    return mapSchedule(raw);
   },
 
   // bus-service's Redis-backed seat hold (5 min TTL) — this is bus-domain,
@@ -224,11 +228,18 @@ export const busService = {
 
   // Real per-route stops (schedules.service.ts#getBoardingPoints) — replaces
   // the plain departure/arrival city name with an actual pickup/drop stop list.
-  getBoardingPoints: (scheduleId: string): Promise<BoardingPoints> =>
-    api.get<BoardingPoints>(`/bus/schedules/${scheduleId}/boarding-points`, true),
+  // Live routes wrap the payload as {success, statusCode, data}; unwrap
+  // defensively (like getScheduleSeats above) so callers can read
+  // boarding_points directly.
+  getBoardingPoints: async (scheduleId: string): Promise<BoardingPoints> => {
+    const res = await api.get<BoardingPoints | { data: BoardingPoints }>(`/bus/schedules/${scheduleId}/boarding-points`, true);
+    return 'data' in res && res.data ? res.data : (res as BoardingPoints);
+  },
 
+  // Live-verified: the route reads `query` (guide Step 1.1); an older `q`
+  // param is silently ignored and returns an empty list.
   getLocationsAutocomplete: async (query: string): Promise<Array<{ id: string; name: string; state?: string }>> => {
-    const res = await api.get<Array<{ id: string; name: string; state?: string }> | { data?: Array<{ id: string; name: string; state?: string }> }>(`/bus/locations/autocomplete?q=${encodeURIComponent(query)}`, true);
+    const res = await api.get<Array<{ id: string; name: string; state?: string }> | { data?: Array<{ id: string; name: string; state?: string }> }>(`/bus/locations/autocomplete?query=${encodeURIComponent(query)}`, true);
     return Array.isArray(res) ? res : (res?.data ?? []);
   },
 

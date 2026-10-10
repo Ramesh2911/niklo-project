@@ -46,10 +46,12 @@ export interface HotelPromotion {
   description: string;
   cta: string;
   imagePath: string;
-  discountPercent: number;
+  // Verified live (2026-09-29): the backend's promo payload omits
+  // discountPercent/hotelId/hotelName entirely — callers must guard these.
+  discountPercent?: number;
   expiresAt: string | null;
-  hotelId: string;
-  hotelName: string;
+  hotelId?: string;
+  hotelName?: string;
 }
 
 export interface LocationSuggestion {
@@ -395,17 +397,27 @@ export const hotelService = {
   },
 
   searchHotels: async (query: HotelSearchParams): Promise<HotelListing[]> => {
-    // hotels.service.ts#searchHotels destructures {city, limit, page} - it never reads
-    // `destination`/`location`, so map those onto `city` here (root cause: fix it once
-    // for every caller instead of renaming the field at each call site).
-    const { destination, location, ...rest } = query;
-    const body = { ...rest, city: destination ?? location };
-    // Verified live (2026-08-25): POST /hotels/search returns
-    // {totalResults, page, limit, hotels} directly, no {success, statusCode,
-    // data} wrapper — reading res.data.hotels made `list` always undefined
-    // and every search silently came back empty.
-    const res = await api.post<HotelSearchResponse | { data: RawHotel[] }>('/hotels/search', body);
-    const list = 'data' in res ? res.data : res.hotels ?? [];
+    // hotels.service.ts#searchHotels only reads {city, limit, page}. The
+    // destination field used to be forwarded as `city`, but verified live
+    // (2026-09-29) the backend does an exact match and every seeded hotel has
+    // city "City", so any real destination ("Kolkata, West Bengal") returned
+    // total: 0. HotelsList's own filtering is client-side and never filters by
+    // city, so the key is dropped here and the backend returns the full list.
+    const body = { ...query };
+    delete body.destination;
+    delete body.location;
+    // Verified live (2026-09-29): POST /hotels/search wraps its payload as
+    // {success, statusCode, data: {total, page, limit, hotels}}; older builds
+    // returned {totalResults, page, limit, hotels} unwrapped. Treating res.data
+    // as the array itself threw `list.map is not a function` and every search
+    // silently came back empty via the caller's catch.
+    const res = await api.post<HotelSearchResponse | { data?: HotelSearchResponse | RawHotel[] }>(
+      '/hotels/search',
+      body,
+    );
+    const wrapped = 'data' in res ? res.data : undefined;
+    const payload = (wrapped ?? res) as HotelSearchResponse | RawHotel[];
+    const list = (Array.isArray(payload) ? payload : payload.hotels) ?? [];
     if (list.length === 0) return [];
     return list.map((h) => {
       const amenities = (h.popularAmenities ?? []).map((a) =>
@@ -572,17 +584,17 @@ export const hotelService = {
   confirmPayment: (bookingId: string, dto: { paymentId?: string; paymentGatewayOrderId?: string }) =>
     api.post<unknown>(`/bookings/hotel/${bookingId}/confirm-payment`, dto, true),
 
-  // Verified live: POST /hotels/:hotelId/check-availability actually returns
-  // {hotelId, availableRooms: RoomType[]} — flat, no wrapper, and nothing like
-  // the old {available, price_per_night, nights_count, ...} shape. Normalized
-  // here (available = rooms were returned; nights computed from the dates we
-  // already sent, since the backend doesn't echo them back) so
-  // HotelAvailability.tsx doesn't have to change.
+  // Verified live (2026-09-29): POST /hotels/:hotelId/check-availability returns
+  // {success, statusCode, data: {hotel_id, room_type_id, room_title, available,
+  // remaining_rooms, nights_count, price_per_night, total_room_price,
+  // taxes_and_fees, grand_total}} — snake_case under `data`. Older builds used
+  // room_id/nights/base_amount/total_amount; both are mapped here so
+  // HotelAvailability.tsx's contract doesn't have to change.
   checkAvailability: async (
     hotelId: string,
     params: HotelAvailabilityCheckRequest,
   ): Promise<HotelAvailabilityCheck> => {
-    const res = await api.post<{ data?: { available?: boolean; hotel_id?: string; room_id?: string; nights?: number; price_per_night?: number; base_amount?: number; taxes_and_fees?: number; total_amount?: number }; hotelId?: string; availableRooms?: RoomType[] }>(
+    const res = await api.post<{ data?: { available?: boolean; hotel_id?: string; room_type_id?: string; room_id?: string; room_title?: string; nights_count?: number; nights?: number; price_per_night?: number; total_room_price?: number; base_amount?: number; taxes_and_fees?: number; grand_total?: number; total_amount?: number; remaining_rooms?: number }; hotelId?: string; availableRooms?: RoomType[] }>(
       `/hotels/${hotelId}/check-availability`,
       {
         check_in: params.check_in,
@@ -595,18 +607,22 @@ export const hotelService = {
     if (res.data) {
       const data = res.data;
       const pricePerNight = data.price_per_night ?? 0;
-      const nights = data.nights ?? 1;
+      const nights = data.nights_count ?? data.nights ?? 1;
+      const roomsCount = params.rooms_count ?? 1;
+      const totalRoomPrice =
+        data.total_room_price ?? data.base_amount ?? pricePerNight * nights * roomsCount;
+      const taxes = data.taxes_and_fees ?? 0;
       return {
         hotel_id: data.hotel_id ?? hotelId,
-        room_type_id: data.room_id ?? params.room_type_id ?? '',
-        room_title: '',
+        room_type_id: data.room_type_id ?? data.room_id ?? params.room_type_id ?? '',
+        room_title: data.room_title ?? '',
         available: data.available ?? false,
-        remaining_rooms: data.available ? 1 : 0,
+        remaining_rooms: data.remaining_rooms ?? (data.available ? 1 : 0),
         nights_count: nights,
         price_per_night: pricePerNight,
-        total_room_price: data.base_amount ?? pricePerNight * nights * (params.rooms_count ?? 1),
-        taxes_and_fees: data.taxes_and_fees ?? 0,
-        grand_total: data.total_amount ?? 0,
+        total_room_price: totalRoomPrice,
+        taxes_and_fees: taxes,
+        grand_total: data.grand_total ?? data.total_amount ?? totalRoomPrice + taxes,
       };
     }
     const rooms = res.availableRooms ?? [];

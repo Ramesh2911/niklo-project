@@ -69,6 +69,7 @@ const ExperiencesList: React.FC = () => {
       max_price: maxPrice ? Number(maxPrice) : undefined,
     })
       .then(setAdventures)
+      .catch(() => setAdventures([]))
       .finally(() => setLoading(false));
   }, [activeFilter, locationParam, minPrice, maxPrice]);
 

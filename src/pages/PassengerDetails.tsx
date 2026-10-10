@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  ArrowLeft, Shield, User as UserIcon, Mail, ChevronUp, ChevronDown, Layers
+  ArrowLeft, Shield, User as UserIcon, Mail, ChevronUp, ChevronDown, Layers,
+  Wallet as WalletIcon, Ticket, Timer,
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -71,6 +72,38 @@ const PassengerDetails = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [bookingError, setBookingError] = useState('');
 
+  // Guide §6 checklist: the 5-min seat hold taken in the seat map ticks down
+  // here — if it hits zero the seats are released and payment must be blocked.
+  const [lockSeconds, setLockSeconds] = useState(300);
+  // Guide Step 4.2: coupon validated server-side via POST /offers/validate
+  const [couponInput, setCouponInput] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
+  const [couponMsg, setCouponMsg] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
+  // Guide Step 6 Option B: pay from the Niklo wallet instead of Razorpay
+  const [payMethod, setPayMethod] = useState<'gateway' | 'wallet'>('gateway');
+  const [walletBalance, setWalletBalance] = useState<number | null>(null);
+
+  const ticketFare = busPrice * seatCount;
+  const discount = appliedCoupon ? appliedCoupon.discount : 0;
+  const insuranceFee = insurance ? seatCount * 20 : 0;
+  const taxes = 20;
+  const totalAmount = ticketFare - discount + insuranceFee + taxes;
+  const lockExpired = lockSeconds <= 0;
+  const lockTimeLabel = `${Math.floor(lockSeconds / 60)}:${String(lockSeconds % 60).padStart(2, '0')}`;
+
+  useEffect(() => {
+    if (!bookingState.scheduleId) return;
+    const timer = setInterval(() => setLockSeconds((s) => (s > 0 ? s - 1 : 0)), 1000);
+    return () => clearInterval(timer);
+  }, [bookingState.scheduleId]);
+
+  useEffect(() => {
+    paymentService.getWalletInfo()
+      .then((w) => setWalletBalance(w.balance))
+      .catch(() => setWalletBalance(null));
+  }, []);
+
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const toggleFaq = (index: number) => {
@@ -83,7 +116,44 @@ const PassengerDetails = () => {
     setPassengers(updated);
   };
 
+  const handleApplyCoupon = async () => {
+    const code = couponInput.trim().toUpperCase();
+    if (!code) return;
+    setApplyingCoupon(true);
+    setCouponMsg(null);
+    try {
+      const res = await bookingService.validateOffer(code, ticketFare, 'BUS');
+      if (res.valid) {
+        const amount = res.discount_amount ?? (res.final_amount != null ? Math.max(0, ticketFare - res.final_amount) : 0);
+        const applied = res.code || code;
+        setAppliedCoupon({ code: applied, discount: amount });
+        setCouponMsg({
+          kind: 'ok',
+          text: t('passengerDetails.couponAppliedMessage').replace('{{code}}', applied).replace('{{amount}}', String(amount)),
+        });
+      } else {
+        setAppliedCoupon(null);
+        setCouponMsg({ kind: 'err', text: res.message || t('passengerDetails.couponInvalidError') });
+      }
+    } catch {
+      setAppliedCoupon(null);
+      setCouponMsg({ kind: 'err', text: t('passengerDetails.couponInvalidError') });
+    } finally {
+      setApplyingCoupon(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponInput('');
+    setCouponMsg(null);
+  };
+
   const handleContinuePayment = async () => {
+    if (lockExpired) {
+      setBookingError(t('passengerDetails.seatLockExpired'));
+      return;
+    }
     if (passengers.some(p => !p.name || !p.age)) {
       setBookingError(t('passengerDetails.errorFillPassengers'));
       return;
@@ -94,11 +164,6 @@ const PassengerDetails = () => {
     }
     setIsProcessing(true);
     setBookingError('');
-
-    const discount = Math.round(busPrice * seatCount * 0.15);
-    const insuranceFee = insurance ? seatCount * 20 : 0;
-    const taxes = 20;
-    const totalAmount = busPrice * seatCount - discount + insuranceFee + taxes;
 
     let booking;
     try {
@@ -128,10 +193,10 @@ const PassengerDetails = () => {
       ? new Date(bookingState.travelDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
       : undefined;
 
-    const goToSuccess = () => navigate('/booking-success', { state: {
+    const goToSuccess = (qrCode?: string) => navigate('/booking-success', { state: {
       type: 'bus',
       bookingId: booking.id,
-      qrCode: booking.qr_code,
+      qrCode: qrCode || booking.qr_code,
       from: bookingState.from,
       to: bookingState.to,
       busName: bookingState.busName,
@@ -146,8 +211,35 @@ const PassengerDetails = () => {
     // to the success screen confirms it first.
     const confirmAndSucceed = async (paymentId?: string, paymentGatewayOrderId?: string) => {
       await bookingService.confirmPayment(booking.id, { payment_id: paymentId, payment_gateway_order_id: paymentGatewayOrderId }).catch(() => {});
-      goToSuccess();
+      // Guide Step 6.3: the QR token is issued when the booking flips to
+      // CONFIRMED — the create-time record is still PENDING, so refetch to
+      // pick up qr_code before rendering the ticket (create-time value as fallback).
+      const fresh = await bookingService.getBooking(booking.id).catch(() => null);
+      goToSuccess(fresh?.qr_code || booking.qr_code);
     };
+
+    // Guide Step 6 Option B — direct wallet payment (no Razorpay checkout).
+    if (payMethod === 'wallet') {
+      if (walletBalance != null && walletBalance < totalAmount) {
+        setIsProcessing(false);
+        setBookingError(t('passengerDetails.walletInsufficientError'));
+        return;
+      }
+      try {
+        const payRes = await paymentService.payWithWallet({
+          booking_id: booking.id,
+          amount: totalAmount,
+          booking_type: 'BUS',
+          description: 'Payment for Bus Booking',
+        });
+        if (payRes.success === false) throw new Error('wallet payment declined');
+        await confirmAndSucceed(payRes.transaction_id);
+      } catch {
+        setIsProcessing(false);
+        setBookingError(t('passengerDetails.walletPaymentFailed'));
+      }
+      return;
+    }
 
     // Booking is already created for real above; Razorpay checkout is a best-effort
     // payment UX on top of it — if the gateway isn't configured, still show success
@@ -159,8 +251,10 @@ const PassengerDetails = () => {
       setIsProcessing(false);
       const RazorpayClass = (window as unknown as { Razorpay: new (opts: Record<string, unknown>) => { open(): void } }).Razorpay;
       const rzp = new RazorpayClass({
+        // guide Step 6A: POST /payment/orders echoes the plain rupee amount —
+        // the Razorpay SDK option must be in paise, so convert here.
         key: import.meta.env.VITE_RAZORPAY_KEY_ID ?? 'rzp_test_placeholder',
-        amount: order.amount,
+        amount: Math.round(order.amount * 100),
         currency: order.currency,
         order_id: order.razorpay_order_id,
         name: 'Niklo',
@@ -412,6 +506,49 @@ const PassengerDetails = () => {
             </div>
           </div>
 
+          {/* Payment Method Card — guide Step 6 (Gateway vs Wallet) */}
+          <div className="details-card">
+            <div className="card-header">
+              <WalletIcon size={20} className="icon-blue" />
+              <h3>{t('passengerDetails.paymentMethodHeading')}</h3>
+            </div>
+            <div className="options-list">
+              <label className="custom-checkbox-wrapper">
+                <div className="checkbox-input">
+                  <input
+                    type="radio"
+                    name="payMethod"
+                    checked={payMethod === 'gateway'}
+                    onChange={() => setPayMethod('gateway')}
+                  />
+                  <span className="checkmark"></span>
+                </div>
+                <div className="checkbox-content">
+                  <strong>{t('passengerDetails.payRazorpayOption')}</strong>
+                </div>
+              </label>
+              <label className="custom-checkbox-wrapper">
+                <div className="checkbox-input">
+                  <input
+                    type="radio"
+                    name="payMethod"
+                    checked={payMethod === 'wallet'}
+                    onChange={() => setPayMethod('wallet')}
+                  />
+                  <span className="checkmark"></span>
+                </div>
+                <div className="checkbox-content">
+                  <div className="checkbox-title-row">
+                    <strong>{t('passengerDetails.payWalletOption')}</strong>
+                  </div>
+                  {walletBalance != null && (
+                    <p>{t('passengerDetails.walletBalanceLabel').replace('{{amount}}', walletBalance.toFixed(2))}</p>
+                  )}
+                </div>
+              </label>
+            </div>
+          </div>
+
         </div>
 
         {/* Right Column (Sidebar) */}
@@ -419,36 +556,59 @@ const PassengerDetails = () => {
 
           <div className="details-card fare-summary-card">
             <h3>{t('passengerDetails.fareSummary')}</h3>
+            {bookingState.scheduleId && (
+              <div
+                style={{
+                  display: 'block', textAlign: 'center', padding: '6px 10px', borderRadius: '8px',
+                  fontSize: '0.85rem', fontWeight: 700, marginBottom: '12px',
+                  background: lockExpired ? '#fef2f2' : '#eff6ff',
+                  color: lockExpired ? '#ef4444' : '#0052ff',
+                }}
+              >
+                <Timer size={13} style={{ verticalAlign: '-2px', marginRight: '6px' }} />
+                {lockExpired
+                  ? t('passengerDetails.seatLockExpired')
+                  : t('passengerDetails.seatsHoldTimer').replace('{{time}}', lockTimeLabel)}
+              </div>
+            )}
             <div className="fare-breakdown">
               <div className="fare-row">
                 <span>{(seatCount > 1 ? t('passengerDetails.ticketFarePlural') : t('passengerDetails.ticketFare')).replace('{{count}}', String(seatCount))}</span>
-                <span>₹{busPrice * seatCount}</span>
+                <span>₹{ticketFare}</span>
               </div>
-              <div className="fare-row discount">
-                <span>{t('passengerDetails.discount')}</span>
-                <span>-₹{Math.round(busPrice * seatCount * 0.15)}</span>
-              </div>
+              {discount > 0 && (
+                <div className="fare-row discount">
+                  <span>{t('passengerDetails.discountLabel')} ({appliedCoupon?.code})</span>
+                  <span>-₹{discount}</span>
+                </div>
+              )}
               <div className="fare-row">
                 <span>{t('passengerDetails.travelInsurance')}</span>
-                <span>{insurance ? `₹${seatCount * 20}` : '—'}</span>
+                <span>{insurance ? `₹${insuranceFee}` : '—'}</span>
               </div>
               <div className="fare-row">
                 <span>{t('passengerDetails.taxes')}</span>
-                <span>₹20</span>
+                <span>₹{taxes}</span>
               </div>
             </div>
             <div className="fare-total">
               <span>{t('passengerDetails.totalAmount')}</span>
               <span className="total-val">
-                ₹{Math.round(busPrice * seatCount * 0.85) + (insurance ? seatCount * 20 : 0) + 20}
+                ₹{totalAmount}
               </span>
             </div>
             {bookingError && (
               <p style={{ color: '#ef4444', fontSize: '0.85rem', marginBottom: '8px' }}>{bookingError}</p>
             )}
-            <button className="btn-continue-payment" onClick={handleContinuePayment} disabled={isProcessing}>
-              {isProcessing ? t('passengerDetails.processing') : t('passengerDetails.continueToPayment')}
-            </button>
+            {lockExpired ? (
+              <button className="btn-continue-payment" onClick={() => navigate('/buses')}>
+                {t('passengerDetails.reselectSeats')}
+              </button>
+            ) : (
+              <button className="btn-continue-payment" onClick={handleContinuePayment} disabled={isProcessing}>
+                {isProcessing ? t('passengerDetails.processing') : t('passengerDetails.continueToPayment')}
+              </button>
+            )}
             <div className="secure-badge">
               <Shield size={14} className="icon-green" />
               <span>{t('passengerDetails.securePayments')}</span>
@@ -456,8 +616,50 @@ const PassengerDetails = () => {
           </div>
 
           <div className="promo-applied-card">
-            <h4>{t('passengerDetails.promoApplied')}</h4>
-            <p>{t('passengerDetails.promoSavedDesc')}</p>
+            <h4><Ticket size={14} style={{ verticalAlign: '-2px', marginRight: '6px' }} />{t('passengerDetails.couponInputLabel')}</h4>
+            {!appliedCoupon ? (
+              <>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <input
+                    type="text"
+                    value={couponInput}
+                    onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                    placeholder="NIKLOBUS"
+                    aria-label={t('passengerDetails.couponInputLabel')}
+                    style={{
+                      flex: 1, minWidth: 0, padding: '10px 12px', border: '1px solid #cbd5e1',
+                      borderRadius: '8px', fontSize: '0.85rem', textTransform: 'uppercase',
+                    }}
+                  />
+                  <button
+                    onClick={handleApplyCoupon}
+                    disabled={applyingCoupon || !couponInput.trim()}
+                    style={{
+                      padding: '10px 16px', border: 'none', borderRadius: '8px', background: '#0052ff',
+                      color: '#fff', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {applyingCoupon ? '…' : t('passengerDetails.couponApplyButton')}
+                  </button>
+                </div>
+                {couponMsg && (
+                  <p style={{ marginTop: '8px', color: couponMsg.kind === 'ok' ? '#16a34a' : '#ef4444' }}>{couponMsg.text}</p>
+                )}
+              </>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap' }}>
+                <p style={{ color: '#16a34a', fontWeight: 600 }}>{couponMsg?.text}</p>
+                <button
+                  onClick={handleRemoveCoupon}
+                  style={{
+                    padding: '6px 12px', border: '1px solid #cbd5e1', borderRadius: '6px',
+                    background: '#fff', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer',
+                  }}
+                >
+                  {t('passengerDetails.couponRemoveButton')}
+                </button>
+              </div>
+            )}
           </div>
 
         </div>

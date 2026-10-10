@@ -49,6 +49,9 @@ export default defineConfig(({ mode }) => {
       '/api/v1/ride':          p(SVC.ride),
       '/api/v1/bus':           p(SVC.bus),
       '/api/v1/adventures':    p(SVC.adventures),
+      // singular prefix = partner-panel routes (/adventure/activities, ...); no
+      // overlap with the plural consumer prefix above
+      '/api/v1/adventure':      p(SVC.adventures),
       '/api/v1/notifications': p(SVC.notification),
       '/api/v1/driver':        p(SVC.driver),
       '/api/v1/ai-planner':    p(SVC.aiPlanner),

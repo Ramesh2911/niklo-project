@@ -140,9 +140,16 @@ export const experienceService = {
     api.post<{ success?: boolean; data?: AdventureAvailability } | AdventureAvailability>(`/adventures/${id}/availability`, params)
       .then((res) => ('data' in res ? res.data : res) as AdventureAvailability),
 
+  // Verified live (2026-09-29): GET /adventures/:id/reviews returns
+  // {success, statusCode, data: {overview, reviews: [...]}} — `data` is an
+  // object, not an array, so returning it directly typed as AdventureReview[]
+  // would crash any `.map` at the call site.
   getReviews: async (id: string): Promise<AdventureReview[]> => {
-    const res = await api.get<AdventureReview[] | { data?: AdventureReview[] }>(`/adventures/${id}/reviews`);
-    return Array.isArray(res) ? res : (res?.data ?? []);
+    const res = await api.get<AdventureReview[] | { data?: AdventureReview[] | { reviews?: AdventureReview[] } }>(`/adventures/${id}/reviews`);
+    if (Array.isArray(res)) return res;
+    const data = res?.data;
+    if (Array.isArray(data)) return data;
+    return data?.reviews ?? [];
   },
 
   confirmSlots: async (id: string, dto: { date: string; time_slot: string; participants: number }): Promise<{ success: boolean; booking_id: string; message: string }> => {

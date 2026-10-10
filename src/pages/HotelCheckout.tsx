@@ -152,7 +152,8 @@ const HotelCheckout: React.FC = () => {
       new Razorpay({
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         order_id: order.razorpay_order_id,
-        amount: order.amount,
+        // /payment/orders echoes rupees; SDK option must be paise (guide Step 6A).
+        amount: Math.round(order.amount * 100),
         currency: order.currency || 'INR',
         name: 'Niklo Travel',
         description: hotelName || t('hotelCheckout.defaultHotelBookingName'),

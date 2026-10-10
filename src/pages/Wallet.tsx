@@ -55,7 +55,8 @@ const Wallet: React.FC = () => {
       if (sdkLoaded && RazorpayClass) {
         const razorpay = new RazorpayClass({
           key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-          amount: order.amount,
+          // /payment/orders echoes rupees; the SDK option must be paise (guide Step 6A).
+          amount: Math.round(order.amount * 100),
           currency: order.currency,
           order_id: order.razorpay_order_id,
           name: 'Niklo Wallet Top-up',

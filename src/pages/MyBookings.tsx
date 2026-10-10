@@ -7,7 +7,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import escapeWeekendImg from '../assets/escape_the_weekend.png';
-import { bookingService, type MyBookingItem } from '../lib/bookingService';
+import { bookingService, type MyBookingItem, type CancellationQuote } from '../lib/bookingService';
 import { busService } from '../lib/busService';
 import { useI18n } from '../contexts/I18nContext';
 import './MyBookings.css';
@@ -24,6 +24,11 @@ const MyBookings: React.FC = () => {
   // silently rendered the same empty-state copy as having zero bookings.
   const [loadError, setLoadError] = useState(false);
   const [cancellingId, setCancellingId] = useState<string | null>(null);
+  // Guide Step 7.2: cancellation goes through a refund-quote preview first
+  // instead of a bare window.confirm.
+  const [quoteBooking, setQuoteBooking] = useState<MyBookingItem | null>(null);
+  const [quote, setQuote] = useState<CancellationQuote | null>(null);
+  const [quoteLoading, setQuoteLoading] = useState(false);
 
   useEffect(() => {
     bookingService.getUserBookings().then(setAllBookings).catch(() => setLoadError(true));
@@ -34,18 +39,42 @@ const MyBookings: React.FC = () => {
     navigate(booking.type === 'Cab' ? `/cabs?${params}` : `/buses?${params}`);
   };
 
+  // Guide Step 7.2 — fetch the cancellation quote, then cancel on confirm.
   const handleCancelBooking = async (booking: MyBookingItem) => {
-    if (!window.confirm(t('bookingActions.cancelConfirm'))) return;
-    setCancellingId(booking.id);
+    setQuoteBooking(booking);
+    setQuote(null);
+    setQuoteLoading(true);
     try {
-      await bookingService.cancelBooking(booking.pnr);
-      setAllBookings(prev => prev.map(b => b.id === booking.id ? { ...b, badge: 'CANCELLED', status: 'CANCELLED' } : b));
+      setQuote(await bookingService.getCancellationQuote(booking.pnr));
+    } catch {
+      // quote unavailable — still allow cancelling (guide fallback)
+      setQuote(null);
+    } finally {
+      setQuoteLoading(false);
+    }
+  };
+
+  const confirmCancelBooking = async () => {
+    if (!quoteBooking) return;
+    setCancellingId(quoteBooking.id);
+    try {
+      await bookingService.cancelBooking(quoteBooking.pnr);
+      setAllBookings(prev => prev.map(b => b.id === quoteBooking.id ? { ...b, badge: 'CANCELLED', status: 'CANCELLED' } : b));
+      setQuoteBooking(null);
+      setQuote(null);
     } catch {
       window.alert(t('bookingActions.cancelFailed'));
     } finally {
       setCancellingId(null);
     }
   };
+
+  const quoteRow = (label: string, value: string, color = '#0f172a') => (
+    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #e2e8f0', fontSize: '0.9rem' }}>
+      <span style={{ color: '#64748b' }}>{label}</span>
+      <strong style={{ color }}>{value}</strong>
+    </div>
+  );
 
   const handleViewDetails = async (booking: MyBookingItem) => {
     // The list view only carries a summary; fetch the full record (real
@@ -257,6 +286,52 @@ const MyBookings: React.FC = () => {
             </div>
             <p className="mb-qr-note">{t('myBookings.qrModalNote')}</p>
             <button className="mb-modal-close-btn" onClick={() => setShowQrModal(null)}>{t('myBookings.qrModalCloseButton')}</button>
+          </div>
+        </div>
+      )}
+
+      {/* Cancellation quote modal — guide Step 7.2 */}
+      {quoteBooking && (
+        <div className="mb-modal-overlay" onClick={() => { if (!quoteLoading) { setQuoteBooking(null); setQuote(null); } }}>
+          <div className="mb-qr-modal" onClick={e => e.stopPropagation()}>
+            <h3>{t('bookingActions.refundDetailsHeading')}</h3>
+            <p style={{ fontSize: '0.9rem', color: '#334155', margin: '8px 0 4px' }}>{quoteBooking.title} • {quoteBooking.date}</p>
+            {quoteLoading ? (
+              <p style={{ margin: '16px 0' }}>{t('bookingActions.refundLoading')}</p>
+            ) : quote ? (
+              <div style={{ width: '100%', margin: '12px 0' }}>
+                {quoteRow(t('bookingActions.refundAmountPaid'), `₹${quote.total_paid ?? quoteBooking.amount}`)}
+                {quoteRow(t('bookingActions.refundFeeLabel'), `₹${quote.cancellation_fee}`, '#ef4444')}
+                {quoteRow(
+                  t('bookingActions.refundableLabel'),
+                  `₹${quote.refundable_amount ?? quote.refund_amount ?? 0}`,
+                  '#16a34a',
+                )}
+                {quote.refund_policy && (
+                  <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '8px' }}>
+                    {t('bookingActions.refundPolicyLabel')}: {quote.refund_policy}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <p style={{ margin: '16px 0', color: '#64748b' }}>{t('bookingActions.refundUnavailable')}</p>
+            )}
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginTop: '12px', flexWrap: 'wrap' }}>
+              <button
+                className="mb-modal-close-btn"
+                onClick={() => { setQuoteBooking(null); setQuote(null); }}
+                disabled={cancellingId === quoteBooking.id}
+              >
+                {t('bookingActions.keepBooking')}
+              </button>
+              <button
+                className="mb-cancel-btn"
+                onClick={confirmCancelBooking}
+                disabled={quoteLoading || cancellingId === quoteBooking.id}
+              >
+                {cancellingId === quoteBooking.id ? t('bookingActions.cancelling') : t('bookingActions.confirmCancelBooking')}
+              </button>
+            </div>
           </div>
         </div>
       )}
