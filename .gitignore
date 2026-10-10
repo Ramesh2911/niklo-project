@@ -9,8 +9,6 @@ dist-ssr/
 .vite/
 
 # env files
-.env
-.env.local
 .env.*.local
 
 # logs
@@ -23,7 +21,6 @@ pnpm-debug.log*
 # editor
 .DS_Store
 .idea/
-.vscode/
 *.suo
 *.ntvs*
 *.njsproj
@@ -37,3 +34,4 @@ coverage/
 
 # tools
 .impeccable/
+config.bat
